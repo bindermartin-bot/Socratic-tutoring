@@ -17,7 +17,7 @@
             --secondary: var(--bbz-green-medium);
             --success: var(--bbz-green-medium);
             --danger: #d92d20;
-            --bg: #f4f6f8; /* Etwas wertigerer, kühlerer Grauton für den Hintergrund */
+            --bg: #f4f6f8; 
             --panel-bg: #ffffff;
             --neutral: var(--bbz-anthracite);
             --neutral-light: #667085;
@@ -65,7 +65,7 @@
             box-shadow: var(--shadow-md);
             margin-bottom: 30px; text-align: center;
             border: 1px solid var(--border-color);
-            border-top: 6px solid var(--bbz-green-medium); /* Schweizer Web-Accent-Line */
+            border-top: 6px solid var(--bbz-green-medium); 
         }
 
         .brand-logo-main {
@@ -101,9 +101,10 @@
         /* App Main Container */
         .app-container { display: none; flex-direction: column; flex: 1; min-width: 0; height: 100%; }
 
-        /* Top Controls Bar - Jetzt im dominanten BBZ-Anthrazit */
+        /* Top Controls Bar - Wieder hell & clean */
         .top-bar {
-            background: var(--bbz-anthracite); 
+            background: #ffffff; 
+            border: 1px solid var(--border-color);
             border-radius: var(--radius-md); 
             padding: 10px 16px;
             box-shadow: var(--shadow-sm); 
@@ -114,28 +115,26 @@
         .brand-logo-mini {
             max-height: 32px;
             width: auto;
-            filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.1));
         }
 
         .info-badge { 
-            background: rgba(255, 255, 255, 0.15); 
+            background: var(--bbz-anthracite); 
             color: white; 
             padding: 6px 14px; 
             border-radius: 6px; 
             font-weight: bold; 
             font-size: 13px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
         }
         
         .action-buttons { display: flex; gap: 8px; align-items: center; }
 
-        .mode-switcher-pivot { display: flex; background: rgba(0, 0, 0, 0.2); padding: 4px; border-radius: var(--radius-md); }
+        .mode-switcher-pivot { display: flex; background: #e2e8f0; padding: 4px; border-radius: var(--radius-md); }
         .pivot-btn {
             background: transparent; border: none; padding: 8px 16px; font-size: 13px; font-weight: 600;
-            color: #ced4da; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 6px;
+            color: var(--neutral-light); cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 6px;
             transition: var(--transition);
         }
-        .pivot-btn.active { background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); color: var(--bbz-anthracite); }
+        .pivot-btn.active { background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08); color: var(--bbz-anthracite); }
 
         /* Global UI Buttons */
         .btn {
@@ -158,8 +157,8 @@
         .btn-clear { background: #fef2f2; color: var(--danger); border: 1px solid #fee2e2; }
         .btn-clear:hover { background: #fee2e2; }
         
-        .btn-back-nav { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.15); }
-        .btn-back-nav:hover { background: rgba(255, 255, 255, 0.2); }
+        .btn-back-nav { background: #f1f5f9; color: var(--neutral); border: 1px solid var(--border-color); }
+        .btn-back-nav:hover { background: #e2e8f0; }
 
         .btn-tool { background: #f1f5f9; color: var(--neutral); border: 1px solid var(--border-color); }
         .btn-tool:hover { background: #e2e8f0; }
@@ -195,44 +194,6 @@
         .pinboard-image-preview-wrapper { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         .pinboard-image-preview-wrapper img { max-width: 100%; max-height: 75%; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
 
-        /* Formeleditor / Mathe-Toolbar Style */
-        .math-toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            background: #f1f5f9;
-            padding: 6px;
-            border: 1px solid var(--border-color);
-            border-bottom: none;
-            border-top-left-radius: var(--radius-md);
-            border-top-right-radius: var(--radius-md);
-        }
-        .math-btn {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-size: 12px;
-            font-weight: 600;
-            font-family: 'Courier New', Courier, monospace;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--bbz-anthracite);
-        }
-        .math-btn:hover {
-            background: var(--bbz-yellow);
-            border-color: #cbd5e1;
-        }
-        .math-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--neutral-light);
-            display: flex;
-            align-items: center;
-            margin-right: 6px;
-            margin-left: 2px;
-        }
-
         /* Workspace Configuration */
         .main-workspace { display: flex; gap: 12px; flex: 1; min-height: 0; margin-bottom: 6px; }
         .panel { background: var(--panel-bg); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 14px; display: flex; flex-direction: column; flex: 1; min-height: 0; box-sizing: border-box; box-shadow: var(--shadow-md); }
@@ -244,9 +205,7 @@
         .textarea-input { 
             width: 100%; flex: 1; padding: 14px; 
             border: 1px solid var(--border-color); 
-            border-bottom-left-radius: var(--radius-md);
-            border-bottom-right-radius: var(--radius-md);
-            border-top-left-radius: 0; border-top-right-radius: 0;
+            border-radius: var(--radius-md);
             font-size: 14px; font-family: inherit; resize: none; box-sizing: border-box; background-color: #f8fafc; transition: var(--transition); line-height: 1.5; 
         }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green-medium); background-color: white; }
@@ -287,7 +246,6 @@
 </head>
 <body>
 
-    <!-- STUFE 1: Launcher & Fächerauswahl -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card">
             <img src="image_b1f285.png" alt="BBZ Schaffhausen Logo" class="brand-logo-main">
@@ -327,10 +285,8 @@
         </div>
     </div>
 
-    <!-- MAIN APP WINDOW (Links angedockt) -->
     <div class="app-container" id="appContainer">
         
-        <!-- OBERE BAR (Anthrazit) -->
         <div class="top-bar">
             <div class="action-buttons">
                 <button class="btn btn-back-nav" onclick="goBackToSelection()">↩ Fachwechsel</button>
@@ -350,7 +306,6 @@
             </div>
         </div>
         
-        <!-- MITTLERE BAR -->
         <div class="task-option-bar">
             <span style="font-size: 12px; font-weight: 700; color: var(--neutral);">Deine Aufgabe:</span>
             <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">📁 Eigene Aufgabe erfassen</button>
@@ -361,484 +316,10 @@
             </div>
         </div>
 
-        <!-- DIE PINNWAND -->
         <div class="shared-universal-pinboard">
             <div class="pinboard-left">
                 <span style="font-size: 10px; font-weight: 700; color: #5c4811; margin-bottom: 4px; letter-spacing: 0.5px;">📌 PINNWAND (Text einfügen oder Screenshot mit Ctrl+V / Klick laden):</span>
                 <textarea class="pinboard-textarea" id="universalTaskText" oninput="updateStartButtonVisuals()" placeholder="Schreibe bzw. kopiere Text hier rein... ODER klicke hier hin und drücke Ctrl+V für ein Bild!"></textarea>
             </div>
             <div class="pinboard-right" id="universalTaskImageContainer">
-                <span style="color: var(--neutral-light); font-size: 11px; text-align: center; cursor: pointer; padding: 6px; font-weight: 500;" onclick="document.getElementById('taskImageLoader').click()">🖼️ Bild laden<br><span style="font-size: 9px; opacity:0.8;">oder <b>Ctrl + V</b></span></span>
-            </div>
-            <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
-        </div>
-
-        <!-- TIMELINE-SCHRITT 1 BUTTONS -->
-        <div style="display: flex; gap: 8px; width: 100%;">
-            <button class="btn btn-start-init" id="btn-main-start-init" onclick="executeIntelligentStep1()" style="flex: 1;">➡️ SCHRITT 1: Sokratischen System-Startprompt kopieren</button>
-            <button class="btn" id="btn-image-fallback" onclick="copyImageToClipboardOnly()" style="display: none; background: var(--bbz-green-light); color: var(--bbz-anthracite); padding: 14px; font-size: 14px; margin-bottom: 8px; font-weight: 600; flex: 1; justify-content: center; align-items: center; gap: 6px;">
-                🖼️ SCHRITT 1b: Bild für KI kopieren
-            </button>
-        </div>
-
-        <!-- DER ARBEITSBEREICH -->
-        <div class="main-workspace">
-            
-            <!-- WORKSPACE A: TASTATUR-MODUS MIT NEUER MATHE-TOOLBAR -->
-            <div class="panel text-panel">
-                <div style="margin-bottom: 6px; font-size: 12px; font-weight: 700; color: var(--primary);">💬 SCHRITT 2: Schreibe hier deinen aktuellen Lösungsschritt oder deine Frage rein:</div>
-                
-                <div class="textarea-container">
-                    <!-- Integrierter Formeleditor / Symbolleiste -->
-                    <div class="math-toolbar">
-                        <span class="math-label">🧮 Mathe:</span>
-                        <button class="math-btn" onclick="insertMath('^2')" title="Quadrat">x²</button>
-                        <button class="math-btn" onclick="insertMath('^3')" title="Kubisch">x³</button>
-                        <button class="math-btn" onclick="insertMath('^')" title="Exponent">x^n</button>
-                        <button class="math-btn" onclick="insertMath('\\sqrt{ }')" title="Wurzel">\sqrt{}</button>
-                        <button class="math-btn" onclick="insertMath('\\frac{ }{ }')" title="Bruch">\frac{}{}</button>
-                        <button class="math-btn" onclick="insertMath(' \\cdot ')" title="Mal-Punkt">·</button>
-                        <button class="math-btn" onclick="insertMath(' \\pm ')" title="Plus-Minus">±</button>
-                        <button class="math-btn" onclick="insertMath('\\pi')" title="Pi">π</button>
-                        <button class="math-btn" onclick="insertMath(' \\neq ')" title="Ungleich">≠</button>
-                        <button class="math-btn" onclick="insertMath(' \\le ')" title="Kleiner gleich">≤</button>
-                        <button class="math-btn" onclick="insertMath(' \\ge ')" title="Grösser gleich">≥</button>
-                        <button class="math-btn" onclick="insertMath('x')" title="Variable x">x</button>
-                        <button class="math-btn" onclick="insertMath('y')" title="Variable y">y</button>
-                    </div>
-                    <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss..."></textarea>
-                </div>
-                
-                <button class="btn btn-action-execute-text" onclick="copyTextSolutionWorkflowOnly()">📋 Schritt 2 kopieren (Rechts einfügen)</button>
-            </div>
-            
-            <!-- WORKSPACE B: STIFT-MODUS -->
-            <div class="panel canvas-panel">
-                <div class="editor-toolbar" style="display: flex; gap: 6px; margin-bottom: 8px; align-items: center;">
-                    <button class="btn btn-tool active" id="tool-pencil" onclick="setTool('pencil')">✏️ Stift</button>
-                    <button class="btn btn-tool" id="tool-eraser" onclick="setTool('eraser')">🧽 Radierer</button>
-                    <span style="font-size: 11px; color: var(--neutral-light); margin-left: 10px; font-weight: 500;">📜 Scrollen: Mit 2 Fingern wischen</span>
-                    <button class="btn btn-clear" style="margin-left: auto;" onclick="clearCanvas()">Löschen</button>
-                </div>
-
-                <div class="scroll-wrapper" id="scrollContainer">
-                    <div class="canvas-container" id="canvas-wrapper">
-                        <canvas id="paintCanvas"></canvas>
-                    </div>
-                </div>
-                <button class="btn btn-action-execute-canvas" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ Schritt 2 kopieren (Rechts einfügen)</button>
-            </div>
-        </div>
-
-        <!-- Copyright im aktiven Arbeitsbereich -->
-        <div class="global-copyright-footer">
-            presented by Methoden-Freitag
-        </div>
-    </div>
-
-    <!-- VERSCHIEBBARES POP-UP FENSTER -->
-    <div class="draggable-popup" id="draggableWindow">
-        <div class="draggable-header" id="draggableHeader">
-            <span>📋 Aufgabenstellung</span>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <button id="btn-pip-trigger" onclick="openAlwaysOnTopWindow()" style="background: #ffffff; color: var(--primary); border: none; padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 4px; cursor: pointer;">📌 Über KI schweben lassen</button>
-                <button class="draggable-close-btn" onclick="closeImagePopup()">✕</button>
-            </div>
-        </div>
-        <div class="draggable-content">
-            <img id="popupTargetImage" src="" alt="Vergrösserte Ansicht">
-        </div>
-    </div>
-
-    <div class="status-toast" id="statusToast">Erfolgreich kopiert!</div>
-
-    <script>
-        const canvas = document.getElementById('paintCanvas');
-        const ctx = canvas.getContext('2d');
-        const wrapper = document.getElementById('canvas-wrapper');
-        const scrollContainer = document.getElementById('scrollContainer');
-        
-        let drawing = false; 
-        let currentTool = 'pencil'; 
-        let loadedImageSrc = "";
-        let pipWindowInstance = null;
-        
-        let selectedSubject = 'Mathematik';
-        let currentActiveMode = 'text'; 
-        let currentTaskOption = 'own';   
-
-        let isScrollingTwoFingers = false;
-        let startScrollTop = 0;
-        let startTouchY = 0;
-
-        const subjectPrompts = {
-            "Deutsch": "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte besonders auf präzise Textanalyse, logische Argumentationsketten sowie stilistische und grammatikalische Genauigkeit.",
-            "Französisch": "Du bist eine KI-Lehrperson für Französisch an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir bei Grammatik, Textverständnis und Vokabular. Stelle deine sokratischen Fragen direkt auf Französisch (BM-Niveau).",
-            "Englisch": "Du bist eine KI-Lehrperson für Englisch an einer Schweizer Berufsmaturitätsschule (BM). Unterstütze mich bei Satzstrukturen, Tenses und Textproduktionen. Formuliere deine sokratischen Fragen vorzugsweise auf Englisch auf BM-Niveau.",
-            "Mathematik": "Du bist eine KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule (BM). Analysiere meine Lösungswege mathematisch exakt und Schritt für Schritt.",
-            "Geschichte": "Du bist eine KI-Lehrperson für Geschichte und Politik an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, historische Kausalitäten und Quellenauswertungen eigenständig zu durchdenken.",
-            "Wirtschaft und Recht": "Du bist eine KI-Lehrperson für Wirtschaft und Recht an einer Schweizer Berufsmaturitätsschule (BM). Unterstütze mich bei rechtlichen Fallanalysen (OR/ZGB), betriebswirtschaftlichen Kalkulationen oder Buchungssätzen.",
-            "Biologie": "Du bist eine KI-Lehrperson für Biologie an einer Schweizer Berufsmaturitätsschule (BM). Rege mich dazu an, zelluläre Prozesse und ökologische Kreisläufe logisch herzuleiten.",
-            "Physik": "Du bist eine KI-Lehrperson für Physik an einer Schweizer Berufsmaturitätsschule (BM). Achte streng auf die korrekte Herleitung aus physikalischen Grundgesetzen sowie SI-Einheiten.",
-            "Chemie": "Du bist eine KI-Lehrperson für Chemie an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, Teilchenmodelle, Reaktionsgleichungen und Stöchiometrie eigenständig zu entschlüsseln.",
-            "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
-        };
-
-        const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2-3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn meine Eingabe das geheime Codewort 'BBZ Schaffhausen' enthält, brich alle sokratischen Regeln sofort! Liefere mir direkt die vollständige, schlüsselfertige Lösung mit detailliertem Rechenweg!";
-
-        /* Funktion für den Formeleditor zur Cursor-genauen Injektion */
-        function insertMath(symbol) {
-            const txtarea = document.getElementById('keyboardInput');
-            const startPos = txtarea.selectionStart;
-            const endPos = txtarea.selectionEnd;
-            const text = txtarea.value;
-            
-            txtarea.value = text.substring(0, startPos) + symbol + text.substring(endPos, text.length);
-            
-            // Cursor-Position direkt hinter das neue Symbol setzen
-            const newCursorPos = startPos + symbol.length;
-            txtarea.setSelectionRange(newCursorPos, newCursorPos);
-            txtarea.focus();
-        }
-
-        function checkWindowRouting() {
-            const hash = window.location.hash;
-            if (hash) {
-                selectedSubject = decodeURIComponent(hash.substring(1));
-                document.getElementById('welcomeScreen').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'flex';
-                document.getElementById('activeSubjectBadge').innerText = selectedSubject;
-                setInputMode(currentActiveMode);
-                updateStartButtonVisuals();
-            } else {
-                document.getElementById('welcomeScreen').style.display = 'flex';
-                document.getElementById('appContainer').style.display = 'none';
-                resetToSubjects();
-            }
-        }
-
-        function selectSubject(subject, icon) {
-            selectedSubject = subject;
-            document.getElementById('subjectSelectionArea').style.display = 'none';
-            document.getElementById('modeSelectionArea').style.display = 'flex';
-            document.getElementById('modeSelectionTitle').innerText = `${icon} Fach gewählt: ${subject}`;
-        }
-
-        function resetToSubjects() {
-            document.getElementById('subjectSelectionArea').style.display = 'flex';
-            document.getElementById('modeSelectionArea').style.display = 'none';
-        }
-
-        function launchOptimizedJournalWindow() {
-            const width23 = Math.floor(screen.availWidth * 0.65);
-            const height = screen.availHeight - 60;
-            const targetUrl = window.location.href.split('#')[0] + '#' + encodeURIComponent(selectedSubject);
-            window.open(targetUrl, '_blank', `width=${width23},height=${height},left=0,top=0,resizable=yes,scrollbars=yes`);
-            
-            document.getElementById('welcomeScreen').innerHTML = `
-                <div class="welcome-card" style="max-width: 500px;">
-                    <img src="image_b1f285.png" alt="BBZ Logo" style="max-height: 50px; margin-bottom: 15px;">
-                    <h1 style="color: var(--bbz-green-medium); margin: 0 0 10px 0;">✔ Socratic Tutoring aktiv</h1>
-                    <p style="color: var(--neutral-light); font-size: 14px; margin-bottom: 20px;">Das Arbeitsfenster läuft nun optimiert auf der linken Bildschirmseite. Öffne jetzt rechts die gewünschte KI.</p>
-                    <button class="btn btn-tool" style="width:100%; justify-content:center; background: var(--bbz-anthracite); color: white;" onclick="window.location.reload()">Neues Fenster öffnen</button>
-                </div>
-                <div class="global-copyright-footer" style="margin-top: auto; padding-top: 20px;">presented by Methoden-Freitag</div>
-            `;
-        }
-
-        function goBackToSelection() { window.location.hash = ''; }
-
-        function openAISplitScreen(kiUrl) {
-            const leftPosition = Math.floor(screen.availWidth * 0.65) + 6;
-            const width13 = Math.floor(screen.availWidth * 0.34) - 10;
-            const height = screen.availHeight - 60;
-            window.open(kiUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
-        }
-
-        function setInputMode(mode) {
-            currentActiveMode = mode;
-            document.body.className = mode === 'text' ? 'text-mode-active' : 'canvas-mode-active';
-            document.getElementById('btn-mode-text').classList.toggle('active', mode === 'text');
-            document.getElementById('btn-mode-canvas').classList.toggle('active', mode === 'canvas');
-            if (mode === 'canvas') { setTimeout(initCanvas, 50); }
-        }
-
-        function setTaskOption(option) {
-            currentTaskOption = option;
-            document.getElementById('taskToggleOwn').classList.toggle('active', option === 'own');
-            document.getElementById('taskToggleGen').classList.toggle('active', option === 'gen');
-            document.getElementById('topicContainerBlock').style.display = option === 'gen' ? 'flex' : 'none';
-            updateStartButtonVisuals();
-        }
-
-        function handleTaskScreenshot(event) {
-            const file = event.target.files[0]; if (!file) return;
-            renderImageToPinboard(file);
-        }
-
-        function renderImageToPinboard(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                loadedImageSrc = e.target.result;
-                document.getElementById('universalTaskImageContainer').innerHTML = `
-                    <div class="pinboard-image-preview-wrapper">
-                        <img src="${loadedImageSrc}" alt="Vorschau" onclick="openImagePopup()" title="Klicken zum Vergrössern">
-                        <button class="change-image-btn" style="position: absolute; bottom: 2px; right: 2px; font-size: 9px; background: rgba(50,50,62,0.8); color: white; border: none; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="document.getElementById('taskImageLoader').click()">🔄 Ändern</button>
-                    </div>`;
-                
-                if (pipWindowInstance && !pipWindowInstance.closed) {
-                    const pipImg = pipWindowInstance.document.getElementById('pipImageElement');
-                    if (pipImg) pipImg.src = loadedImageSrc;
-                } else {
-                    openImagePopup(); 
-                }
-                updateStartButtonVisuals();
-            }
-            reader.readAsDataURL(file);
-        }
-
-        window.addEventListener('paste', function(e) {
-            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].type.indexOf('image') !== -1) {
-                    const blob = items[i].getAsFile();
-                    if (currentTaskOption === 'gen') setTaskOption('own');
-                    renderImageToPinboard(blob);
-                    e.preventDefault(); 
-                    showToast("🖼️ Bild direkt aus Zwischenablage geladen!");
-                    break;
-                }
-            }
-        });
-
-        function openImagePopup() {
-            if (!loadedImageSrc) return;
-            document.getElementById('popupTargetImage').src = loadedImageSrc;
-            document.getElementById('draggableWindow').style.display = 'flex';
-            if (!('documentPictureInPicture' in window)) {
-                document.getElementById('btn-pip-trigger').style.display = 'none';
-            }
-        }
-
-        function closeImagePopup() { document.getElementById('draggableWindow').style.display = 'none'; }
-
-        async function openAlwaysOnTopWindow() {
-            if (!loadedImageSrc) return;
-            if ('documentPictureInPicture' in window) {
-                try {
-                    if (pipWindowInstance) pipWindowInstance.close();
-
-                    pipWindowInstance = await documentPictureInPicture.requestWindow({ width: 480, height: 360 });
-                    const d = pipWindowInstance.document;
-                    d.body.style.margin = "0"; d.body.style.padding = "6px";
-                    d.body.style.background = "#f8fafc"; d.body.style.display = "flex";
-                    d.body.style.alignItems = "center"; d.body.style.justifyContent = "center";
-                    d.body.style.height = "100vh"; d.body.style.boxSizing = "border-box";
-                    d.title = "📌 Schwebende Aufgabe";
-
-                    const img = d.createElement('img');
-                    img.id = 'pipImageElement'; img.src = loadedImageSrc;
-                    img.style.maxWidth = "100%"; img.style.maxHeight = "100%";
-                    img.style.objectFit = "contain"; img.style.borderRadius = "6px";
-                    img.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
-                    
-                    d.body.appendChild(img);
-                    closeImagePopup();
-                    showToast("📌 Schwebefenster aktiv! Über die KI verschiebbar.");
-                } catch (err) {
-                    console.error(err); openImagePopup();
-                }
-            } else {
-                showToast("Browser unterstützt kein echtes Schwebe-Fenster.");
-            }
-        }
-
-        const dragWindow = document.getElementById("draggableWindow");
-        const dragHeader = document.getElementById("draggableHeader");
-        let isDragging = false; let startX, startY;
-
-        dragHeader.addEventListener("mousedown", (e) => {
-            if(e.target.tagName === 'BUTTON') return;
-            isDragging = true; startX = e.clientX - dragWindow.offsetLeft; startY = e.clientY - dragWindow.offsetTop; e.preventDefault();
-        });
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return; dragWindow.style.left = (e.clientX - startX) + "px"; dragWindow.style.top = (e.clientY - startY) + "px";
-        });
-        document.addEventListener("mouseup", () => { isDragging = false; });
-
-        function updateStartButtonVisuals() {
-            const btn = document.getElementById('btn-main-start-init');
-            const imgBtn = document.getElementById('btn-image-fallback');
-            if (!btn) return;
-
-            if (currentTaskOption === 'gen') {
-                btn.innerHTML = `✨ SCHRITT 1: Sokratischen Prompt zur Aufgaben-Generierung kopieren`;
-                btn.style.background = "var(--bbz-green-medium)";
-                if (imgBtn) imgBtn.style.display = "none";
-            } else {
-                const pinboardText = document.getElementById('universalTaskText').value.trim();
-                if (loadedImageSrc) {
-                    btn.innerHTML = `➡️ SCHRITT 1a: Start-Prompt kopieren`;
-                    btn.style.background = "var(--bbz-green-medium)";
-                    if (imgBtn) imgBtn.style.display = "flex";
-                } else {
-                    btn.innerHTML = `➡️ SCHRITT 1: Sokratischen System-Startprompt kopieren`;
-                    btn.style.background = "var(--bbz-green-medium)";
-                    if (imgBtn) imgBtn.style.display = "none";
-                    if (pinboardText.length > 0) {
-                        btn.innerHTML = `📋 SCHRITT 1: Start-Prompt + Textaufgabe kopieren`;
-                    }
-                }
-            }
-        }
-
-        async function executeIntelligentStep1() {
-            let fullInitPrompt = subjectPrompts[selectedSubject] || subjectPrompts["Mathematik"];
-            fullInitPrompt += globalSocraticRules;
-
-            if (currentTaskOption === 'gen') {
-                const topicText = document.getElementById('topicInputField').value.trim();
-                const thema = topicText.length > 0 ? topicText : "einem passenden BM-Lehrplanthema dieses Faches";
-                fullInitPrompt += `\n\n[ANWEISUNG]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${thema}". Liefere NUR die Aufgabe ohne Lösung. Wenn ich antworte, fährst du sokratisch fort.`;
-                
-                try {
-                    await navigator.clipboard.writeText(fullInitPrompt);
-                    showToast("✨ Prompt zur Aufgaben-Generierung kopiert!");
-                } catch (err) { alert('Fehler beim Kopieren.'); }
-                return;
-            }
-
-            const pinboardText = document.getElementById('universalTaskText').value.trim();
-            
-            if (loadedImageSrc) {
-                fullInitPrompt += `\n\n[UNSERE AUFGABE FÜR HEUTE]: Siehe das gleich separat von mir eingefügte Bild. Analysiere diese Aufgabenstellung genau.`;
-                fullInitPrompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch durch diese Aufgabe zu begleiten. Warte danach auf meinen ersten Lösungsschritt.`;
-                
-                try {
-                    await navigator.clipboard.writeText(fullInitPrompt);
-                    showToast("📋 Schritt 1a kopiert! Nutze jetzt Schritt 1b für das Bild.");
-                } catch (err) { alert('Fehler beim Kopieren.'); }
-            } else {
-                if (pinboardText.length > 0) {
-                    fullInitPrompt += `\n\n[UNSERE AUFGABE FÜR HEUTE]:\n${pinboardText}`;
-                }
-                fullInitPrompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch durch diese Aufgabe zu begleiten. Warte danach auf meinen ersten Lösungsschritt.`;
-                
-                try {
-                    await navigator.clipboard.writeText(fullInitPrompt);
-                    showToast("📋 Start-Prompt & Textaufgabe kopiert!");
-                } catch (err) { alert('Fehler beim Kopieren.'); }
-            }
-        }
-
-        async function copyImageToClipboardOnly() {
-            if (!loadedImageSrc) return;
-            try {
-                const response = await fetch(loadedImageSrc);
-                const blob = await response.blob();
-                const item = new ClipboardItem({ [blob.type]: blob });
-                await navigator.clipboard.write([item]);
-                showToast("🖼️ Bild kopiert! Füge es mit Ctrl+V im KI-Fenster ein.");
-            } catch (err) { alert("Bildexport blockiert."); }
-        }
-
-        async function copyTextSolutionWorkflowOnly() {
-            const userText = document.getElementById('keyboardInput').value.trim();
-            if (userText.length === 0) { alert("Bitte gib zuerst einen Lösungsschritt ein."); return; }
-            try {
-                await navigator.clipboard.writeText(userText);
-                showToast("📋 Lösungsschritt kopiert!");
-            } catch (err) { alert('Fehler beim Kopieren.'); }
-        }
-
-        async function copyCanvasSolutionWorkflowOnly() {
-            try {
-                canvas.toBlob(async (blob) => {
-                    if (!blob) { alert("Das Skizzenfeld ist leer."); return; }
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                    showToast("🖼️ Zeichnung kopiert! Direkt rechts einfügen.");
-                }, 'image/png');
-            } catch (err) { alert('Fehler beim Kopieren.'); }
-        }
-
-        function initCanvas() {
-            if (!wrapper || currentActiveMode !== 'canvas') return;
-            canvas.width = wrapper.offsetWidth || 450; canvas.height = wrapper.offsetHeight || 600; 
-            redrawEverything();
-        }
-
-        function redrawEverything() {
-            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = "#f1f5f9"; ctx.lineWidth = 1;
-            const gridSize = 25;
-            for (let x = 0; x < canvas.width; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
-            for (let y = 0; y < canvas.height; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
-            updateStyles();
-        }
-
-        function setTool(tool) {
-            currentTool = tool;
-            document.getElementById('tool-pencil').classList.toggle('active', tool === 'pencil');
-            document.getElementById('tool-eraser').classList.toggle('active', tool === 'eraser');
-            updateStyles();
-        }
-
-        function updateStyles() {
-            if (currentTool === 'pencil') { ctx.strokeStyle = '#32323e'; ctx.lineWidth = 2.5; } 
-            else { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 35; }
-            ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        }
-
-        window.addEventListener('resize', initCanvas);
-
-        function getCoordinates(e) {
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            return { x: clientX - rect.left, y: clientY - rect.top };
-        }
-
-        function startDrawing(e) {
-            if (e.touches && e.touches.length === 2) {
-                isScrollingTwoFingers = true; drawing = false;
-                startTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                startScrollTop = scrollContainer.scrollTop;
-                e.preventDefault(); return;
-            }
-            isScrollingTwoFingers = false; drawing = true;
-            const coord = getCoordinates(e); ctx.beginPath(); ctx.moveTo(coord.x, coord.y);
-            if (e.touches) e.preventDefault(); 
-        }
-
-        function draw(e) {
-            if (e.touches && e.touches.length === 2 && isScrollingTwoFingers) {
-                const currentTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                const deltaY = currentTouchY - startTouchY;
-                scrollContainer.scrollTop = startScrollTop - deltaY;
-                e.preventDefault(); return;
-            }
-            if (!drawing || (e.touches && e.touches.length > 1)) { drawing = false; return; }
-            const coord = getCoordinates(e); ctx.lineTo(coord.x, coord.y); ctx.stroke(); 
-            if (e.touches) e.preventDefault();
-        }
-
-        function stopDrawing() { drawing = false; isScrollingTwoFingers = false; }
-
-        canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseleave', stopDrawing);
-        canvas.addEventListener('touchstart', startDrawing, {passive: false}); canvas.addEventListener('touchmove', draw, {passive: false});
-        canvas.addEventListener('touchend', stopDrawing);
-
-        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); redrawEverything(); }
-
-        function showToast(msg) {
-            const toast = document.getElementById('statusToast');
-            toast.innerText = msg; toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        }
-
-        window.addEventListener('load', checkWindowRouting); window.addEventListener('hashchange', checkWindowRouting);
-    </script>
-</body>
-</html>
+                <span
