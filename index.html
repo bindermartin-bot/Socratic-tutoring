@@ -6,34 +6,34 @@
     <title>Socratic Tutoring - BBZ Schaffhausen</title>
     <style>
         :root {
-            /* Exakte Farbabstimmung basierend auf dem Logo image_b1f285.png */
-            --bbz-anthracite: #32323e;    /* Das dunkle Text-Anthrazit */
-            --bbz-green-medium: #469542;  /* Das kräftige Marken-Grün */
-            --bbz-green-light: #89b04b;   /* Das hellere Maigrün */
-            --bbz-yellow: #ebd147;        /* Das BBZ-Gelb */
-            --bbz-teal-dark: #1b443c;     /* Das tiefe Dunkelgrün */
+            /* Original BBZ Schaffhausen Farbpalette */
+            --bbz-anthracite: #32323e;    
+            --bbz-green-medium: #469542;  
+            --bbz-green-light: #89b04b;   
+            --bbz-yellow: #ebd147;        
+            --bbz-teal-dark: #1b443c;     
             
             --primary: var(--bbz-anthracite);
             --secondary: var(--bbz-green-medium);
             --success: var(--bbz-green-medium);
             --danger: #d92d20;
-            --bg: #f8f9fa;
+            --bg: #f4f6f8; /* Etwas wertigerer, kühlerer Grauton für den Hintergrund */
             --panel-bg: #ffffff;
             --neutral: var(--bbz-anthracite);
-            --neutral-light: #6c757d;
-            --border-color: #e9ecef;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --shadow-sm: 0 2px 8px rgba(50, 50, 62, 0.04);
-            --shadow-md: 0 8px 24px rgba(50, 50, 62, 0.06);
-            --transition: all 0.2s ease-in-out;
+            --neutral-light: #667085;
+            --border-color: #d0d5dd;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1);
+            --shadow-md: 0 4px 20px rgba(50, 50, 62, 0.08);
+            --transition: all 0.15s ease-in-out;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 12px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -52,7 +52,7 @@
             align-items: center;
             justify-content: flex-start;
             z-index: 1000;
-            padding: 40px 20px;
+            padding: 50px 20px;
             box-sizing: border-box;
             overflow-y: auto;
         }
@@ -60,22 +60,23 @@
         .welcome-card {
             background: var(--panel-bg); 
             border-radius: var(--radius-lg); 
-            padding: 35px 25px;
-            max-width: 900px; width: 100%; 
+            padding: 40px 30px;
+            max-width: 850px; width: 100%; 
             box-shadow: var(--shadow-md);
-            margin-bottom: 24px; text-align: center;
+            margin-bottom: 30px; text-align: center;
             border: 1px solid var(--border-color);
+            border-top: 6px solid var(--bbz-green-medium); /* Schweizer Web-Accent-Line */
         }
 
         .brand-logo-main {
-            max-height: 75px;
+            max-height: 85px;
             width: auto;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .subject-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 14px; max-width: 900px; width: 100%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px; max-width: 900px; width: 100%;
             margin-bottom: 40px;
         }
 
@@ -83,16 +84,16 @@
             background: var(--panel-bg); 
             border: 1px solid var(--border-color); 
             border-radius: var(--radius-md); 
-            padding: 18px;
+            padding: 16px;
             font-size: 14px; font-weight: 600; color: var(--neutral); cursor: pointer;
             transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px;
             box-shadow: var(--shadow-sm);
         }
         .subject-btn:hover { 
-            border-color: var(--bbz-green-light); 
-            background: #fdfdfd; 
-            transform: translateY(-2px); 
-            box-shadow: 0 4px 12px rgba(70, 149, 66, 0.1);
+            border-color: var(--bbz-green-medium); 
+            background: #fafafa; 
+            transform: translateY(-1px); 
+            box-shadow: 0 4px 12px rgba(70, 149, 66, 0.12);
         }
 
         .mode-selection-area { display: none; flex-direction: column; align-items: center; gap: 15px; }
@@ -100,29 +101,41 @@
         /* App Main Container */
         .app-container { display: none; flex-direction: column; flex: 1; min-width: 0; height: 100%; }
 
-        /* Top Controls Bar */
+        /* Top Controls Bar - Jetzt im dominanten BBZ-Anthrazit */
         .top-bar {
-            background: var(--panel-bg); border-radius: var(--radius-md); padding: 8px 16px;
-            box-shadow: var(--shadow-sm); display: flex;
-            align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 8px;
-            border: 1px solid var(--border-color);
+            background: var(--bbz-anthracite); 
+            border-radius: var(--radius-md); 
+            padding: 10px 16px;
+            box-shadow: var(--shadow-sm); 
+            display: flex;
+            align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 10px;
         }
 
         .brand-logo-mini {
-            max-height: 28px;
+            max-height: 32px;
             width: auto;
+            filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.1));
         }
 
-        .info-badge { background: #f4f6f4; color: var(--primary); padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 13px; border: 1px solid var(--border-color); }
+        .info-badge { 
+            background: rgba(255, 255, 255, 0.15); 
+            color: white; 
+            padding: 6px 14px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-size: 13px; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+        }
+        
         .action-buttons { display: flex; gap: 8px; align-items: center; }
 
-        .mode-switcher-pivot { display: flex; background: #eee; padding: 4px; border-radius: var(--radius-md); }
+        .mode-switcher-pivot { display: flex; background: rgba(0, 0, 0, 0.2); padding: 4px; border-radius: var(--radius-md); }
         .pivot-btn {
             background: transparent; border: none; padding: 8px 16px; font-size: 13px; font-weight: 600;
-            color: var(--neutral-light); cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 6px;
+            color: #ced4da; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 6px;
             transition: var(--transition);
         }
-        .pivot-btn.active { background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.08); color: var(--secondary); }
+        .pivot-btn.active { background: white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); color: var(--bbz-anthracite); }
 
         /* Global UI Buttons */
         .btn {
@@ -130,66 +143,113 @@
             display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: var(--transition);
         }
         
-        /* PROCESS WORKFLOW BUTTONS WITH NEW BRAND COLORS */
         .btn-start-init { 
-            background: var(--primary); color: white; width: 100%; justify-content: center; padding: 14px; font-size: 14px; margin-bottom: 8px; 
-            box-shadow: 0 4px 12px rgba(50,50,62,0.15); border-radius: var(--radius-md);
+            background: var(--bbz-green-medium); color: white; width: 100%; justify-content: center; padding: 14px; font-size: 14px; margin-bottom: 10px; 
+            box-shadow: 0 2px 6px rgba(70,149,66,0.2); border-radius: var(--radius-md);
         }
-        .btn-start-init:hover { background: #22222a; transform: translateY(-1px); }
+        .btn-start-init:hover { background: #387835; transform: translateY(-1px); }
 
-        .btn-action-execute-text { background: var(--secondary); color: white; width: 100%; justify-content: center; padding: 12px; font-size: 14px; margin-top: 6px; border-radius: var(--radius-md); }
-        .btn-action-execute-text:hover { background: #387835; transform: translateY(-1px); }
+        .btn-action-execute-text { background: var(--bbz-anthracite); color: white; width: 100%; justify-content: center; padding: 12px; font-size: 14px; margin-top: 8px; border-radius: var(--radius-md); }
+        .btn-action-execute-text:hover { background: #1e1e24; transform: translateY(-1px); }
         
-        .btn-action-execute-canvas { background: var(--bbz-teal-dark); color: white; width: 100%; justify-content: center; padding: 12px; font-size: 14px; margin-top: 6px; border-radius: var(--radius-md); }
+        .btn-action-execute-canvas { background: var(--bbz-teal-dark); color: white; width: 100%; justify-content: center; padding: 12px; font-size: 14px; margin-top: 8px; border-radius: var(--radius-md); }
         .btn-action-execute-canvas:hover { background: #112b26; transform: translateY(-1px); }
 
         .btn-clear { background: #fef2f2; color: var(--danger); border: 1px solid #fee2e2; }
         .btn-clear:hover { background: #fee2e2; }
+        
+        .btn-back-nav { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.15); }
+        .btn-back-nav:hover { background: rgba(255, 255, 255, 0.2); }
+
         .btn-tool { background: #f1f5f9; color: var(--neutral); border: 1px solid var(--border-color); }
         .btn-tool:hover { background: #e2e8f0; }
-        .btn-tool.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .btn-tool.active { background: var(--bbz-anthracite); color: white; border-color: var(--bbz-anthracite); }
         
-        .btn-ki-select { background: #ffffff; color: var(--primary); border: 1px solid var(--border-color); font-size: 12px; padding: 6px 12px; font-weight: bold; border-radius: 6px; box-shadow: var(--shadow-sm); }
-        .btn-ki-select:hover { border-color: var(--secondary); color: var(--secondary); }
+        .btn-ki-select { background: #ffffff; color: var(--bbz-anthracite); border: 1px solid var(--border-color); font-size: 12px; padding: 6px 12px; font-weight: bold; border-radius: 6px; box-shadow: var(--shadow-sm); }
+        .btn-ki-select:hover { border-color: var(--bbz-green-light); color: var(--bbz-green-medium); }
 
         /* Secondary control rows */
         .task-option-bar {
             background: white; border-radius: var(--radius-md); padding: 8px 16px; box-shadow: var(--shadow-sm);
-            display: flex; gap: 12px; margin-bottom: 8px; align-items: center; border: 1px solid var(--border-color);
+            display: flex; gap: 12px; margin-bottom: 10px; align-items: center; border: 1px solid var(--border-color);
         }
         .task-toggle {
-            padding: 8px 14px; background: #f1f5f9; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: var(--transition); color: var(--neutral-light);
+            padding: 8px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: var(--transition); color: var(--neutral-light);
         }
-        .task-toggle.active { background: #f1f5f9; color: var(--secondary); border-color: var(--secondary); box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .task-toggle.active { background: #f1f5f9; color: var(--bbz-green-medium); border-color: var(--bbz-green-medium); box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
         .topic-container { display: none; align-items: center; gap: 8px; flex: 1; }
         .topic-input { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; flex: 1; font-size: 13px; background: #f8fafc; transition: var(--transition); }
-        .topic-input:focus { outline: none; border-color: var(--secondary); background: white; }
+        .topic-input:focus { outline: none; border-color: var(--bbz-green-medium); background: white; }
 
-        /* Pinnwand mit dezentem BBZ-Gelb-Touch */
+        /* Pinnwand mit BBZ-Gelb-Rahmen */
         .shared-universal-pinboard {
-            background: #fffdf2; border: 1px solid #fae8a4; border-radius: var(--radius-md); padding: 12px; margin-bottom: 8px;
+            background: #fffdf5; border: 1px solid var(--bbz-yellow); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px;
             display: flex; gap: 14px; height: 115px; box-sizing: border-box; box-shadow: var(--shadow-sm); transition: var(--transition);
         }
-        .shared-universal-pinboard:focus-within { border-color: var(--bbz-yellow); }
         .pinboard-left { flex: 3; display: flex; flex-direction: column; }
-        .pinboard-right { flex: 1; border: 2px dashed #e2e8f0; background: #ffffff; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; transition: var(--transition); }
-        .pinboard-right:hover { border-color: var(--secondary); background: #f8fafc; }
+        .pinboard-right { flex: 1; border: 2px dashed var(--border-color); background: #ffffff; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; transition: var(--transition); }
+        .pinboard-right:hover { border-color: var(--bbz-green-medium); background: #f8fafc; }
         .pinboard-textarea { width: 100%; flex: 1; border: none; background: transparent; resize: none; font-size: 13px; font-family: inherit; box-sizing: border-box; color: var(--neutral); }
         .pinboard-textarea:focus { outline: none; }
         
         .pinboard-image-preview-wrapper { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
         .pinboard-image-preview-wrapper img { max-width: 100%; max-height: 75%; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
 
+        /* Formeleditor / Mathe-Toolbar Style */
+        .math-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            background: #f1f5f9;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-top-left-radius: var(--radius-md);
+            border-top-right-radius: var(--radius-md);
+        }
+        .math-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--bbz-anthracite);
+        }
+        .math-btn:hover {
+            background: var(--bbz-yellow);
+            border-color: #cbd5e1;
+        }
+        .math-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--neutral-light);
+            display: flex;
+            align-items: center;
+            margin-right: 6px;
+            margin-left: 2px;
+        }
+
         /* Workspace Configuration */
-        .main-workspace { display: flex; gap: 12px; flex: 1; min-height: 0; margin-bottom: 4px; }
+        .main-workspace { display: flex; gap: 12px; flex: 1; min-height: 0; margin-bottom: 6px; }
         .panel { background: var(--panel-bg); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 14px; display: flex; flex-direction: column; flex: 1; min-height: 0; box-sizing: border-box; box-shadow: var(--shadow-md); }
         
         .text-mode-active .canvas-panel { display: none !important; }
         .canvas-mode-active .text-panel { display: none !important; }
 
         .textarea-container { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-        .textarea-input { width: 100%; flex: 1; padding: 14px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 14px; font-family: inherit; resize: none; box-sizing: border-box; background-color: #f8fafc; transition: var(--transition); line-height: 1.5; }
-        .textarea-input:focus { outline: none; border-color: var(--secondary); background-color: white; }
+        .textarea-input { 
+            width: 100%; flex: 1; padding: 14px; 
+            border: 1px solid var(--border-color); 
+            border-bottom-left-radius: var(--radius-md);
+            border-bottom-right-radius: var(--radius-md);
+            border-top-left-radius: 0; border-top-right-radius: 0;
+            font-size: 14px; font-family: inherit; resize: none; box-sizing: border-box; background-color: #f8fafc; transition: var(--transition); line-height: 1.5; 
+        }
+        .textarea-input:focus { outline: none; border-color: var(--bbz-green-medium); background-color: white; }
 
         /* Scrollable Canvas container */
         .scroll-wrapper { flex: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-md); position: relative; background: #ffffff; }
@@ -202,7 +262,7 @@
             font-size: 11px;
             color: var(--neutral-light);
             font-weight: 500;
-            padding: 2px 0;
+            padding: 4px 0;
             letter-spacing: 0.3px;
         }
 
@@ -214,7 +274,7 @@
             resize: both; min-width: 250px; min-height: 200px;
         }
         .draggable-header {
-            background: var(--primary); color: white; padding: 10px 16px; cursor: move;
+            background: var(--bbz-anthracite); color: white; padding: 10px 16px; cursor: move;
             display: flex; justify-content: space-between; align-items: center;
             font-size: 13px; font-weight: bold; user-select: none;
         }
@@ -222,7 +282,7 @@
         .draggable-content { flex: 1; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: #f8fafc; }
         .draggable-content img { max-width: 100%; height: auto; object-fit: contain; border-radius: 4px; }
 
-        .status-toast { position: fixed; bottom: 24px; left: 24px; background: var(--neutral); color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 13px; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 4000; }
+        .status-toast { position: fixed; bottom: 24px; left: 24px; background: var(--bbz-anthracite); color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 13px; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 4000; }
     </style>
 </head>
 <body>
@@ -230,12 +290,8 @@
     <!-- STUFE 1: Launcher & Fächerauswahl -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card">
-            <!-- BBZ Logo eingebunden aus image_b1f285.png -->
             <img src="image_b1f285.png" alt="BBZ Schaffhausen Logo" class="brand-logo-main">
-            
-            <!-- Exakter Haupttitel nach Wunsch -->
             <h1 style="color: var(--primary); margin: 0 0 12px 0; font-weight: 800; letter-spacing: -0.5px;">Socratic Tutoring</h1>
-            
             <p style="color: var(--neutral-light); font-size: 14px; max-width: 720px; margin: 0 auto; line-height: 1.6;">
                 Digitaler Lernassistent für die Schweizer Berufsmaturität (BM). Die gekoppelte KI unterstützt dich sokratisch: Sie verrät keine fertigen Lösungen, sondern gibt dir minimalistische Denkanstösse.
             </p>
@@ -259,14 +315,13 @@
 
         <div class="mode-selection-area" id="modeSelectionArea">
             <p id="modeSelectionTitle" style="font-weight: 700; color: var(--secondary); margin-bottom: 10px; font-size: 16px;"></p>
-            <div style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px 20px; text-align: center; max-width: 420px; cursor: pointer; box-shadow: var(--shadow-md); transition: var(--transition);" onclick="launchOptimizedJournalWindow()">
-                <h3 style="margin: 0 0 10px 0; color: var(--secondary); font-size: 18px;">🚀 Journal im Split-Screen starten</h3>
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px 20px; text-align: center; max-width: 420px; cursor: pointer; box-shadow: var(--shadow-md); transition: var(--transition); border-top: 4px solid var(--bbz-green-medium);" onclick="launchOptimizedJournalWindow()">
+                <h3 style="margin: 0 0 10px 0; color: var(--bbz-anthracite); font-size: 18px;">🚀 Journal im Split-Screen starten</h3>
                 <p style="font-size: 13px; margin: 0; color: var(--neutral-light); line-height: 1.5;">Öffnet das Arbeitsfenster links (2/3). Du kannst darin fliegend zwischen Stift und Tastatur wechseln.</p>
             </div>
             <button class="btn btn-tool" style="margin-top: 20px;" onclick="resetToSubjects()">↩ Fach ändern</button>
         </div>
         
-        <!-- Copyright auf der Startseite -->
         <div class="global-copyright-footer" style="margin-top: auto; padding-top: 20px;">
             presented by Methoden-Freitag
         </div>
@@ -275,10 +330,10 @@
     <!-- MAIN APP WINDOW (Links angedockt) -->
     <div class="app-container" id="appContainer">
         
-        <!-- OBERE BAR -->
+        <!-- OBERE BAR (Anthrazit) -->
         <div class="top-bar">
             <div class="action-buttons">
-                <button class="btn btn-tool" onclick="goBackToSelection()">↩ Fachwechsel</button>
+                <button class="btn btn-back-nav" onclick="goBackToSelection()">↩ Fachwechsel</button>
                 <span class="info-badge" id="activeSubjectBadge">Fach</span>
             </div>
 
@@ -288,7 +343,6 @@
             </div>
             
             <div class="action-buttons">
-                <!-- Mini-Logo im Header für optimales Branding im Betrieb -->
                 <img src="image_b1f285.png" alt="BBZ Logo" class="brand-logo-mini">
                 <button class="btn btn-ki-select" onclick="openAISplitScreen('https://chatgpt.com')">ChatGPT</button>
                 <button class="btn btn-ki-select" onclick="openAISplitScreen('https://gemini.google.com')">Gemini</button>
@@ -322,7 +376,7 @@
         <!-- TIMELINE-SCHRITT 1 BUTTONS -->
         <div style="display: flex; gap: 8px; width: 100%;">
             <button class="btn btn-start-init" id="btn-main-start-init" onclick="executeIntelligentStep1()" style="flex: 1;">➡️ SCHRITT 1: Sokratischen System-Startprompt kopieren</button>
-            <button class="btn" id="btn-image-fallback" onclick="copyImageToClipboardOnly()" style="display: none; background: var(--secondary); color: white; padding: 14px; font-size: 14px; margin-bottom: 8px; font-weight: 600; flex: 1; justify-content: center; align-items: center; gap: 6px;">
+            <button class="btn" id="btn-image-fallback" onclick="copyImageToClipboardOnly()" style="display: none; background: var(--bbz-green-light); color: var(--bbz-anthracite); padding: 14px; font-size: 14px; margin-bottom: 8px; font-weight: 600; flex: 1; justify-content: center; align-items: center; gap: 6px;">
                 🖼️ SCHRITT 1b: Bild für KI kopieren
             </button>
         </div>
@@ -330,12 +384,31 @@
         <!-- DER ARBEITSBEREICH -->
         <div class="main-workspace">
             
-            <!-- WORKSPACE A: TASTATUR-MODUS -->
+            <!-- WORKSPACE A: TASTATUR-MODUS MIT NEUER MATHE-TOOLBAR -->
             <div class="panel text-panel">
                 <div style="margin-bottom: 6px; font-size: 12px; font-weight: 700; color: var(--primary);">💬 SCHRITT 2: Schreibe hier deinen aktuellen Lösungsschritt oder deine Frage rein:</div>
+                
                 <div class="textarea-container">
+                    <!-- Integrierter Formeleditor / Symbolleiste -->
+                    <div class="math-toolbar">
+                        <span class="math-label">🧮 Mathe:</span>
+                        <button class="math-btn" onclick="insertMath('^2')" title="Quadrat">x²</button>
+                        <button class="math-btn" onclick="insertMath('^3')" title="Kubisch">x³</button>
+                        <button class="math-btn" onclick="insertMath('^')" title="Exponent">x^n</button>
+                        <button class="math-btn" onclick="insertMath('\\sqrt{ }')" title="Wurzel">\sqrt{}</button>
+                        <button class="math-btn" onclick="insertMath('\\frac{ }{ }')" title="Bruch">\frac{}{}</button>
+                        <button class="math-btn" onclick="insertMath(' \\cdot ')" title="Mal-Punkt">·</button>
+                        <button class="math-btn" onclick="insertMath(' \\pm ')" title="Plus-Minus">±</button>
+                        <button class="math-btn" onclick="insertMath('\\pi')" title="Pi">π</button>
+                        <button class="math-btn" onclick="insertMath(' \\neq ')" title="Ungleich">≠</button>
+                        <button class="math-btn" onclick="insertMath(' \\le ')" title="Kleiner gleich">≤</button>
+                        <button class="math-btn" onclick="insertMath(' \\ge ')" title="Grösser gleich">≥</button>
+                        <button class="math-btn" onclick="insertMath('x')" title="Variable x">x</button>
+                        <button class="math-btn" onclick="insertMath('y')" title="Variable y">y</button>
+                    </div>
                     <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss..."></textarea>
                 </div>
+                
                 <button class="btn btn-action-execute-text" onclick="copyTextSolutionWorkflowOnly()">📋 Schritt 2 kopieren (Rechts einfügen)</button>
             </div>
             
@@ -413,6 +486,21 @@
 
         const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2-3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn meine Eingabe das geheime Codewort 'BBZ Schaffhausen' enthält, brich alle sokratischen Regeln sofort! Liefere mir direkt die vollständige, schlüsselfertige Lösung mit detailliertem Rechenweg!";
 
+        /* Funktion für den Formeleditor zur Cursor-genauen Injektion */
+        function insertMath(symbol) {
+            const txtarea = document.getElementById('keyboardInput');
+            const startPos = txtarea.selectionStart;
+            const endPos = txtarea.selectionEnd;
+            const text = txtarea.value;
+            
+            txtarea.value = text.substring(0, startPos) + symbol + text.substring(endPos, text.length);
+            
+            // Cursor-Position direkt hinter das neue Symbol setzen
+            const newCursorPos = startPos + symbol.length;
+            txtarea.setSelectionRange(newCursorPos, newCursorPos);
+            txtarea.focus();
+        }
+
         function checkWindowRouting() {
             const hash = window.location.hash;
             if (hash) {
@@ -450,9 +538,9 @@
             document.getElementById('welcomeScreen').innerHTML = `
                 <div class="welcome-card" style="max-width: 500px;">
                     <img src="image_b1f285.png" alt="BBZ Logo" style="max-height: 50px; margin-bottom: 15px;">
-                    <h1 style="color: var(--secondary); margin: 0 0 10px 0;">✔ Socratic Tutoring aktiv</h1>
+                    <h1 style="color: var(--bbz-green-medium); margin: 0 0 10px 0;">✔ Socratic Tutoring aktiv</h1>
                     <p style="color: var(--neutral-light); font-size: 14px; margin-bottom: 20px;">Das Arbeitsfenster läuft nun optimiert auf der linken Bildschirmseite. Öffne jetzt rechts die gewünschte KI.</p>
-                    <button class="btn btn-tool" style="width:100%; justify-content:center;" onclick="window.location.reload()">Neues Fenster öffnen</button>
+                    <button class="btn btn-tool" style="width:100%; justify-content:center; background: var(--bbz-anthracite); color: white;" onclick="window.location.reload()">Neues Fenster öffnen</button>
                 </div>
                 <div class="global-copyright-footer" style="margin-top: auto; padding-top: 20px;">presented by Methoden-Freitag</div>
             `;
@@ -585,17 +673,17 @@
 
             if (currentTaskOption === 'gen') {
                 btn.innerHTML = `✨ SCHRITT 1: Sokratischen Prompt zur Aufgaben-Generierung kopieren`;
-                btn.style.background = "var(--secondary)";
+                btn.style.background = "var(--bbz-green-medium)";
                 if (imgBtn) imgBtn.style.display = "none";
             } else {
                 const pinboardText = document.getElementById('universalTaskText').value.trim();
                 if (loadedImageSrc) {
                     btn.innerHTML = `➡️ SCHRITT 1a: Start-Prompt kopieren`;
-                    btn.style.background = "var(--primary)";
+                    btn.style.background = "var(--bbz-green-medium)";
                     if (imgBtn) imgBtn.style.display = "flex";
                 } else {
                     btn.innerHTML = `➡️ SCHRITT 1: Sokratischen System-Startprompt kopieren`;
-                    btn.style.background = "var(--primary)";
+                    btn.style.background = "var(--bbz-green-medium)";
                     if (imgBtn) imgBtn.style.display = "none";
                     if (pinboardText.length > 0) {
                         btn.innerHTML = `📋 SCHRITT 1: Start-Prompt + Textaufgabe kopieren`;
