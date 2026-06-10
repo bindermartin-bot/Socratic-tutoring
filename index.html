@@ -843,9 +843,11 @@
         reader.onload = ev => {
             loadedImageSrc = ev.target.result;
             const con = document.getElementById('universalTaskImageContainer');
+            con.removeAttribute('onclick');
+            con.style.cursor = 'default';
             con.innerHTML = `
                 <div class="pb-img-wrap">
-                    <img src="${loadedImageSrc}" alt="Vorschau" onclick="openImagePopup()" title="Vergrössern">
+                    <img src="${loadedImageSrc}" alt="Vorschau" onclick="event.stopPropagation();openImagePopup()" title="Vergrössern" style="cursor:zoom-in;">
                     <button class="pb-img-change" onclick="event.stopPropagation();document.getElementById('taskImageLoader').click()">🔄 Ändern</button>
                 </div>`;
             if (pipWindowInstance && !pipWindowInstance.closed) {
