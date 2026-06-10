@@ -261,11 +261,11 @@
         </div>
 
         <div class="mode-selection-area" id="kiSelectionArea" style="width: 100%; display: none; flex-direction: column; align-items: center;">
-            <p id="kiSelectionTitle" style="font-weight: 700; color: var(--bbz-anthracite); margin-bottom: 20px; font-size: 16px;"></p>
+            <p id="kiSelectionTitle" style="font-weight: 700; color: var(--bbz-anthracite); margin-bottom: 20px; font-size: 16px; text-align: center;"></p>
             <div class="subject-grid" style="max-width: 650px;">
-                <button class="subject-btn" style="border-top: 4px solid #19c37d; padding: 22px;" onclick="selectKI('ChatGPT', 'https://chatgpt.com')">🤖 ChatGPT nutzen</button>
-                <button class="subject-btn" style="border-top: 4px solid #1a73e8; padding: 22px;" onclick="selectKI('Gemini', 'https://gemini.google.com')">✨ Gemini nutzen</button>
-                <button class="subject-btn" style="border-top: 4px solid #0078d4; padding: 22px;" onclick="selectKI('Copilot', 'https://copilot.microsoft.com')">🧭 Copilot nutzen</button>
+                <button class="subject-btn" style="border-top: 4px solid #19c37d; padding: 22px;" onclick="selectKI('ChatGPT')">🤖 ChatGPT nutzen</button>
+                <button class="subject-btn" style="border-top: 4px solid #1a73e8; padding: 22px;" onclick="selectKI('Gemini')">✨ Gemini nutzen</button>
+                <button class="subject-btn" style="border-top: 4px solid #0078d4; padding: 22px;" onclick="selectKI('Copilot')">🧭 Copilot nutzen</button>
             </div>
             <button class="btn btn-tool" style="margin-top: 20px;" onclick="resetToSubjects()">↩ Zurück zur Fächerauswahl</button>
         </div>
@@ -285,19 +285,19 @@
             
             <div style="background: #fffdf5; border: 1px solid var(--bbz-yellow); border-radius: var(--radius-md); padding: 18px; margin-bottom: 22px; box-shadow: var(--shadow-sm);">
                 <ol class="ol-guidance" style="margin: 0; padding-left: 20px; font-size: 13.5px; color: var(--neutral); line-height: 1.6;">
-                    <li>Klicke unten auf den schwarzen Button <br><b>"1. Sokratischen System-Prompt kopieren"</b>.</li>
-                    <li>Klicke rechts auf dein neu geöffnetes <b id="guidanceKiName" style="color:var(--bbz-green-medium);">KI</b>-Fenster.</li>
-                    <li>Klicke dort in das Chatfeld, drücke <b>Ctrl + V</b> (Einfügen) und schicke die Nachricht ab.</li>
+                    <li>Klicke unten auf <br><b>"1. Sokratischen Prompt kopieren & KI rechts öffnen"</b>.</li>
+                    <li>Klicke in das neu geöffnete Chatfeld der KI auf der rechten Seite.</li>
+                    <li>Drücke <b>Ctrl + V</b> (Einfügen) und schicke den Prompt direkt ab.</li>
                     <li>Kehre hierher zurück und klicke auf <b>"2. Weiter zum Arbeitsjournal"</b>.</li>
                 </ol>
             </div>
 
-            <button class="btn" id="btn-guidance-copy" onclick="copyGuidanceSystemPrompt()" style="background: var(--bbz-anthracite); color: white; width: 100%; padding: 14px; justify-content: center; font-size: 14px; border-radius: var(--radius-md); margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                📋 1. Sokratischen System-Prompt kopieren
+            <button class="btn" id="btn-guidance-copy" onclick="copyPromptAndOpenKIWindow()" style="background: var(--bbz-anthracite); color: white; width: 100%; padding: 14px; justify-content: center; font-size: 14px; border-radius: var(--radius-md); margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                📋 1. Sokratischen Prompt kopieren & KI rechts öffnen
             </button>
             
             <button class="btn" id="btn-guidance-next" onclick="proceedToMainWorkspace()" style="background: #cbd5e1; color: #64748b; width: 100%; padding: 14px; justify-content: center; font-size: 14px; border-radius: var(--radius-md); cursor: not-allowed;" disabled>
-                🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 kopieren)
+                🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 ausführen)
             </button>
         </div>
         <div class="global-copyright-footer" style="margin-top: auto;">presented by Methoden-Freitag</div>
@@ -345,18 +345,15 @@
             <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
         </div>
 
-        <div id="workspaceActionBlock" style="width: 100%; margin-bottom: 10px;">
-            </div>
+        <div id="workspaceActionBlock" style="width: 100%; margin-bottom: 10px;"></div>
 
         <div class="main-workspace">
             
             <div class="panel text-panel">
                 <div style="margin-bottom: 6px; font-size: 12px; font-weight: 700; color: var(--primary);">💬 SCHRITT 2: Schreibe hier deinen aktuellen Lösungsschritt oder deine Frage rein:</div>
-                
                 <div class="textarea-container">
                     <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss..."></textarea>
                 </div>
-                
                 <button class="btn btn-action-execute-text" onclick="copyTextSolutionWorkflowOnly()">📋 Schritt 2 kopieren (Rechts einfügen)</button>
             </div>
             
@@ -367,7 +364,6 @@
                     <span style="font-size: 11px; color: var(--neutral-light); margin-left: 10px; font-weight: 500;">📜 Scrollen: Mit 2 Finger wischen</span>
                     <button class="btn btn-clear" style="margin-left: auto;" onclick="clearCanvas()">Löschen</button>
                 </div>
-
                 <div class="scroll-wrapper" id="scrollContainer">
                     <div class="canvas-container" id="canvas-wrapper">
                         <canvas id="paintCanvas"></canvas>
@@ -415,6 +411,12 @@
         let startScrollTop = 0;
         let startTouchY = 0;
 
+        const kiUrls = {
+            'ChatGPT': 'https://chatgpt.com',
+            'Gemini': 'https://gemini.google.com',
+            'Copilot': 'https://copilot.microsoft.com'
+        };
+
         const subjectPrompts = {
             "Deutsch": "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte besonders auf präzise Textanalyse, logische Argumentationsketten sowie stilistische und grammatikalische Genauigkeit.",
             "Französisch": "Du bist eine KI-Lehrperson für Französisch an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir bei Grammatik, Textverständnis und Vokabular. Stelle deine sokratischen Fragen direkt auf Französisch (BM-Niveau).",
@@ -424,37 +426,35 @@
             "Wirtschaft und Recht": "Du bist eine KI-Lehrperson für Wirtschaft und Recht an einer Schweizer Berufsmaturitätsschule (BM). Unterstütze mich bei rechtlichen Fallanalysen (OR/ZGB), betriebswirtschaftlichen Kalkulationen oder Buchungssätzen.",
             "Biologie": "Du bist eine KI-Lehrperson für Biologie an einer Schweizer Berufsmaturitätsschule (BM). Rege mich dazu an, zelluläre Prozesse und ökologische Kreisläufe logisch herzuleiten.",
             "Physik": "Du bist eine KI-Lehrperson für Physik an einer Schweizer Berufsmaturitätsschule (BM). Achte streng auf die korrekte Herleitung aus physikalischen Grundgesetzen sowie SI-Einheiten.",
-            "Chemie": "Du bist eine KI-Lehrperson für Chemie an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, Teilchenmodelle, Reaktionsgleichungen und Stöchiometrie eigenständig zu entschlüsseln.",
+            "Chemie": "Du bist eine KI-Lehrperson für Chemie an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, Teilchenmodelle, Reaktionsgleichungen und Stöchiometrie eigenständig zu entschlüesseln.",
             "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
         };
 
         const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2-3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
 
-        // Diese Funktion regelt die Ansicht basierend auf der URL-Struktur
-        function checkWindowRouting() {
-            const hash = window.location.hash;
-            if (hash && hash.includes('|')) {
-                const parts = decodeURIComponent(hash.substring(1)).split('|');
-                selectedSubject = parts[0];
-                selectedKI = parts[1];
+        // App-Zustand beim Laden prüfen (Befinden wir uns im Launcher oder im verkleinerten Workspace?)
+        function initAppRouting() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const view = urlParams.get('view');
+            
+            if (view === 'workspace') {
+                selectedSubject = urlParams.get('subject') || 'Mathematik';
+                selectedKI = urlParams.get('ki') || 'ChatGPT';
                 
+                // Launcher ausblenden, Sperrbildschirm im linken Fenster anzeigen
                 document.getElementById('welcomeScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
+                document.getElementById('guidanceScreen').style.display = 'flex';
                 
-                // Aktivierungs-Sperrbildschirm im aktuellen Tab einblenden
-                const gScreen = document.getElementById('guidanceScreen');
-                gScreen.style.display = 'flex';
-                document.getElementById('guidanceKiName').innerText = selectedKI;
-                
-                // Sperre Weiter-Button initial
+                // Weiter-Button im Workspace sperren, bis Schritt 1 kopiert wurde
                 const nextBtn = document.getElementById('btn-guidance-next');
                 nextBtn.disabled = true;
                 nextBtn.style.background = '#cbd5e1';
                 nextBtn.style.color = '#64748b';
                 nextBtn.style.cursor = 'not-allowed';
-                nextBtn.innerText = '🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 kopieren)';
+                nextBtn.innerText = '🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 ausführen)';
             } else {
-                // Keine Fachdaten vorhanden -> Zeige Startbildschirm
+                // Standardfall: Zeige den Launcher vollflächig
                 document.getElementById('welcomeScreen').style.display = 'flex';
                 document.getElementById('guidanceScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
@@ -474,30 +474,42 @@
             document.getElementById('kiSelectionArea').style.display = 'none';
         }
 
-        // KORRIGIERTE LOGIK: Verhindert Popup-Blocker
-        function selectKI(kiName, kiUrl) {
+        // Schritt 1: Das Arbeitsjournal wird als perfekt dimensioniertes linkes Fenster geöffnet
+        function selectKI(kiName) {
             selectedKI = kiName;
-            const width23 = Math.floor(screen.availWidth * 0.65);
+            
+            const width65 = Math.floor(screen.availWidth * 0.64);
             const height = screen.availHeight - 60;
             
-            // 1. NUR DAS KI-FENSTER wird als neues Popup rechts geöffnet
-            const leftPosition = width23 + 6;
-            const width13 = Math.floor(screen.availWidth * 0.34) - 10;
-            window.open(kiUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
+            // Generiere die URL mit Parametern für die linke Bildschirmhälfte
+            const workspaceUrl = window.location.origin + window.location.pathname + 
+                `?view=workspace&subject=${encodeURIComponent(selectedSubject)}&ki=${encodeURIComponent(selectedKI)}`;
             
-            // 2. Das AKTUELLE Fenster ändert einfach seinen Hash!
-            // Das triggert das Event 'hashchange' und schaltet dieses Tab um.
-            window.location.hash = encodeURIComponent(selectedSubject + '|' + selectedKI);
+            // Öffne das Arbeitsjournal links (Grössenänderung klappt hier, da echtes Popup!)
+            window.open(workspaceUrl, 'workspace_window', `width=${width65},height=${height},left=0,top=0,resizable=yes,scrollbars=yes`);
+            
+            // Nachricht auf dem ursprünglichen Tab anzeigen
+            document.getElementById('kiSelectionTitle').innerHTML = `✨ <b>Arbeitsjournal erfolgreich geöffnet!</b><br><span style="font-size:13px; font-weight:normal; color:var(--neutral-light);">Du kannst dieses Hauptfenster jetzt minimieren oder schliessen und im neuen, linken Fenster fortfahren.</span>`;
         }
 
-        async function copyGuidanceSystemPrompt() {
+        // Schritt 2: Kopiert den Prompt UND öffnet die KI auf der rechten Seite (Umgeht jeden Popup-Blocker)
+        async function copyPromptAndOpenKIWindow() {
             let fullInitPrompt = subjectPrompts[selectedSubject] || subjectPrompts["Mathematik"];
             fullInitPrompt += globalSocraticRules;
             fullInitPrompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch zu begleiten. Warte danach auf meine Aufgabe oder meine Eingabe.`;
 
             try {
+                // Prompt kopieren
                 await navigator.clipboard.writeText(fullInitPrompt);
                 showToast("📋 System-Prompt kopiert!");
+                
+                // KI-Fenster rechts öffnen (34% Breite)
+                const width35 = Math.floor(screen.availWidth * 0.34) - 10;
+                const leftPosition = Math.floor(screen.availWidth * 0.65) + 6;
+                const height = screen.availHeight - 60;
+                const targetKiUrl = kiUrls[selectedKI] || 'https://chatgpt.com';
+                
+                window.open(targetKiUrl, 'ki_split_window', `width=${width35},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
                 
                 // Schalte Weiter-Button frei
                 const nextBtn = document.getElementById('btn-guidance-next');
@@ -506,7 +518,7 @@
                 nextBtn.style.color = 'white';
                 nextBtn.style.cursor = 'pointer';
                 nextBtn.innerText = '➡️ 2. Weiter zum Arbeitsjournal';
-            } catch (err) { alert('Fehler beim Kopieren.'); }
+            } catch (err) { alert('Fehler beim Kopieren oder beim Öffnen der KI.'); }
         }
 
         function proceedToMainWorkspace() {
@@ -517,13 +529,16 @@
             updateWorkspaceVisuals();
         }
 
-        function goBackToSelection() { window.location.hash = ''; }
+        function goBackToSelection() { 
+            // Zurück zum Launcher leiten
+            window.location.href = window.location.origin + window.location.pathname;
+        }
 
-        function openAISplitScreen(kiUrl) {
+        function openAISplitScreen(targetUrl) {
             const leftPosition = Math.floor(screen.availWidth * 0.65) + 6;
             const width13 = Math.floor(screen.availWidth * 0.34) - 10;
             const height = screen.availHeight - 60;
-            window.open(kiUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
+            window.open(targetUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
         }
 
         function setInputMode(mode) {
@@ -808,9 +823,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // Event-Listener für URL-Änderungen und App-Start
-        window.addEventListener('load', checkWindowRouting); 
-        window.addEventListener('hashchange', checkWindowRouting);
+        window.addEventListener('load', initAppRouting);
     </script>
 </body>
 </html>
