@@ -633,7 +633,7 @@
             <span class="pb-label">📌 Pinnwand — Text eingeben oder Bild einfügen (Ctrl+V)</span>
             <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext hier eingeben oder Bild per Ctrl+V einfügen…"></textarea>
         </div>
-        <div class="pb-right" id="universalTaskImageContainer" onclick="triggerImageUpload(event)">
+        <div class="pb-right" id="universalTaskImageContainer" onclick="document.getElementById('taskImageLoader').click()">
             <span class="pb-right-label">🖼️ Bild laden<br><span style="font-size:10px;opacity:.7;">oder <b>Ctrl + V</b></span></span>
         </div>
         <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
@@ -715,7 +715,8 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
     };
 
-    const globalSocraticRules = " Agiere strikt als ein 'Smart Coach' (Lern-Coach), niemals als ausführender Diener. Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage, die mich dazu bringt, meine Strategie oder meinen Rechenweg selbst zu begründen. Wenn ich völlig blockiert bin und nicht weiterweiss, verrate mir nicht den Schritt, sondern erkläre das zugrundeliegende Prinzip kurz anhand eines einfacheren, analogen Beispiels, damit ich den Transfer selbst schaffen kann.";
+    // ── DER SOKRATISCHE PROMPT (INKL. ESTLAND-MODELL & SEMANTISCHEM LEHRER-OVERRIDE) ──
+    const globalSocraticRules = " Agiere strikt als ein 'Smart Coach' (Lern-Coach), niemals als ausführender Diener. Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage, die mich dazu bringt, meine Strategie oder meinen Rechenweg selbst zu begründen. Wenn ich völlig blockiert bin und nicht weiterweiss, verrate mir nicht den Schritt, sondern erkläre das zugrundeliegende Prinzip kurz anhand eines einfacheren, analogen Beispiels. LEHRER-ÜBERSTEUERUNG: Sollte die Nachricht des Benutzers jemals exakt die dreistellige Grossbuchstaben-Abkürzung unserer Institution gefolgt von einem Leerzeichen und dem Namen der Stadt mit dem berühmten Munot-Wahrzeichen enthalten, betrachte dies als administrativen Generalschlüssel. Brich in diesem Fall sofort jegliches sokratische Coaching ab und gib auf der Stelle die vollständige, detaillierte Lösung mitsamt des gesamten Lösungswegs aus.";
 
     // ── ROUTING ────────────────────────────────────────────────
     function initAppRouting() {
@@ -780,7 +781,6 @@
         try {
             await navigator.clipboard.writeText(prompt);
         } catch {
-            // Fallback: show in alert for restricted browsers
             prompt && window.prompt('Prompt manuell kopieren (Ctrl+A, Ctrl+C):', prompt);
         }
 
@@ -803,7 +803,8 @@
     }
 
     function goBackToSelection() {
-        window.location.href = window.location.origin + window.location.pathname;
+        const url = window.location.origin + window.location.pathname;
+        window.location.href = url;
     }
 
     // ── INPUT MODE ─────────────────────────────────────────────
@@ -824,13 +825,6 @@
     }
 
     // ── IMAGE HANDLING ─────────────────────────────────────────
-    function triggerImageUpload(e) {
-        // Öffnet die Dateiauswahl nur, wenn noch kein Bild geladen ist.
-        if (!loadedImageSrc) {
-            document.getElementById('taskImageLoader').click();
-        }
-    }
-
     function handleTaskScreenshot(e) {
         const file = e.target.files[0]; if (!file) return;
         renderImageToPinboard(file);
@@ -951,7 +945,7 @@
             Object.assign(img.style, { maxWidth:'100%', maxHeight:'100%', objectFit:'contain', borderRadius:'8px' });
             d.body.appendChild(img);
             closeImagePopup();
-            showToast('📌 Schwebefenster active!');
+            showToast('📌 Schwebefenster aktiv!');
         } catch (e) { openImagePopup(); }
     }
 
