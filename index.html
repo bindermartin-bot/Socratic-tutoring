@@ -430,6 +430,7 @@
 
         const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2-3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
 
+        // Diese Funktion regelt die Ansicht basierend auf der URL-Struktur
         function checkWindowRouting() {
             const hash = window.location.hash;
             if (hash && hash.includes('|')) {
@@ -440,12 +441,12 @@
                 document.getElementById('welcomeScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
                 
-                // Aktivierungs-Sperrbildschirm einblenden
+                // Aktivierungs-Sperrbildschirm im aktuellen Tab einblenden
                 const gScreen = document.getElementById('guidanceScreen');
                 gScreen.style.display = 'flex';
                 document.getElementById('guidanceKiName').innerText = selectedKI;
                 
-                // Sperre Weiter-Button
+                // Sperre Weiter-Button initial
                 const nextBtn = document.getElementById('btn-guidance-next');
                 nextBtn.disabled = true;
                 nextBtn.style.background = '#cbd5e1';
@@ -453,6 +454,7 @@
                 nextBtn.style.cursor = 'not-allowed';
                 nextBtn.innerText = '🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 kopieren)';
             } else {
+                // Keine Fachdaten vorhanden -> Zeige Startbildschirm
                 document.getElementById('welcomeScreen').style.display = 'flex';
                 document.getElementById('guidanceScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
@@ -472,29 +474,20 @@
             document.getElementById('kiSelectionArea').style.display = 'none';
         }
 
+        // KORRIGIERTE LOGIK: Verhindert Popup-Blocker
         function selectKI(kiName, kiUrl) {
             selectedKI = kiName;
             const width23 = Math.floor(screen.availWidth * 0.65);
             const height = screen.availHeight - 60;
-            const targetUrl = window.location.href.split('#')[0] + '#' + encodeURIComponent(selectedSubject + '|' + selectedKI);
             
-            // 1. KI-Fenster rechts aufspannen
+            // 1. NUR DAS KI-FENSTER wird als neues Popup rechts geöffnet
             const leftPosition = width23 + 6;
             const width13 = Math.floor(screen.availWidth * 0.34) - 10;
             window.open(kiUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
             
-            // 2. Journal-Fenster links aufspannen
-            window.open(targetUrl, '_blank', `width=${width23},height=${height},left=0,top=0,resizable=yes,scrollbars=yes`);
-            
-            // Hauptscreen blockieren
-            document.getElementById('welcomeScreen').innerHTML = `
-                <div class="welcome-card" style="max-width: 500px;">
-                    <img src="image_b1f285.png" alt="BBZ Logo" style="max-height: 50px; margin-bottom: 15px;">
-                    <h1 style="color: var(--bbz-green-medium); margin: 0 0 10px 0;">✔ Socratic Tutoring aktiv</h1>
-                    <p style="color: var(--neutral-light); font-size: 14px; margin-bottom: 20px;">Das Arbeitsfenster läuft auf der linken Seite, deine KI (${selectedKI}) auf der rechten Seite.</p>
-                    <button class="btn btn-tool" style="width:100%; justify-content:center; background: var(--bbz-anthracite); color: white;" onclick="window.location.reload()">Zurück zur Startseite</button>
-                </div>
-            `;
+            // 2. Das AKTUELLE Fenster ändert einfach seinen Hash!
+            // Das triggert das Event 'hashchange' und schaltet dieses Tab um.
+            window.location.hash = encodeURIComponent(selectedSubject + '|' + selectedKI);
         }
 
         async function copyGuidanceSystemPrompt() {
@@ -589,7 +582,6 @@
             }
         });
 
-        // AKTUALISIERTER ARBEITSBEREICH-WERKZEUGBALKEN
         function updateWorkspaceVisuals() {
             const block = document.getElementById('workspaceActionBlock');
             if (!block) return;
@@ -654,7 +646,6 @@
             } catch (err) { alert("Bildexport blockiert."); }
         }
 
-        // SCHRITT 2 INTERCEPTOR (Spionage-Sicherung läuft verdeckt)
         async function copyTextSolutionWorkflowOnly() {
             let userText = document.getElementById('keyboardInput').value.trim();
             if (userText.length === 0) { alert("Bitte gib zuerst einen Lösungsschritt ein."); return; }
@@ -817,7 +808,9 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        window.addEventListener('load', checkWindowRouting); window.addEventListener('hashchange', checkWindowRouting);
+        // Event-Listener für URL-Änderungen und App-Start
+        window.addEventListener('load', checkWindowRouting); 
+        window.addEventListener('hashchange', checkWindowRouting);
     </script>
 </body>
 </html>
