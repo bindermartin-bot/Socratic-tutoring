@@ -157,9 +157,6 @@
         .btn-tool { background: #f1f5f9; color: var(--neutral); border: 1px solid var(--border-color); }
         .btn-tool:hover { background: #e2e8f0; }
         .btn-tool.active { background: var(--bbz-anthracite); color: white; border-color: var(--bbz-anthracite); }
-        
-        .btn-ki-select { background: #ffffff; color: var(--bbz-anthracite); border: 1px solid var(--border-color); font-size: 12px; padding: 6px 12px; font-weight: bold; border-radius: 6px; box-shadow: var(--shadow-sm); }
-        .btn-ki-select:hover { border-color: var(--bbz-green-light); color: var(--bbz-green-medium); }
 
         /* Secondary control rows */
         .task-option-bar {
@@ -318,9 +315,6 @@
             
             <div class="action-buttons">
                 <img src="image_b1f285.png" alt="BBZ Logo" class="brand-logo-mini">
-                <button class="btn btn-ki-select" onclick="openAISplitScreen('https://chatgpt.com')">ChatGPT</button>
-                <button class="btn btn-ki-select" onclick="openAISplitScreen('https://gemini.google.com')">Gemini</button>
-                <button class="btn btn-ki-select" onclick="openAISplitScreen('https://copilot.microsoft.com')">Copilot</button>
             </div>
         </div>
         
@@ -432,7 +426,6 @@
 
         const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2-3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
 
-        // App-Zustand beim Laden prüfen (Befinden wir uns im Launcher oder im verkleinerten Workspace?)
         function initAppRouting() {
             const urlParams = new URLSearchParams(window.location.search);
             const view = urlParams.get('view');
@@ -441,12 +434,10 @@
                 selectedSubject = urlParams.get('subject') || 'Mathematik';
                 selectedKI = urlParams.get('ki') || 'ChatGPT';
                 
-                // Launcher ausblenden, Sperrbildschirm im linken Fenster anzeigen
                 document.getElementById('welcomeScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
                 document.getElementById('guidanceScreen').style.display = 'flex';
                 
-                // Weiter-Button im Workspace sperren, bis Schritt 1 kopiert wurde
                 const nextBtn = document.getElementById('btn-guidance-next');
                 nextBtn.disabled = true;
                 nextBtn.style.background = '#cbd5e1';
@@ -454,7 +445,6 @@
                 nextBtn.style.cursor = 'not-allowed';
                 nextBtn.innerText = '🔒 2. Weiter zum Arbeitsjournal (Zuerst Schritt 1 ausführen)';
             } else {
-                // Standardfall: Zeige den Launcher vollflächig
                 document.getElementById('welcomeScreen').style.display = 'flex';
                 document.getElementById('guidanceScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'none';
@@ -474,44 +464,36 @@
             document.getElementById('kiSelectionArea').style.display = 'none';
         }
 
-        // Schritt 1: Das Arbeitsjournal wird als perfekt dimensioniertes linkes Fenster geöffnet
         function selectKI(kiName) {
             selectedKI = kiName;
-            
             const width65 = Math.floor(screen.availWidth * 0.64);
             const height = screen.availHeight - 60;
-            
-            // Generiere die URL mit Parametern für die linke Bildschirmhälfte
             const workspaceUrl = window.location.origin + window.location.pathname + 
                 `?view=workspace&subject=${encodeURIComponent(selectedSubject)}&ki=${encodeURIComponent(selectedKI)}`;
             
-            // Öffne das Arbeitsjournal links (Grössenänderung klappt hier, da echtes Popup!)
+            // Formatierung strikt ohne Leerzeichen für Safari-Kompatibilität
             window.open(workspaceUrl, 'workspace_window', `width=${width65},height=${height},left=0,top=0,resizable=yes,scrollbars=yes`);
             
-            // Nachricht auf dem ursprünglichen Tab anzeigen
             document.getElementById('kiSelectionTitle').innerHTML = `✨ <b>Arbeitsjournal erfolgreich geöffnet!</b><br><span style="font-size:13px; font-weight:normal; color:var(--neutral-light);">Du kannst dieses Hauptfenster jetzt minimieren oder schliessen und im neuen, linken Fenster fortfahren.</span>`;
         }
 
-        // Schritt 2: Kopiert den Prompt UND öffnet die KI auf der rechten Seite (Umgeht jeden Popup-Blocker)
         async function copyPromptAndOpenKIWindow() {
             let fullInitPrompt = subjectPrompts[selectedSubject] || subjectPrompts["Mathematik"];
             fullInitPrompt += globalSocraticRules;
             fullInitPrompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch zu begleiten. Warte danach auf meine Aufgabe oder meine Eingabe.`;
 
             try {
-                // Prompt kopieren
                 await navigator.clipboard.writeText(fullInitPrompt);
                 showToast("📋 System-Prompt kopiert!");
                 
-                // KI-Fenster rechts öffnen (34% Breite)
                 const width35 = Math.floor(screen.availWidth * 0.34) - 10;
                 const leftPosition = Math.floor(screen.availWidth * 0.65) + 6;
                 const height = screen.availHeight - 60;
                 const targetKiUrl = kiUrls[selectedKI] || 'https://chatgpt.com';
                 
+                // Features komplett ohne Leerzeichen für Mac / Safari optimiert
                 window.open(targetKiUrl, 'ki_split_window', `width=${width35},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
                 
-                // Schalte Weiter-Button frei
                 const nextBtn = document.getElementById('btn-guidance-next');
                 nextBtn.disabled = false;
                 nextBtn.style.background = 'var(--bbz-green-medium)';
@@ -530,15 +512,7 @@
         }
 
         function goBackToSelection() { 
-            // Zurück zum Launcher leiten
             window.location.href = window.location.origin + window.location.pathname;
-        }
-
-        function openAISplitScreen(targetUrl) {
-            const leftPosition = Math.floor(screen.availWidth * 0.65) + 6;
-            const width13 = Math.floor(screen.availWidth * 0.34) - 10;
-            const height = screen.availHeight - 60;
-            window.open(targetUrl, 'ki_split_window', `width=${width13},height=${height},left=${leftPosition},top=0,resizable=yes,scrollbars=yes`);
         }
 
         function setInputMode(mode) {
