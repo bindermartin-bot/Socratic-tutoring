@@ -536,7 +536,6 @@
 </head>
 <body>
 
-<!-- ── WELCOME ───────────────────────────────────────────────── -->
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
         <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" onerror="this.style.display='none'">
@@ -579,7 +578,6 @@
     <div class="footer" style="margin-top:auto;padding-top:24px;">presented by Methoden-Freitag</div>
 </div>
 
-<!-- ── GUIDANCE SCREEN ───────────────────────────────────────── -->
 <div class="screen" id="guidanceScreen" style="display:none;background:#e4e9f2;">
     <div class="guidance-card">
         <div class="gc-header">
@@ -607,10 +605,8 @@
     <div class="footer" style="margin-top:auto;padding-top:24px;">presented by Methoden-Freitag</div>
 </div>
 
-<!-- ── APP ──────────────────────────────────────────────────── -->
 <div id="appContainer">
 
-    <!-- Top bar -->
     <div class="top-bar">
         <div style="display:flex;gap:8px;align-items:center;">
             <button class="btn btn-ghost" style="padding:7px 13px;font-size:13.5px;" onclick="goBackToSelection()">↩ Fachwechsel</button>
@@ -623,7 +619,6 @@
         <img src="image_b1f285.png" alt="BBZ" class="logo-mini" onerror="this.style.display='none'">
     </div>
 
-    <!-- Task bar -->
     <div class="task-bar">
         <span class="task-bar-label">Aufgabe:</span>
         <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">📁 Eigene Aufgabe</button>
@@ -633,22 +628,19 @@
         </div>
     </div>
 
-    <!-- Pinboard -->
     <div class="pinboard">
         <div class="pb-left">
             <span class="pb-label">📌 Pinnwand — Text eingeben oder Bild einfügen (Ctrl+V)</span>
             <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext hier eingeben oder Bild per Ctrl+V einfügen…"></textarea>
         </div>
-        <div class="pb-right" id="universalTaskImageContainer" onclick="document.getElementById('taskImageLoader').click()">
+        <div class="pb-right" id="universalTaskImageContainer" onclick="triggerImageUpload(event)">
             <span class="pb-right-label">🖼️ Bild laden<br><span style="font-size:10px;opacity:.7;">oder <b>Ctrl + V</b></span></span>
         </div>
         <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
     </div>
 
-    <!-- Dynamic action block -->
     <div id="workspaceActionBlock"></div>
 
-    <!-- Workspace panels -->
     <div class="main-workspace">
 
         <div class="panel text-panel">
@@ -676,7 +668,6 @@
     <div class="footer">presented by Methoden-Freitag</div>
 </div>
 
-<!-- Draggable popup -->
 <div class="popup" id="draggableWindow">
     <div class="popup-header" id="draggableHeader">
         <span>📋 Aufgabenstellung</span>
@@ -724,7 +715,7 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
     };
 
-    const globalSocraticRules = " Agiere strikt als ein 'Smart Coach' (Lern-Coach), niemals als ausführender Diener. Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage, die mich dazu bringt, meine Strategie oder meinen Rechenweg selbst zu begründen. Wenn ich völlig blockiert bin und nicht weiterweiss, verrate mir nicht den Schritt, sondern erkläre das zugrundeliegende Prinzip kurz anhand eines einfacheren, analogen Beispiels, damit ich den Transfer selbst schaffen kann.";
+    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
 
     // ── ROUTING ────────────────────────────────────────────────
     function initAppRouting() {
@@ -833,6 +824,13 @@
     }
 
     // ── IMAGE HANDLING ─────────────────────────────────────────
+    function triggerImageUpload(e) {
+        // Öffnet die Dateiauswahl nur, wenn noch kein Bild geladen ist.
+        if (!loadedImageSrc) {
+            document.getElementById('taskImageLoader').click();
+        }
+    }
+
     function handleTaskScreenshot(e) {
         const file = e.target.files[0]; if (!file) return;
         renderImageToPinboard(file);
@@ -843,11 +841,9 @@
         reader.onload = ev => {
             loadedImageSrc = ev.target.result;
             const con = document.getElementById('universalTaskImageContainer');
-            con.removeAttribute('onclick');
-            con.style.cursor = 'default';
             con.innerHTML = `
                 <div class="pb-img-wrap">
-                    <img src="${loadedImageSrc}" alt="Vorschau" onclick="event.stopPropagation();openImagePopup()" title="Vergrössern" style="cursor:zoom-in;">
+                    <img src="${loadedImageSrc}" alt="Vorschau" onclick="openImagePopup()" title="Vergrössern">
                     <button class="pb-img-change" onclick="event.stopPropagation();document.getElementById('taskImageLoader').click()">🔄 Ändern</button>
                 </div>`;
             if (pipWindowInstance && !pipWindowInstance.closed) {
@@ -955,7 +951,7 @@
             Object.assign(img.style, { maxWidth:'100%', maxHeight:'100%', objectFit:'contain', borderRadius:'8px' });
             d.body.appendChild(img);
             closeImagePopup();
-            showToast('📌 Schwebefenster aktiv!');
+            showToast('📌 Schwebefenster active!');
         } catch (e) { openImagePopup(); }
     }
 
