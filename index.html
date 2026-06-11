@@ -313,7 +313,7 @@
         }
         .topic-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
-        /* Optimized Pinboard Layout (More visual space for preview) */
+        /* Optimized Pinboard Layout */
         .pinboard {
             background: #fffdf4; border: 1.5px solid #e0c93a; border-radius: var(--r-md); padding: 6px 10px;
             display: flex; gap: 10px; height: 92px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(235,209,71,.1);
@@ -386,7 +386,7 @@
         }
         .panel-label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
 
-        /* Workspace structural conditional routing (FIXED SELECTORS) */
+        /* Conditional routing classes */
         .text-mode-active .text-panel { display: flex !important; }
         .text-mode-active .canvas-panel, .text-mode-active .image-panel { display: none !important; }
 
@@ -557,7 +557,7 @@
         <div class="panel text-panel">
             <div class="panel-label">Schreiben</div>
             <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss…"></textarea>
-            <button class="btn btn-action-text" onclick="copyTextSolutionWorkflowOnly()">📋 Lösungsschritt kopieren → drüben einfügen</button>
+            <button class="btn btn-action-text" id="btn-copy-text-workflow" onclick="copyTextSolutionWorkflowOnly()">📋 Lösungsschritt kopieren → drüben einfügen</button>
         </div>
 
         <div class="panel canvas-panel">
@@ -572,7 +572,9 @@
                     <canvas id="paintCanvas"></canvas>
                 </div>
             </div>
-            <button class="btn btn-action-canvas" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ Zeichnung kopieren → drüben einfügen</button>
+            <div id="canvasActionContainer" style="width:100%;">
+                <button class="btn btn-action-canvas" id="btn-copy-canvas-workflow" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ Zeichnung kopieren → drüben einfügen</button>
+            </div>
         </div>
 
         <div class="panel image-panel">
@@ -581,7 +583,9 @@
                 <div id="solutionImageContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
             </div>
             <input type="file" id="solutionImageLoader" accept="image/*" onchange="handleSolutionScreenshot(event)" style="display:none;">
-            <button class="btn btn-action-canvas" style="background:var(--bbz-green); box-shadow:0 2px 6px rgba(70,149,66,.15);" onclick="copySolutionImageWorkflowOnly()">🖼️ Foto kopieren → drüben einfügen</button>
+            <div id="imageActionContainer" style="width:100%;">
+                <button class="btn btn-action-canvas" id="btn-copy-image-workflow" style="background:var(--bbz-green); box-shadow:0 2px 6px rgba(70,149,66,.15);" onclick="copySolutionImageWorkflowOnly()">🖼️ Foto kopieren → drüben einfügen</button>
+            </div>
         </div>
 
     </div>
@@ -631,9 +635,9 @@
     let currentActiveMode = 'text', currentTaskOption = 'own';
     let isScrollingTwoFingers = false, startScrollTop = 0, startTouchY = 0;
     
-    // Lehrpersonen-Modus Status & Passwort ("BBZSchaffhausen" rückwärts Base64)
+    // Lehrpersonen-Modus Status & Passwort
     let isTeacherMode = false;
-    const TEACHER_SECRET_KEY = "nesuYmFmYWhjTlNaS2tR";
+    const TEACHER_SECRET_KEY = "nesuYmFmYWhjTlNaS2tR"; // "BBZSchaffhausen" obfuscated
 
     const kiUrls = {
         ChatGPT: 'https://chatgpt.com',
@@ -656,7 +660,56 @@
 
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
 
-    // ── GEHEIMER LEHRENDEN-MODUS OVERRIDE ───────────────────────
+    // ── LIVE UI TRANSFORMER FOR TEACHER OVERRIDE ─────────────────
+    function applyTeacherModeUI() {
+        if (!isTeacherMode) return;
+
+        // 1. Fach-Label verlässlich rot färben
+        const badge = document.getElementById('activeSubjectBadge');
+        if (badge) {
+            badge.textContent = `🔓 ${selectedSubject} (Musterlösung)`;
+            badge.style.background = '#d92d20';
+            badge.style.backgroundColor = '#d92d20';
+        }
+
+        // 2. Pinnwand-Aktionsbuttons updaten
+        updateWorkspaceVisuals();
+
+        // 3. Tastatur-Kopierbutton umstellen
+        const btnText = document.getElementById('btn-copy-text-workflow');
+        if (btnText) {
+            btnText.innerHTML = `🔓 Direktes Ergebnis / Musterlösung anfordern`;
+            btnText.style.background = '#d92d20';
+        }
+
+        // 4. Stift-Zeichnung Aktionsbereich auf Split-Tasten umstellen
+        const canvasContainer = document.getElementById('canvasActionContainer');
+        if (canvasContainer) {
+            canvasContainer.innerHTML = `
+                <div style="display:flex; gap:6px; width:100%; margin-top:8px;">
+                    <button class="btn btn-action-canvas" style="background:var(--bbz-teal); flex:1; margin-top:0;" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ 1. Zeichnung kopieren</button>
+                    <button class="btn" style="background:#d92d20; color:#fff; flex:1; font-size:13.5px; font-weight:600; border-radius:var(--r-md);" onclick="copyOverrideInstructionOnly()">⚠️ 2. Override-Text kopieren</button>
+                </div>`;
+        }
+
+        // 5. Foto-Lösungsweg Aktionsbereich auf Split-Tasten umstellen
+        const imageContainer = document.getElementById('imageActionContainer');
+        if (imageContainer) {
+            imageContainer.innerHTML = `
+                <div style="display:flex; gap:6px; width:100%; margin-top:8px;">
+                    <button class="btn btn-action-canvas" style="background:var(--bbz-green); flex:1; margin-top:0; box-shadow:none;" onclick="copySolutionImageWorkflowOnly()">🖼️ 1. Foto kopieren</button>
+                    <button class="btn" style="background:#d92d20; color:#fff; flex:1; font-size:13.5px; font-weight:600; border-radius:var(--r-md);" onclick="copyOverrideInstructionOnly()">⚠️ 2. Override-Text kopieren</button>
+                </div>`;
+        }
+
+        // 6. Vorbereitungsbildschirm-Button updaten
+        const btnGuidanceCopy = document.getElementById('btn-guidance-copy');
+        if (btnGuidanceCopy) {
+            btnGuidanceCopy.innerHTML = `🔓 1. Master-Override Prompt kopieren & KI öffnen`;
+            btnGuidanceCopy.style.background = '#d92d20';
+        }
+    }
+
     function unlockTeacherMode() {
         const pw = prompt("Bitte Lehrpersonen-Passwort eingeben:");
         if (!pw) return;
@@ -666,21 +719,13 @@
         if (obfuscatedInput === TEACHER_SECRET_KEY) {
             isTeacherMode = true;
             showToast("🔓 Lehrpersonen-Modus aktiv! Sokratische Sperre aufgehoben.");
-            
-            // Badge live updaten
-            const badge = document.getElementById('activeSubjectBadge');
-            if (badge) {
-                badge.textContent = `🔓 ${selectedSubject} (Musterlösung)`;
-                badge.style.background = 'var(--danger)';
-            }
-            // Interface-Buttons neu rendern, um die Änderungen widerzuspiegeln
-            updateWorkspaceVisuals();
+            applyTeacherModeUI();
         } else {
             showToast("❌ Falsches Passwort.");
         }
     }
 
-    // ── ROUTING ────────────────────────────────────────────────
+    // ── ROUTING & INIT ─────────────────────────────────────────
     function initAppRouting() {
         const params = new URLSearchParams(window.location.search);
         const view   = params.get('view');
@@ -695,6 +740,7 @@
             document.getElementById('guidanceScreen').style.display = 'flex';
             document.getElementById('appContainer').style.display   = 'none';
             lockGuidanceNextBtn();
+            if (isTeacherMode) applyTeacherModeUI();
         } else {
             document.getElementById('welcomeScreen').style.display  = 'flex';
             document.getElementById('guidanceScreen').style.display = 'none';
@@ -770,24 +816,25 @@
         document.getElementById('guidanceScreen').style.display = 'none';
         document.getElementById('appContainer').style.display   = 'flex';
         
-        const badge = document.getElementById('activeSubjectBadge');
-        if (isTeacherMode) {
-            badge.textContent = `🔓 ${selectedSubject} (Musterlösung)`;
-            badge.style.background = 'var(--danger)';
-        } else {
-            badge.textContent = selectedSubject;
-            badge.style.background = 'var(--bbz-anthracite)';
-        }
-        
         setInputMode('text');
-        updateWorkspaceVisuals();
+        
+        if (isTeacherMode) {
+            applyTeacherModeUI();
+        } else {
+            const badge = document.getElementById('activeSubjectBadge');
+            if (badge) {
+                badge.textContent = selectedSubject;
+                badge.style.background = 'var(--bbz-anthracite)';
+            }
+            updateWorkspaceVisuals();
+        }
     }
 
     function goBackToSelection() {
         window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // ── INTERFACE ROUTING (MODES) ──────────────────────────────
+    // ── INTERFACE MODES ────────────────────────────────────────
     function setInputMode(mode) {
         currentActiveMode = mode;
         document.body.className = mode === 'text' ? 'text-mode-active' : (mode === 'canvas' ? 'canvas-mode-active' : 'image-mode-active');
@@ -795,6 +842,8 @@
         document.getElementById('btn-mode-canvas').classList.toggle('active', mode === 'canvas');
         document.getElementById('btn-mode-image').classList.toggle('active', mode === 'image');
         if (mode === 'canvas') setTimeout(initCanvas, 50);
+        
+        if (isTeacherMode) applyTeacherModeUI();
     }
 
     function setTaskOption(opt) {
@@ -805,7 +854,7 @@
         updateWorkspaceVisuals();
     }
 
-    // ── LIVE CAMERA CONTROLS ───────────────────────────────────
+    // ── LIVE CAMERA SYSTEM ─────────────────────────────────────
     function openCameraForTask() { cameraTarget = 'task'; openCameraModal(); }
     function openCameraForSolution() { cameraTarget = 'solution'; openCameraModal(); }
 
@@ -874,7 +923,7 @@
         showToast('📸 Foto erfolgreich übernommen!');
     }
 
-    // ── IMAGE HANDLING (TASK PINBOARD) ─────────────────────────
+    // ── IMAGE HANDLING (PINBOARD) ─────────────────────────────
     function handleTaskScreenshot(e) {
         const file = e.target.files[0]; if (!file) return;
         const reader = new FileReader();
@@ -908,7 +957,7 @@
         updateWorkspaceVisuals();
     }
 
-    // ── IMAGE HANDLING (SOLUTION PANEL) ───────────────────────
+    // ── IMAGE HANDLING (LÖSUNGSWEG FOTO) ───────────────────────
     function handleSolutionScreenshot(e) {
         const file = e.target.files[0]; if (!file) return;
         const reader = new FileReader();
@@ -929,17 +978,19 @@
     function resetSolutionImageContainer() {
         loadedSolutionImageSrc = '';
         const con = document.getElementById('solutionImageContainer');
-        con.innerHTML = `
-            <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-direction:column;">
-                <div style="display:flex; gap:8px;">
-                    <button class="btn" style="background:#0ea5e9; color:#fff; font-weight:700;" onclick="document.getElementById('solutionImageLoader').click()">📁 Datei</button>
-                    <button class="btn" style="background:#6366f1; color:#fff; font-weight:700;" onclick="openCameraForSolution()">📷 Kamera</button>
-                </div>
-                <span style="font-size:12px; color:var(--muted); font-weight:500;">oder Ctrl+V drücken</span>
-            </div>`;
+        if (con) {
+            con.innerHTML = `
+                <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-direction:column;">
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn" style="background:#0ea5e9; color:#fff; font-weight:700;" onclick="document.getElementById('solutionImageLoader').click()">📁 Datei</button>
+                        <button class="btn" style="background:#6366f1; color:#fff; font-weight:700;" onclick="openCameraForSolution()">📷 Kamera</button>
+                    </div>
+                    <span style="font-size:12px; color:var(--muted); font-weight:500;">oder Ctrl+V drücken</span>
+                </div>`;
+        }
     }
 
-    // Smart Clipboard Paste Handler
+    // Clipboard Paste Listener
     window.addEventListener('paste', e => {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (const item of items) {
@@ -963,33 +1014,39 @@
         }
     });
 
-    // ── WORKSPACE VISUALS ──────────────────────────────────────
+    // ── PROMPT & VISUAL UPDATE LOGIC ───────────────────────────
     function updateWorkspaceVisuals() {
         const block = document.getElementById('workspaceActionBlock');
         if (!block) return;
 
         if (currentTaskOption === 'gen') {
-            block.innerHTML = `<button class="action-btn-full green" onclick="copyTaskGenerationPromptOnly()">✨ Aufgaben-Prompt kopieren → bei ${selectedKI} einfügen</button>`;
+            if (isTeacherMode) {
+                block.innerHTML = `<button class="action-btn-full" style="background:#d92d20; color:#fff;" onclick="copyTaskGenerationPromptOnly()">🔓 Aufgaben-Prompt + Direktlösung kopieren → bei ${selectedKI} einfügen</button>`;
+            } else {
+                block.innerHTML = `<button class="action-btn-full green" onclick="copyTaskGenerationPromptOnly()">✨ Aufgaben-Prompt kopieren → bei ${selectedKI} einfügen</button>`;
+            }
         } else if (loadedImageSrc) {
             if (isTeacherMode) {
-                // Ermöglicht das Senden des Bildes kombiniert mit dem direkten Lösungstext für Lehrpersonen
                 block.innerHTML = `
                     <div style="display:flex; gap:6px; width:100%;">
                         <button class="action-btn-full green" style="flex:1;" onclick="copyImageToClipboardOnly()">🖼️ 1. Bildaufgabe kopieren</button>
-                        <button class="action-btn-full neutral" style="flex:1;" onclick="copyOverrideInstructionOnly()">⚠️ 2. Musterlösungs-Text kopieren</button>
+                        <button class="action-btn-full" style="background:#d92d20; color:#fff; flex:1;" onclick="copyOverrideInstructionOnly()">⚠️ 2. Musterlösungs-Text kopieren</button>
                     </div>`;
             } else {
                 block.innerHTML = `<button class="action-btn-full green" onclick="copyImageToClipboardOnly()">🖼️ Bildaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
             }
         } else if (document.getElementById('universalTaskText').value.trim()) {
-            const btnText = isTeacherMode ? `🔓 Direkte Musterlösung anfordern → bei ${selectedKI} einfügen` : `📋 Textaufgabe kopieren → bei ${selectedKI} einfügen`;
-            block.innerHTML = `<button class="action-btn-full green" onclick="copyPinboardTextOnly()">${btnText}</button>`;
+            if (isTeacherMode) {
+                block.innerHTML = `<button class="action-btn-full" style="background:#d92d20; color:#fff;" onclick="copyPinboardTextOnly()">🔓 Direkte Musterlösung anfordern → bei ${selectedKI} einfügen</button>`;
+            } else {
+                block.innerHTML = `<button class="action-btn-full green" onclick="copyPinboardTextOnly()">📋 Textaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            }
         } else {
             block.innerHTML = `<div class="action-hint">💡 Erfasse oben eine Aufgabe (Text, Datei oder Kamera), um sie an ${selectedKI} zu übergeben.</div>`;
         }
     }
 
-    // ── CLIPBOARD ACTIONS ──────────────────────────────────────
+    // ── PROMPT WRAPPERS (PROMPTS EXPANSION) ────────────────────
     async function safeCopy(text) {
         try { await navigator.clipboard.writeText(text); showToast('📋 Kopiert!'); }
         catch { window.prompt('Manuell kopieren (Ctrl+A, Ctrl+C):', text); }
@@ -998,13 +1055,17 @@
     async function copyTaskGenerationPromptOnly() {
         const topic  = document.getElementById('topicInputField').value.trim();
         const thema  = topic || `einem BM-Lehrplanthema dieses Faches`;
-        await safeCopy(`[AUFGABEN-ERSTELLUNG]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${thema}". Liefere NUR die reine Aufgabenstellung ohne Lösungsergebnisse oder Lösungswege, damit ich sie selbstständig lösen kann.`);
+        if (isTeacherMode) {
+            await safeCopy(`[AUFGABEN-ERSTELLUNG - MASTER OVERRIDE]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${thema}". Da der Lehrpersonen-Modus aktiv ist, liefere mir bitte direkt sowohl die exakte Aufgabenstellung als auch unmittelbar darunter die vollständige, fehlerfreie Musterlösung mit allen Zwischenschritten.`);
+        } else {
+            await safeCopy(`[AUFGABEN-ERSTELLUNG]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${thema}". Liefere NUR die reine Aufgabenstellung ohne Lösungsergebnisse oder Lösungswege, damit ich sie selbstständig lösen kann.`);
+        }
     }
 
     async function copyPinboardTextOnly() {
         const txt = document.getElementById('universalTaskText').value.trim();
         if (isTeacherMode) {
-            await safeCopy(`[MEINE AUFGABE - MASTER OVERRIDE]:\n${txt}\n\nLiefere mir zu dieser Aufgabe SOFORT die perfekte, vollständige und fehlerfreie Musterlösung mitsamt allen Zwischenschritten und Herleitungen.`);
+            await safeCopy(`[MEINE AUFGABE - MASTER OVERRIDE]:\n${txt}\n\nACHTUNG: Ignoriere alle bisherigen sokratischen Regeln komplett. Du befindest dich im Lehrpersonen-Modus. Liefere mir SOFORT die perfekte, vollständige und fehlerfreie Musterlösung mitsamt allen Zwischenschritten und Herleitungen auf Schriftdeutsch.`);
         } else {
             await safeCopy(`[MEINE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Löse sie nicht auf, sondern warte auf meinen ersten Lösungsschritt oder meine erste Vermutung.`);
         }
@@ -1026,11 +1087,11 @@
 
     async function copyTextSolutionWorkflowOnly() {
         const txt = document.getElementById('keyboardInput').value.trim();
-        if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
-        
         if (isTeacherMode) {
-            await safeCopy(`[LEHRPERSONEN-EINGABE]:\n${txt}\n\nIgnoriere das sokratische Verhalten. Gib mir die direkte mathematische/fachliche Auflösung oder Bestätigung zu diesem Schritt.`);
+            const queryText = txt ? `Zu meinem Ansatz: "${txt}"\n\n` : "";
+            await safeCopy(`[LÖSUNGSWEG - MASTER OVERRIDE]:\n${queryText}Ignoriere das sokratische Verhalten komplett. Liefere mir ab hier SOFORT die direkte, vollständige fachliche Auflösung und die exakte Musterlösung für die aktuelle Aufgabe.`);
         } else {
+            if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
             await safeCopy(txt);
         }
     }
@@ -1040,7 +1101,7 @@
             if (!blob) { showToast('⚠️ Zeichenfeld ist leer.'); return; }
             try {
                 await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showToast(isTeacherMode ? '🖼️ Zeichnung kopiert! (Nutze Override-Text falls Direktlösung gewünscht)' : '🖼️ Zeichnung kopiert!');
+                showToast(isTeacherMode ? '🖼️ Skizze kopiert! (Nutze Override-Text-Button falls Direktlösung gewünscht)' : '🖼️ Zeichnung kopiert!');
             } catch { showToast('⚠️ Kopieren blockiert.'); }
         }, 'image/png');
     }
@@ -1051,11 +1112,11 @@
             const resp = await fetch(loadedSolutionImageSrc);
             const blob = await resp.blob();
             await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-            showToast('🖼️ Foto des Lösungswegs kopiert! Drüben einfügen.');
+            showToast('🖼️ Foto des Lösungswegs kopiert!');
         } catch { showToast('⚠️ Kopieren fehlgeschlagen.'); }
     }
 
-    // ── IMAGE POPUP ────────────────────────────────────────────
+    // ── PIP FLOATING WINDOW ────────────────────────────────────
     function openImagePopup() {
         if (!loadedImageSrc) return;
         document.getElementById('popupTargetImage').src = loadedImageSrc;
@@ -1082,7 +1143,7 @@
         } catch (e) { openImagePopup(); }
     }
 
-    // Draggable popup
+    // Draggable Window Logic
     const dragWin = document.getElementById('draggableWindow');
     const dragHdr = document.getElementById('draggableHeader');
     let isDragging = false, dX, dY;
@@ -1093,7 +1154,7 @@
     document.addEventListener('mousemove', e => { if (!isDragging) return; dragWin.style.left = (e.clientX-dX)+'px'; dragWin.style.top = (e.clientY-dY)+'px'; });
     document.addEventListener('mouseup', () => isDragging = false);
 
-    // ── CANVAS DRAWING SYSTEM ──────────────────────────────────
+    // ── STIFT-EINGABE SYSTEM (CANVAS) ──────────────────────────
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
         canvas.width  = wrapper.offsetWidth || 450;
