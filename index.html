@@ -22,14 +22,14 @@
             --muted-light:     #9ca3af;
             --border:          #e2e6ed;
             --border-strong:   #c9d1dc;
-            --r-sm:            6px;
-            --r-md:            10px;
-            --r-lg:            14px;
+            --r-sm:            5px;
+            --r-md:            8px;
+            --r-lg:            12px;
             --r-xl:            20px;
-            --sh-sm:           0 1px 3px rgba(16,24,40,.08), 0 1px 2px rgba(16,24,40,.04);
-            --sh-md:           0 4px 16px rgba(50,50,62,.10), 0 1px 4px rgba(50,50,62,.06);
-            --sh-lg:           0 12px 40px rgba(50,50,62,.14), 0 4px 12px rgba(50,50,62,.08);
-            --tr:              all .18s ease;
+            --sh-sm:           0 1px 2px rgba(16,24,40,.05);
+            --sh-md:           0 4px 12px rgba(50,50,62,.08);
+            --sh-lg:           0 12px 32px rgba(50,50,62,.12);
+            --tr:              all .15s ease;
             --font:            'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
@@ -40,8 +40,8 @@
             background: var(--bg);
             height: 100vh; overflow: hidden;
             color: var(--bbz-anthracite);
-            font-size: 15px;
-            line-height: 1.5;
+            font-size: 14.5px;
+            line-height: 1.4;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -51,7 +51,7 @@
             display: flex; flex-direction: column;
             align-items: center; justify-content: flex-start;
             z-index: 100; overflow-y: auto;
-            padding: 48px 20px 32px;
+            padding: 40px 20px 32px;
             background: var(--bg);
         }
 
@@ -60,100 +60,101 @@
             border-radius: var(--r-xl);
             border: 1px solid var(--border);
             border-top: 5px solid var(--bbz-green);
-            padding: 44px 36px 36px;
+            padding: 36px 32px;
             max-width: 840px; width: 100%;
             box-shadow: var(--sh-lg);
             text-align: center;
-            margin-bottom: 36px;
+            margin-bottom: 28px;
         }
 
         .hero-card .logo {
-            max-height: 78px; width: auto;
-            margin-bottom: 22px;
+            max-height: 70px; width: auto;
+            margin-bottom: 18px;
+            cursor: pointer;
+            user-select: none;
         }
 
         .hero-card h1 {
-            font-size: 30px; font-weight: 800;
+            font-size: 28px; font-weight: 800;
             color: var(--bbz-anthracite);
             letter-spacing: -0.8px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .hero-card p {
-            font-size: 15.5px; color: var(--muted);
+            font-size: 15px; color: var(--muted);
             max-width: 680px; margin: 0 auto;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         .section-label {
-            font-size: 13px; font-weight: 700;
+            font-size: 12px; font-weight: 700;
             color: var(--muted); letter-spacing: .8px;
             text-transform: uppercase;
-            margin-bottom: 16px; margin-top: 4px;
+            margin-bottom: 14px;
         }
 
         /* Subject grid */
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
             max-width: 860px; width: 100%;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .subject-btn {
             background: var(--panel);
             border: 1.5px solid var(--border);
             border-radius: var(--r-md);
-            padding: 16px 14px;
+            padding: 14px 12px;
             font-family: var(--font);
-            font-size: 14.5px; font-weight: 600;
+            font-size: 14px; font-weight: 600;
             color: var(--bbz-anthracite);
             cursor: pointer;
             transition: var(--tr);
             display: flex; align-items: center;
-            justify-content: flex-start; gap: 10px;
+            justify-content: flex-start; gap: 8px;
             box-shadow: var(--sh-sm);
-            text-align: left;
         }
-        .subject-btn .icon { font-size: 20px; flex-shrink: 0; }
+        .subject-btn .icon { font-size: 18px; flex-shrink: 0; }
         .subject-btn:hover {
             border-color: var(--bbz-green);
             background: #f3fbf2;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(70,149,66,.14);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(70,149,66,.1);
             color: var(--bbz-green-dark);
         }
 
         /* KI selection */
-        #kiSelectionArea { display: none; flex-direction: column; align-items: center; gap: 16px; }
+        #kiSelectionArea { display: none; flex-direction: column; align-items: center; gap: 14px; }
 
         .ki-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px; max-width: 600px; width: 100%;
+            gap: 12px; max-width: 600px; width: 100%;
         }
 
         .ki-btn {
             background: var(--panel);
             border: 1.5px solid var(--border);
             border-radius: var(--r-lg);
-            padding: 24px 16px 20px;
+            padding: 20px 14px;
             font-family: var(--font);
-            font-size: 15px; font-weight: 700;
+            font-size: 14.5px; font-weight: 700;
             color: var(--bbz-anthracite);
             cursor: pointer;
             transition: var(--tr);
             display: flex; flex-direction: column;
-            align-items: center; gap: 10px;
+            align-items: center; gap: 8px;
             box-shadow: var(--sh-sm);
         }
-        .ki-btn .ki-icon { font-size: 26px; }
+        .ki-btn .ki-icon { font-size: 24px; }
         .ki-btn.chatgpt { border-top: 4px solid #19c37d; }
         .ki-btn.gemini  { border-top: 4px solid #1a73e8; }
         .ki-btn.copilot { border-top: 4px solid #0078d4; }
         .ki-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--sh-md);
         }
         .ki-btn.chatgpt:hover { background: #f0fdf8; border-color: #19c37d; }
@@ -161,54 +162,53 @@
         .ki-btn.copilot:hover { background: #eff6ff; border-color: #0078d4; }
 
         /* ── GUIDANCE SCREEN ────────────────────────────── */
-        #guidanceScreen { background: #e8ecf3; }
+        #guidanceScreen { background: #e4e9f2; }
 
         .guidance-card {
             background: var(--panel);
             border-radius: var(--r-xl);
             border: 1px solid var(--border);
             border-top: 5px solid var(--bbz-anthracite);
-            padding: 36px;
+            padding: 32px;
             max-width: 580px; width: 100%;
             box-shadow: var(--sh-lg);
         }
 
         .guidance-card .gc-header {
-            text-align: center; margin-bottom: 24px;
+            text-align: center; margin-bottom: 20px;
         }
-        .guidance-card .gc-header img { max-height: 42px; margin-bottom: 14px; }
+        .guidance-card .gc-header img { max-height: 38px; margin-bottom: 12px; cursor: pointer; }
         .guidance-card .gc-header h2 {
-            font-size: 20px; font-weight: 800;
-            color: var(--bbz-anthracite); margin-bottom: 6px;
+            font-size: 19px; font-weight: 800;
+            color: var(--bbz-anthracite); margin-bottom: 4px;
         }
         .guidance-card .gc-header p {
-            font-size: 14px; color: var(--muted); line-height: 1.6;
+            font-size: 13.5px; color: var(--muted); line-height: 1.5;
         }
 
         .steps-box {
             background: #fffdf4;
             border: 1.5px solid var(--bbz-yellow);
             border-radius: var(--r-md);
-            padding: 20px 20px 20px 16px;
-            margin-bottom: 22px;
+            padding: 16px;
+            margin-bottom: 18px;
         }
 
         .steps-box ol {
-            padding-left: 22px;
-            display: flex; flex-direction: column; gap: 12px;
+            padding-left: 20px;
+            display: flex; flex-direction: column; gap: 10px;
         }
 
         .steps-box li {
-            font-size: 14.5px; color: var(--bbz-anthracite);
-            line-height: 1.6;
+            font-size: 14px; color: var(--bbz-anthracite);
+            line-height: 1.5;
         }
-        .steps-box li b { color: var(--bbz-anthracite); }
 
         /* ── GLOBAL BUTTONS ─────────────────────────────── */
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 10px 18px;
-            font-family: var(--font); font-size: 14px; font-weight: 600;
+            gap: 6px; padding: 8px 14px;
+            font-family: var(--font); font-size: 13.5px; font-weight: 600;
             border: none; border-radius: var(--r-md);
             cursor: pointer; transition: var(--tr);
             white-space: nowrap; text-decoration: none;
@@ -217,25 +217,24 @@
 
         .btn-primary {
             background: var(--bbz-green); color: #fff;
-            box-shadow: 0 2px 8px rgba(70,149,66,.28);
-            width: 100%; padding: 15px; font-size: 15px;
-            border-radius: var(--r-md); margin-bottom: 10px;
+            box-shadow: 0 2px 6px rgba(70,149,66,.2);
+            width: 100%; padding: 13px; font-size: 14.5px;
+            margin-bottom: 8px;
         }
-        .btn-primary:hover { background: var(--bbz-green-dark); box-shadow: 0 4px 14px rgba(70,149,66,.35); }
+        .btn-primary:hover { background: var(--bbz-green-dark); }
 
         .btn-secondary {
             background: var(--bbz-anthracite); color: #fff;
-            box-shadow: 0 2px 6px rgba(50,50,62,.2);
-            width: 100%; padding: 15px; font-size: 15px;
-            border-radius: var(--r-md); margin-bottom: 10px;
+            box-shadow: 0 2px 6px rgba(50,50,62,.15);
+            width: 100%; padding: 13px; font-size: 14.5px;
+            margin-bottom: 8px;
         }
         .btn-secondary:hover { background: #1e1e28; }
 
         .btn-locked {
             background: #e5e9f0; color: #9ca3af;
             cursor: not-allowed; pointer-events: none;
-            width: 100%; padding: 15px; font-size: 15px;
-            border-radius: var(--r-md);
+            width: 100%; padding: 13px; font-size: 14.5px;
         }
 
         .btn-ghost {
@@ -247,298 +246,214 @@
         .btn-tool {
             background: #f1f5f9; color: var(--bbz-anthracite);
             border: 1.5px solid var(--border);
-            padding: 8px 14px; font-size: 13.5px;
+            padding: 6px 12px; font-size: 13px;
         }
-        .btn-tool.active {
-            background: var(--bbz-anthracite); color: #fff;
-            border-color: var(--bbz-anthracite);
+        
+        #tool-pencil.active {
+            background: #32323e !important; color: #fff !important; border-color: #32323e !important;
+        }
+        #tool-eraser.active {
+            background: #fee2e2 !important; color: #d92d20 !important; border-color: #fecaca !important;
         }
         .btn-tool:hover:not(.active) { background: #e5e9f2; }
 
         .btn-danger {
-            background: #fff1f1; color: var(--danger);
-            border: 1.5px solid #fecaca;
-            padding: 8px 14px; font-size: 13.5px;
+            background: #fff1f1; color: var(--danger); border: 1.5px solid #fecaca;
+            padding: 6px 12px; font-size: 13px;
         }
         .btn-danger:hover { background: #fee2e2; }
 
         .btn-action-text {
             background: var(--bbz-anthracite); color: #fff;
-            width: 100%; padding: 13px; font-size: 14.5px;
-            margin-top: 10px; border-radius: var(--r-md);
-            box-shadow: 0 2px 8px rgba(50,50,62,.18);
+            width: 100%; padding: 11px; font-size: 14px;
+            margin-top: 8px; border-radius: var(--r-md);
         }
         .btn-action-text:hover { background: #1e1e28; }
 
         .btn-action-canvas {
             background: var(--bbz-teal); color: #fff;
-            width: 100%; padding: 13px; font-size: 14.5px;
-            margin-top: 10px; border-radius: var(--r-md);
-            box-shadow: 0 2px 8px rgba(27,68,60,.2);
+            width: 100%; padding: 11px; font-size: 14px;
+            margin-top: 8px; border-radius: var(--r-md);
         }
         .btn-action-canvas:hover { background: #12302b; }
 
         /* ── APP CONTAINER ──────────────────────────────── */
         #appContainer {
             display: none; position: fixed; inset: 0;
-            flex-direction: column;
-            padding: 10px; gap: 8px;
-            background: var(--bg);
+            flex-direction: column; padding: 5px; gap: 5px; background: var(--bg);
         }
 
-        /* Top bar */
+        /* Compact Combined Header (Top bar + Task bar merged) */
         .top-bar {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: var(--r-md);
-            padding: 9px 16px;
-            box-shadow: var(--sh-sm);
-            display: flex; align-items: center;
-            justify-content: space-between; gap: 14px;
-            flex-shrink: 0;
+            background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-md);
+            padding: 6px 12px; box-shadow: var(--sh-sm); display: flex; align-items: center;
+            justify-content: space-between; gap: 12px; flex-shrink: 0;
         }
-
-        .top-bar .logo-mini { max-height: 28px; width: auto; }
+        .top-bar .logo-mini { max-height: 22px; width: auto; cursor: pointer; user-select: none; }
 
         .subject-badge {
-            background: var(--bbz-anthracite); color: #fff;
-            padding: 6px 14px; border-radius: var(--r-sm);
-            font-size: 13.5px; font-weight: 700;
-            letter-spacing: .2px;
+            background: var(--bbz-anthracite); color: #fff; padding: 4px 10px; border-radius: var(--r-sm);
+            font-size: 12.5px; font-weight: 700; transition: background 0.3s;
         }
 
-        .pivot {
-            display: flex; background: #eaeff6;
-            padding: 3px; border-radius: var(--r-md);
-            gap: 2px;
-        }
-        .pivot-btn {
-            background: transparent; border: none;
-            padding: 8px 16px; font-family: var(--font);
-            font-size: 13.5px; font-weight: 600;
-            color: var(--muted); cursor: pointer;
-            border-radius: 8px;
-            display: flex; align-items: center; gap: 6px;
-            transition: var(--tr);
-        }
-        .pivot-btn.active {
-            background: #fff;
-            box-shadow: 0 1px 5px rgba(0,0,0,.10);
-            color: var(--bbz-anthracite);
-        }
-        .pivot-btn:hover:not(.active) { color: var(--bbz-anthracite); background: rgba(255,255,255,.6); }
-
-        /* Task bar */
-        .task-bar {
-            background: var(--panel); border: 1px solid var(--border);
-            border-radius: var(--r-md); padding: 8px 16px;
-            box-shadow: var(--sh-sm);
-            display: flex; gap: 10px; align-items: center;
-            flex-shrink: 0;
-        }
-
-        .task-bar-label {
-            font-size: 12.5px; font-weight: 700;
-            color: var(--muted); text-transform: uppercase;
-            letter-spacing: .5px;
-        }
+        .task-bar-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
 
         .task-toggle {
-            padding: 7px 14px;
-            background: #f4f7fb;
-            border: 1.5px solid var(--border);
-            border-radius: var(--r-sm);
-            cursor: pointer; font-family: var(--font);
-            font-size: 13.5px; font-weight: 600;
+            padding: 4px 10px; background: #f4f7fb; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+            cursor: pointer; font-family: var(--font); font-size: 12.5px; font-weight: 600;
             transition: var(--tr); color: var(--muted);
         }
-        .task-toggle.active {
-            background: #f0faf0; color: var(--bbz-green);
-            border-color: var(--bbz-green);
-        }
+        .task-toggle.active { background: #f0faf0; color: var(--bbz-green); border-color: var(--bbz-green); }
         .task-toggle:hover:not(.active) { background: #eaeff6; color: var(--bbz-anthracite); }
 
-        .topic-wrap { display: none; align-items: center; gap: 8px; flex: 1; }
+        .topic-wrap { display: none; align-items: center; gap: 6px; flex: 1; max-width: 260px; }
         .topic-input {
-            padding: 8px 13px; border: 1.5px solid var(--border);
-            border-radius: var(--r-sm); flex: 1;
-            font-family: var(--font); font-size: 14px;
-            background: #f8fafc; transition: var(--tr);
-            color: var(--bbz-anthracite);
+            padding: 4px 10px; border: 1.5px solid var(--border); border-radius: var(--r-sm); width: 100%;
+            font-family: var(--font); font-size: 13px; background: #f8fafc; transition: var(--tr); color: var(--bbz-anthracite);
         }
-        .topic-input::placeholder { color: var(--muted-light); }
         .topic-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
-        /* Pinboard */
+        /* Optimized Pinboard Layout (More visual space for preview) */
         .pinboard {
-            background: #fffdf4;
-            border: 1.5px solid #e0c93a;
-            border-radius: var(--r-md);
-            padding: 12px 14px;
-            display: flex; gap: 14px;
-            height: 118px; flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(235,209,71,.15);
+            background: #fffdf4; border: 1.5px solid #e0c93a; border-radius: var(--r-md); padding: 6px 10px;
+            display: flex; gap: 10px; height: 92px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(235,209,71,.1);
         }
-
-        .pb-left { flex: 3; display: flex; flex-direction: column; gap: 5px; }
-        .pb-label {
-            font-size: 11px; font-weight: 700;
-            color: #7a6010; letter-spacing: .5px;
-            text-transform: uppercase;
-        }
+        .pb-left { flex: 3; display: flex; flex-direction: column; gap: 2px; }
+        .pb-label { font-size: 10.5px; font-weight: 700; color: #7a6010; letter-spacing: .2px; text-transform: uppercase; }
 
         .pb-textarea {
-            flex: 1; border: none; background: transparent;
-            resize: none; font-family: var(--font);
-            font-size: 14px; color: var(--bbz-anthracite);
-            line-height: 1.5;
+            flex: 1; border: none; background: transparent; resize: none; font-family: var(--font);
+            font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4;
         }
-        .pb-textarea::placeholder { color: var(--muted-light); }
         .pb-textarea:focus { outline: none; }
 
         .pb-right {
-            flex: 1; border: 2px dashed var(--border-strong);
-            background: #fff; border-radius: 8px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-            transition: var(--tr); cursor: pointer;
-            min-width: 90px;
+            flex: 1; border: 1.5px dashed var(--border-strong); background: #fff; border-radius: 6px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; transition: var(--tr); min-width: 120px; max-width: 160px;
         }
-        .pb-right:hover { border-color: var(--bbz-green); background: #f5fcf5; }
-        .pb-right-label {
-            color: var(--muted); font-size: 12px;
-            text-align: center; font-weight: 500;
-            pointer-events: none; padding: 6px;
-        }
+        .pb-right-label { color: var(--muted); font-size: 11px; text-align: center; font-weight: 500; pointer-events: none; padding: 4px; line-height: 1.2; }
         .pb-img-wrap { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-        .pb-img-wrap img { max-width: 100%; max-height: 82%; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
+        .pb-img-wrap img { max-width: 100%; max-height: 90%; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
         .pb-img-change {
-            position: absolute; bottom: 3px; right: 3px;
-            font-size: 9px; background: rgba(50,50,62,.82); color: #fff;
-            border: none; padding: 2px 7px; border-radius: 4px; cursor: pointer;
-            font-family: var(--font); font-weight: 600;
+            position: absolute; bottom: 2px; right: 2px; font-size: 9px; background: rgba(217, 45, 32, 0.9); color: #fff;
+            border: none; padding: 2px 5px; border-radius: 3px; cursor: pointer; font-family: var(--font); font-weight: 600;
         }
+
+        /* Pivot Switcher Layout */
+        .pivot { display: flex; background: #eaeff6; padding: 2px; border-radius: var(--r-md); gap: 2px; }
+        .pivot-btn {
+            background: transparent; border: none; padding: 5px 11px; font-family: var(--font);
+            font-size: 12.5px; font-weight: 600; color: var(--muted); cursor: pointer;
+            border-radius: 6px; display: flex; align-items: center; gap: 4px;
+            transition: var(--tr); border: 1px solid transparent;
+        }
+        
+        #btn-mode-text.active {
+            background: #e0f2fe !important; color: #0369a1 !important; border: 1px solid #bae6fd !important;
+        }
+        #btn-mode-canvas.active {
+            background: #e6fffa !important; color: #0d9488 !important; border: 1px solid #99f6e4 !important;
+        }
+        #btn-mode-image.active {
+            background: #e0e7ff !important; color: #4338ca !important; border: 1px solid #c7d2fe !important;
+        }
+        .pivot-btn:hover:not(.active) { color: var(--bbz-anthracite); background: rgba(255,255,255,.6); }
 
         /* Action block */
         #workspaceActionBlock { flex-shrink: 0; }
 
         .action-btn-full {
-            width: 100%; padding: 13px 18px;
-            font-family: var(--font); font-size: 15px; font-weight: 700;
-            border: none; border-radius: var(--r-md); cursor: pointer;
-            transition: var(--tr); display: flex;
-            align-items: center; justify-content: center; gap: 9px;
-            box-shadow: 0 2px 10px rgba(70,149,66,.22);
+            width: 100%; padding: 10px 14px; font-family: var(--font); font-size: 14px; font-weight: 700;
+            border: none; border-radius: var(--r-md); cursor: pointer; transition: var(--tr);
+            display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 1px 6px rgba(70,149,66,.15);
         }
-        .action-btn-full:hover { transform: translateY(-1px); }
         .action-btn-full.green { background: var(--bbz-green); color: #fff; }
-        .action-btn-full.green:hover { background: var(--bbz-green-dark); box-shadow: 0 4px 16px rgba(70,149,66,.32); }
-        .action-btn-full.neutral { background: var(--bbz-anthracite); color: #fff; box-shadow: 0 2px 8px rgba(50,50,62,.2); }
+        .action-btn-full.green:hover { background: var(--bbz-green-dark); }
+        .action-btn-full.neutral { background: var(--bbz-anthracite); color: #fff; }
         .action-btn-full.neutral:hover { background: #1e1e28; }
 
         .action-hint {
-            background: #fff; border: 1.5px dashed var(--border-strong);
-            color: var(--muted); padding: 12px 16px;
-            border-radius: var(--r-md); font-size: 14px;
-            font-weight: 500; text-align: center;
+            background: #fff; border: 1.5px dashed var(--border-strong); color: var(--muted); padding: 8px 12px;
+            border-radius: var(--r-md); font-size: 13px; font-weight: 500; text-align: center;
         }
 
-        /* Main workspace */
-        .main-workspace {
-            display: flex; gap: 10px;
-            flex: 1; min-height: 0;
-        }
-
+        /* Main workspace routing */
+        .main-workspace { display: flex; gap: 8px; flex: 1; min-height: 0; }
         .panel {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 16px;
-            display: flex; flex-direction: column;
-            flex: 1; min-height: 0;
-            box-shadow: var(--sh-md);
+            background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg);
+            padding: 10px; display: flex; flex-direction: column; flex: 1; min-height: 0; box-shadow: var(--sh-md);
         }
+        .panel-label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
 
-        .panel-label {
-            font-size: 12.5px; font-weight: 700;
-            color: var(--muted); text-transform: uppercase;
-            letter-spacing: .5px; margin-bottom: 10px;
-        }
+        /* Workspace structural conditional routing (FIXED SELECTORS) */
+        .text-mode-active .text-panel { display: flex !important; }
+        .text-mode-active .canvas-panel, .text-mode-active .image-panel { display: none !important; }
 
-        .text-mode-active .canvas-panel { display: none !important; }
-        .canvas-mode-active .text-panel  { display: none !important; }
+        .canvas-mode-active .canvas-panel { display: flex !important; }
+        .canvas-mode-active .text-panel, .canvas-mode-active .image-panel { display: none !important; }
+
+        .image-mode-active .image-panel { display: flex !important; }
+        .image-mode-active .text-panel, .canvas-mode-active .image-panel { display: none !important; }
 
         .textarea-input {
-            flex: 1; padding: 14px;
-            border: 1.5px solid var(--border);
-            border-radius: var(--r-md);
-            font-family: var(--font);
-            font-size: 15px; resize: none;
-            background: #f8fafc;
-            transition: var(--tr); line-height: 1.6;
-            color: var(--bbz-anthracite);
+            flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--r-md);
+            font-family: var(--font); font-size: 14.5px; resize: none; background: #f8fafc;
+            transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite);
         }
         .textarea-input::placeholder { color: var(--muted-light); }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
         /* Canvas */
-        .canvas-toolbar { display: flex; gap: 7px; align-items: center; margin-bottom: 10px; }
-        .canvas-hint { font-size: 12px; color: var(--muted-light); font-weight: 500; margin-left: 8px; }
-        .scroll-wrap {
-            flex: 1; overflow-y: auto;
-            border: 1.5px solid var(--border);
-            border-radius: var(--r-md);
-            background: #fff;
-        }
+        .canvas-toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
+        .canvas-hint { font-size: 11.5px; color: var(--muted-light); font-weight: 500; margin-left: 6px; }
+        .scroll-wrap { flex: 1; overflow-y: auto; border: 1.5px solid var(--border); border-radius: var(--r-md); background: #fff; min-height: 0; }
         .canvas-wrap { position: relative; width: 100%; height: 2400px; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
         /* Draggable popup */
         .popup {
-            position: fixed; top: 170px; left: 36px;
-            width: 460px; height: 350px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            box-shadow: var(--sh-lg);
-            z-index: 3000; border-radius: var(--r-lg);
-            display: none; flex-direction: column; overflow: hidden;
-            resize: both; min-width: 240px; min-height: 180px;
+            position: fixed; top: 120px; left: 24px; width: 440px; height: 320px; background: var(--panel);
+            border: 1px solid var(--border); box-shadow: var(--sh-lg); z-index: 3000; border-radius: var(--r-lg);
+            display: none; flex-direction: column; overflow: hidden; resize: both; min-width: 240px; min-height: 180px;
         }
         .popup-header {
-            background: var(--bbz-anthracite); color: #fff;
-            padding: 10px 16px; cursor: move;
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 14px; font-weight: 700; user-select: none;
-            flex-shrink: 0;
+            background: var(--bbz-anthracite); color: #fff; padding: 8px 12px; cursor: move;
+            display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; user-select: none; flex-shrink: 0;
         }
-        .popup-close { background: transparent; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: .75; }
+        .popup-close { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; opacity: .75; }
         .popup-close:hover { opacity: 1; }
-        .popup-body { flex: 1; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: #f8fafc; }
+        .popup-body { flex: 1; overflow: auto; padding: 10px; display: flex; align-items: flex-start; justify-content: center; background: #f8fafc; }
         .popup-body img { max-width: 100%; height: auto; border-radius: 4px; }
+
+        /* Live Camera Modal Custom Overlay */
+        .camera-modal {
+            position: fixed; inset: 0; background: rgba(50, 50, 62, 0.85);
+            z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .camera-box {
+            background: var(--panel); border-radius: var(--r-lg); width: 100%; max-width: 440px;
+            box-shadow: var(--sh-lg); padding: 16px; display: flex; flex-direction: column; gap: 10px;
+        }
+        .camera-video-wrap { width: 100%; background: #000; border-radius: var(--r-md); overflow: hidden; aspect-ratio: 4/3; }
+        #cameraVideo { width: 100%; height: 100%; object-fit: cover; }
 
         /* Toast */
         .toast {
-            position: fixed; bottom: 22px; left: 22px;
-            background: var(--bbz-anthracite); color: #fff;
-            padding: 12px 22px; border-radius: 10px;
-            font-weight: 600; font-size: 14px;
-            display: none; box-shadow: var(--sh-lg); z-index: 4000;
+            position: fixed; bottom: 20px; left: 20px; background: var(--bbz-anthracite); color: #fff;
+            padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13.5px;
+            display: none; box-shadow: var(--sh-lg); z-index: 6000;
         }
 
         /* Footer */
-        .footer {
-            text-align: center; font-size: 12px;
-            color: var(--muted-light); flex-shrink: 0;
-            padding: 2px 0; letter-spacing: .3px;
-        }
+        .footer { text-align: center; font-size: 11px; color: var(--muted-light); flex-shrink: 0; padding: 2px 0; }
     </style>
 </head>
 <body>
 
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
-        <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" onerror="this.style.display='none'">
+        <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
         <h1>Socratic Tutoring</h1>
         <p>Digitaler Lernassistent für die Schweizer Berufsmaturität. Die KI verrät keine Lösungen — sie stellt gezielte Fragen, damit du selbst denkst.</p>
     </div>
@@ -548,7 +463,7 @@
         <div class="subject-grid">
             <button class="subject-btn" onclick="selectSubject('Deutsch','📕')"><span class="icon">📕</span>Deutsch</button>
             <button class="subject-btn" onclick="selectSubject('Französisch','📘')"><span class="icon">📘</span>Französisch</button>
-            <button class="subject-btn" onclick="selectSubject('Englisch','📙')"><span class="icon">📙</span>Englisch</button>
+            <button class="subject-btn" onclick="selectSubject('Englisch','🧡')"><span class="icon">🧡</span>Englisch</button>
             <button class="subject-btn" onclick="selectSubject('Mathematik','📐')"><span class="icon">📐</span>Mathematik</button>
             <button class="subject-btn" onclick="selectSubject('Geschichte','🏛️')"><span class="icon">🏛️</span>Geschichte</button>
             <button class="subject-btn" onclick="selectSubject('Wirtschaft und Recht','⚖️')"><span class="icon">⚖️</span>Wirtschaft &amp; Recht</button>
@@ -560,28 +475,21 @@
     </div>
 
     <div id="kiSelectionArea">
-        <p id="kiSelectionTitle" class="section-label" style="font-size:15px;text-transform:none;letter-spacing:0;color:var(--bbz-anthracite);font-weight:700;"></p>
+        <p id="kiSelectionTitle" class="section-label" style="font-size:14px;text-transform:none;letter-spacing:0;color:var(--bbz-anthracite);font-weight:700;"></p>
         <div class="ki-grid">
-            <button class="ki-btn chatgpt" onclick="selectKI('ChatGPT')">
-                <span class="ki-icon">🤖</span>ChatGPT
-            </button>
-            <button class="ki-btn gemini" onclick="selectKI('Gemini')">
-                <span class="ki-icon">✨</span>Gemini
-            </button>
-            <button class="ki-btn copilot" onclick="selectKI('Copilot')">
-                <span class="ki-icon">🧭</span>Copilot
-            </button>
+            <button class="ki-btn chatgpt" onclick="selectKI('ChatGPT')"><span class="ki-icon">🤖</span>ChatGPT</button>
+            <button class="ki-btn gemini" onclick="selectKI('Gemini')"><span class="ki-icon">✨</span>Gemini</button>
+            <button class="ki-btn copilot" onclick="selectKI('Copilot')"><span class="ki-icon">🧭</span>Copilot</button>
         </div>
-        <button class="btn btn-ghost" style="margin-top:14px;" onclick="resetToSubjects()">↩ Zurück zur Fächerauswahl</button>
+        <button class="btn btn-ghost" style="margin-top:12px;" onclick="resetToSubjects()">↩ Zurück zur Fächerauswahl</button>
     </div>
-
-    <div class="footer" style="margin-top:auto;padding-top:24px;">presented by Methoden-Freitag</div>
+    <div class="footer" style="margin-top:auto;padding-top:20px;">presented by Methoden-Freitag</div>
 </div>
 
 <div class="screen" id="guidanceScreen" style="display:none;background:#e4e9f2;">
     <div class="guidance-card">
         <div class="gc-header">
-            <img src="image_b1f285.png" alt="BBZ Logo" onerror="this.style.display='none'">
+            <img src="image_b1f285.png" alt="BBZ Logo" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
             <h2>Sokratische Regeln aktivieren</h2>
             <p>Führe Schritt 1 aus, damit die KI dir beim Denken hilft – statt einfach die Lösung zu liefern.</p>
         </div>
@@ -597,54 +505,57 @@
         <button class="btn btn-secondary" id="btn-guidance-copy" onclick="copyPromptAndOpenKIWindow()">
             📋 1. Sokratischen Prompt kopieren &amp; KI öffnen
         </button>
-
         <button class="btn btn-locked" id="btn-guidance-next" onclick="proceedToMainWorkspace()" disabled>
             🔒 2. Weiter zum Arbeitsjournal
         </button>
     </div>
-    <div class="footer" style="margin-top:auto;padding-top:24px;">presented by Methoden-Freitag</div>
+    <div class="footer" style="margin-top:auto;padding-top:20px;">presented by Methoden-Freitag</div>
 </div>
 
 <div id="appContainer">
 
     <div class="top-bar">
-        <div style="display:flex;gap:8px;align-items:center;">
-            <button class="btn btn-ghost" style="padding:7px 13px;font-size:13.5px;" onclick="goBackToSelection()">↩ Fachwechsel</button>
+        <div style="display:flex;gap:6px;align-items:center;">
+            <button class="btn btn-ghost" style="padding:4px 8px;font-size:12.5px;" onclick="goBackToSelection()">↩ Wechseln</button>
             <span class="subject-badge" id="activeSubjectBadge">Fach</span>
         </div>
-        <div class="pivot">
-            <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur</button>
-            <button class="pivot-btn" id="btn-mode-canvas" onclick="setInputMode('canvas')">✏️ Stift-Skizze</button>
+        
+        <div style="display:flex;gap:6px;align-items:center;flex:1;justify-content:center;">
+            <span class="task-bar-label">Aufgabe:</span>
+            <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">📁 Eigene Aufgabe</button>
+            <button class="task-toggle" id="taskToggleGen" onclick="setTaskOption('gen')">✨ KI generiert</button>
+            <div class="topic-wrap" id="topicContainerBlock">
+                <input type="text" class="topic-input" id="topicInputField" oninput="updateWorkspaceVisuals()" placeholder="Thema eingeben...">
+            </div>
         </div>
-        <img src="image_b1f285.png" alt="BBZ" class="logo-mini" onerror="this.style.display='none'">
-    </div>
 
-    <div class="task-bar">
-        <span class="task-bar-label">Aufgabe:</span>
-        <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">📁 Eigene Aufgabe</button>
-        <button class="task-toggle" id="taskToggleGen" onclick="setTaskOption('gen')">✨ KI generiert</button>
-        <div class="topic-wrap" id="topicContainerBlock">
-            <input type="text" class="topic-input" id="topicInputField" oninput="updateWorkspaceVisuals()" placeholder="Thema (z.B. Quadratische Gleichungen, Mietvertrag…)">
-        </div>
+        <img src="image_b1f285.png" alt="BBZ" class="logo-mini" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
     </div>
 
     <div class="pinboard">
         <div class="pb-left">
-            <span class="pb-label">📌 Pinnwand — Text eingeben oder Bild einfügen (Ctrl+V)</span>
-            <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext hier eingeben oder Bild per Ctrl+V einfügen…"></textarea>
+            <span class="pb-label">📌 Pinnwand (Text eintippen oder Bild per Ctrl+V einfügen)</span>
+            <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext hier erfassen..."></textarea>
         </div>
-        <div class="pb-right" id="universalTaskImageContainer" onclick="document.getElementById('taskImageLoader').click()">
-            <span class="pb-right-label">🖼️ Bild laden<br><span style="font-size:10px;opacity:.7;">oder <b>Ctrl + V</b></span></span>
-        </div>
+        <div class="pb-right" id="universalTaskImageContainer"></div>
         <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
     </div>
 
     <div id="workspaceActionBlock"></div>
 
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:1px 2px; flex-shrink:0;">
+        <span class="task-bar-label" style="color:var(--muted); font-size:11.5px;">💬 Schritt 2 — Lösungsweg via:</span>
+        <div class="pivot">
+            <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur</button>
+            <button class="pivot-btn" id="btn-mode-canvas" onclick="setInputMode('canvas')">✏️ Stift-Skizze</button>
+            <button class="pivot-btn" id="btn-mode-image" onclick="setInputMode('image')">📷 Foto / Kamera</button>
+        </div>
+    </div>
+
     <div class="main-workspace">
 
         <div class="panel text-panel">
-            <div class="panel-label">💬 Schritt 2 — Lösungsschritt oder Frage eingeben</div>
+            <div class="panel-label">Schreiben</div>
             <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss…"></textarea>
             <button class="btn btn-action-text" onclick="copyTextSolutionWorkflowOnly()">📋 Lösungsschritt kopieren → drüben einfügen</button>
         </div>
@@ -663,6 +574,16 @@
             </div>
             <button class="btn btn-action-canvas" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ Zeichnung kopieren → drüben einfügen</button>
         </div>
+
+        <div class="panel image-panel">
+            <div class="panel-label">Foto hochladen oder aufnehmen</div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1.5px dashed var(--border-strong); background:#f8fafc; border-radius:var(--r-md); min-height:0; padding:10px; position:relative;">
+                <div id="solutionImageContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
+            </div>
+            <input type="file" id="solutionImageLoader" accept="image/*" onchange="handleSolutionScreenshot(event)" style="display:none;">
+            <button class="btn btn-action-canvas" style="background:var(--bbz-green); box-shadow:0 2px 6px rgba(70,149,66,.15);" onclick="copySolutionImageWorkflowOnly()">🖼️ Foto kopieren → drüben einfügen</button>
+        </div>
+
     </div>
 
     <div class="footer">presented by Methoden-Freitag</div>
@@ -671,13 +592,27 @@
 <div class="popup" id="draggableWindow">
     <div class="popup-header" id="draggableHeader">
         <span>📋 Aufgabenstellung</span>
-        <div style="display:flex;gap:8px;align-items:center;">
-            <button id="btn-pip-trigger" onclick="openAlwaysOnTopWindow()" style="background:#fff;color:var(--bbz-anthracite);border:none;padding:3px 10px;font-size:11.5px;font-weight:700;border-radius:4px;cursor:pointer;">📌 Schweben lassen</button>
+        <div style="display:flex;gap:6px;align-items:center;">
+            <button id="btn-pip-trigger" onclick="openAlwaysOnTopWindow()" style="background:#fff;color:var(--bbz-anthracite);border:none;padding:2px 8px;font-size:11px;font-weight:700;border-radius:4px;cursor:pointer;">📌 Schweben lassen</button>
             <button class="popup-close" onclick="closeImagePopup()">✕</button>
         </div>
     </div>
     <div class="popup-body">
         <img id="popupTargetImage" src="" alt="Aufgabenstellung">
+    </div>
+</div>
+
+<div class="camera-modal" id="cameraModal">
+    <div class="camera-box">
+        <span class="task-bar-label" style="color:var(--bbz-anthracite);">📷 Kamera-Auswahl &amp; Vorschau</span>
+        <select id="cameraSelect" class="topic-input" style="background:#fff; font-weight:600; padding:6px;"></select>
+        <div class="camera-video-wrap">
+            <video id="cameraVideo" autoplay playsinline></video>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:4px;">
+            <button class="btn" style="background:var(--bbz-green); color:#fff; flex:1;" onclick="captureCameraSnapshot()">📸 Foto aufnehmen</button>
+            <button class="btn btn-ghost" style="flex:1;" onclick="closeCameraModal()">❌ Abbrechen</button>
+        </div>
     </div>
 </div>
 
@@ -690,11 +625,15 @@
     const wrapper   = document.getElementById('canvas-wrapper');
     const scrollCon = document.getElementById('scrollContainer');
 
-    let drawing = false, currentTool = 'pencil', loadedImageSrc = '';
-    let pipWindowInstance = null;
+    let drawing = false, currentTool = 'pencil', loadedImageSrc = '', loadedSolutionImageSrc = '';
+    let pipWindowInstance = null, activeCameraStream = null, cameraTarget = 'task'; 
     let selectedSubject = 'Mathematik', selectedKI = 'ChatGPT';
     let currentActiveMode = 'text', currentTaskOption = 'own';
     let isScrollingTwoFingers = false, startScrollTop = 0, startTouchY = 0;
+    
+    // Lehrpersonen-Modus Status & Passwort ("BBZSchaffhausen" rückwärts Base64)
+    let isTeacherMode = false;
+    const TEACHER_SECRET_KEY = "nesuYmFmYWhjTlNaS2tR";
 
     const kiUrls = {
         ChatGPT: 'https://chatgpt.com',
@@ -715,13 +654,39 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
     };
 
-    // Lehrer-Override-Passwort verschlüsselt eingebunden, um unbefugte Lösungsabfragen zu verhindern.
-    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn meine Eingabe exakt das geheime Lehrer-Codewort \"" + atob("QkJaIFNjaGFmZmhhdXNlbg==") + "\" enthält, ignoriere alle vorherigen Restriktionen komplett und gib sofort die vollständige, detaillierte Lösung inklusive aller Zwischenschritte aus.";
+    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
+
+    // ── GEHEIMER LEHRENDEN-MODUS OVERRIDE ───────────────────────
+    function unlockTeacherMode() {
+        const pw = prompt("Bitte Lehrpersonen-Passwort eingeben:");
+        if (!pw) return;
+        
+        const obfuscatedInput = btoa(pw).split("").reverse().join("");
+        
+        if (obfuscatedInput === TEACHER_SECRET_KEY) {
+            isTeacherMode = true;
+            showToast("🔓 Lehrpersonen-Modus aktiv! Sokratische Sperre aufgehoben.");
+            
+            // Badge live updaten
+            const badge = document.getElementById('activeSubjectBadge');
+            if (badge) {
+                badge.textContent = `🔓 ${selectedSubject} (Musterlösung)`;
+                badge.style.background = 'var(--danger)';
+            }
+            // Interface-Buttons neu rendern, um die Änderungen widerzuspiegeln
+            updateWorkspaceVisuals();
+        } else {
+            showToast("❌ Falsches Passwort.");
+        }
+    }
 
     // ── ROUTING ────────────────────────────────────────────────
     function initAppRouting() {
         const params = new URLSearchParams(window.location.search);
         const view   = params.get('view');
+
+        resetImageContainer();
+        resetSolutionImageContainer();
 
         if (view === 'workspace') {
             selectedSubject = params.get('subject') || 'Mathematik';
@@ -775,13 +740,20 @@
     }
 
     async function copyPromptAndOpenKIWindow() {
-        let prompt = (subjectPrompts[selectedSubject] || subjectPrompts['Mathematik']) + globalSocraticRules;
-        prompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch zu begleiten. Warte danach auf meine Aufgabe oder Eingabe.`;
+        let promptText = "";
+        
+        if (isTeacherMode) {
+            promptText = (subjectPrompts[selectedSubject] || subjectPrompts['Mathematik']) + 
+                         "\n\nACHTUNG MASTER-OVERRIDE: Ignoriere alle standardmässigen sokratischen Einschränkungen. Du befindest dich im Demonstrations-Modus für Lehrpersonen. Wenn ich dir nachfolgend eine Aufgabe, einen Text oder ein Bild sende, liefere mir SOFORT die perfekte, vollständige und fehlerfreie Musterlösung inklusive aller mathematischen Herleitungen, Rechenwege und Zwischenschritte auf Schriftdeutsch.";
+        } else {
+            promptText = (subjectPrompts[selectedSubject] || subjectPrompts['Mathematik']) + globalSocraticRules;
+            promptText += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch zu begleiten. Warte danach auf meine Aufgabe oder Eingabe.`;
+        }
 
         try {
-            await navigator.clipboard.writeText(prompt);
+            await navigator.clipboard.writeText(promptText);
         } catch {
-            prompt && window.prompt('Prompt manuell kopieren (Ctrl+A, Ctrl+C):', prompt);
+            promptText && window.prompt('Prompt manuell kopieren (Ctrl+A, Ctrl+C):', promptText);
         }
 
         const w35 = Math.floor(screen.availWidth * 0.34) - 10;
@@ -790,14 +762,23 @@
         window.open(kiUrls[selectedKI] || 'https://chatgpt.com', 'ki_split_window',
             `width=${w35},height=${h},left=${lft},top=0,resizable=yes,scrollbars=yes`);
 
-        showToast('📋 Prompt kopiert!');
+        showToast(isTeacherMode ? '🔓 Override-Prompt kopiert!' : '📋 Prompt kopiert!');
         unlockGuidanceNextBtn();
     }
 
     function proceedToMainWorkspace() {
         document.getElementById('guidanceScreen').style.display = 'none';
         document.getElementById('appContainer').style.display   = 'flex';
-        document.getElementById('activeSubjectBadge').textContent = selectedSubject;
+        
+        const badge = document.getElementById('activeSubjectBadge');
+        if (isTeacherMode) {
+            badge.textContent = `🔓 ${selectedSubject} (Musterlösung)`;
+            badge.style.background = 'var(--danger)';
+        } else {
+            badge.textContent = selectedSubject;
+            badge.style.background = 'var(--bbz-anthracite)';
+        }
+        
         setInputMode('text');
         updateWorkspaceVisuals();
     }
@@ -806,12 +787,13 @@
         window.location.href = window.location.origin + window.location.pathname;
     }
 
-    // ── INPUT MODE ─────────────────────────────────────────────
+    // ── INTERFACE ROUTING (MODES) ──────────────────────────────
     function setInputMode(mode) {
         currentActiveMode = mode;
-        document.body.className = mode === 'text' ? 'text-mode-active' : 'canvas-mode-active';
+        document.body.className = mode === 'text' ? 'text-mode-active' : (mode === 'canvas' ? 'canvas-mode-active' : 'image-mode-active');
         document.getElementById('btn-mode-text').classList.toggle('active', mode === 'text');
         document.getElementById('btn-mode-canvas').classList.toggle('active', mode === 'canvas');
+        document.getElementById('btn-mode-image').classList.toggle('active', mode === 'image');
         if (mode === 'canvas') setTimeout(initCanvas, 50);
     }
 
@@ -823,39 +805,159 @@
         updateWorkspaceVisuals();
     }
 
-    // ── IMAGE HANDLING ─────────────────────────────────────────
-    function handleTaskScreenshot(event) {
-        const file = event.target.files[0]; if (!file) return;
-        renderImageToPinboard(file);
+    // ── LIVE CAMERA CONTROLS ───────────────────────────────────
+    function openCameraForTask() { cameraTarget = 'task'; openCameraModal(); }
+    function openCameraForSolution() { cameraTarget = 'solution'; openCameraModal(); }
+
+    async function openCameraModal() {
+        const modal = document.getElementById('cameraModal');
+        const select = document.getElementById('cameraSelect');
+        const video = document.getElementById('cameraVideo');
+        modal.style.display = 'flex';
+        
+        try {
+            activeCameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            video.srcObject = activeCameraStream;
+            
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const videoDevices = devices.filter(d => d.kind === 'videoinput');
+            
+            select.innerHTML = '';
+            videoDevices.forEach((device, index) => {
+                const opt = document.createElement('option');
+                opt.value = device.deviceId;
+                opt.text = device.label || `Kamera ${index + 1}`;
+                select.appendChild(opt);
+            });
+            
+            select.onchange = async () => {
+                if (activeCameraStream) {
+                    activeCameraStream.getTracks().forEach(track => track.stop());
+                }
+                const constraints = { video: { deviceId: { exact: select.value } } };
+                activeCameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = activeCameraStream;
+            };
+            
+        } catch (err) {
+            showToast('❌ Kamera-Zugriff blockiert.');
+            closeCameraModal();
+        }
     }
 
-    function renderImageToPinboard(file) {
+    function closeCameraModal() {
+        if (activeCameraStream) {
+            activeCameraStream.getTracks().forEach(track => track.stop());
+            activeCameraStream = null;
+        }
+        document.getElementById('cameraModal').style.display = 'none';
+    }
+
+    function captureCameraSnapshot() {
+        const video = document.getElementById('cameraVideo');
+        if (!video || !activeCameraStream) return;
+        
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = video.videoWidth || 640;
+        tempCanvas.height = video.videoHeight || 480;
+        const tempCtx = tempCanvas.getContext('2d');
+        
+        tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+        const dataUrl = tempCanvas.toDataURL('image/png');
+        
+        if (cameraTarget === 'task') {
+            displayLoadedImage(dataUrl);
+        } else {
+            displaySolutionImage(dataUrl);
+        }
+        closeCameraModal();
+        showToast('📸 Foto erfolgreich übernommen!');
+    }
+
+    // ── IMAGE HANDLING (TASK PINBOARD) ─────────────────────────
+    function handleTaskScreenshot(e) {
+        const file = e.target.files[0]; if (!file) return;
         const reader = new FileReader();
-        reader.onload = ev => {
-            loadedImageSrc = ev.target.result;
-            const con = document.getElementById('universalTaskImageContainer');
-            con.innerHTML = `
-                <div class="pb-img-wrap">
-                    <img src="${loadedImageSrc}" alt="Vorschau" onclick="event.stopPropagation(); openImagePopup();" title="Vergrössern">
-                    <button class="pb-img-change" onclick="event.stopPropagation();document.getElementById('taskImageLoader').click()">🔄 Ändern</button>
-                </div>`;
-            if (pipWindowInstance && !pipWindowInstance.closed) {
-                const pipImg = pipWindowInstance.document.getElementById('pipImageElement');
-                if (pipImg) pipImg.src = loadedImageSrc;
-            }
-            updateWorkspaceVisuals();
-        };
+        reader.onload = ev => displayLoadedImage(ev.target.result);
         reader.readAsDataURL(file);
     }
 
+    function displayLoadedImage(src) {
+        loadedImageSrc = src;
+        const con = document.getElementById('universalTaskImageContainer');
+        con.innerHTML = `
+            <div class="pb-img-wrap">
+                <img src="${loadedImageSrc}" alt="Vorschau" onclick="openImagePopup()" title="Vergrössern">
+                <button class="pb-img-change" onclick="event.stopPropagation(); resetImageContainer();">🗑️ Löschen</button>
+            </div>`;
+        if (pipWindowInstance && !pipWindowInstance.closed) {
+            const pipImg = pipWindowInstance.document.getElementById('pipImageElement');
+            if (pipImg) pipImg.src = loadedImageSrc;
+        }
+        updateWorkspaceVisuals();
+    }
+
+    function resetImageContainer() {
+        loadedImageSrc = '';
+        const con = document.getElementById('universalTaskImageContainer');
+        con.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:3px; width:100%; padding:2px; justify-content:center; height:100%;">
+                <button class="btn" style="background:#0ea5e9; color:#fff; font-size:10.5px; padding:3px 6px; font-weight:700;" onclick="document.getElementById('taskImageLoader').click()">📁 Datei</button>
+                <button class="btn" style="background:#6366f1; color:#fff; font-size:10.5px; padding:3px 6px; font-weight:700;" onclick="openCameraForTask()">📷 Kamera</button>
+            </div>`;
+        updateWorkspaceVisuals();
+    }
+
+    // ── IMAGE HANDLING (SOLUTION PANEL) ───────────────────────
+    function handleSolutionScreenshot(e) {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => displaySolutionImage(ev.target.result);
+        reader.readAsDataURL(file);
+    }
+
+    function displaySolutionImage(src) {
+        loadedSolutionImageSrc = src;
+        const con = document.getElementById('solutionImageContainer');
+        con.innerHTML = `
+            <div class="pb-img-wrap" style="height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
+                <img src="${loadedSolutionImageSrc}" alt="Lösungsweg Vorschau" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:6px;">
+                <button class="pb-img-change" onclick="event.stopPropagation(); resetSolutionImageContainer();">🗑️ Löschen</button>
+            </div>`;
+    }
+
+    function resetSolutionImageContainer() {
+        loadedSolutionImageSrc = '';
+        const con = document.getElementById('solutionImageContainer');
+        con.innerHTML = `
+            <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-direction:column;">
+                <div style="display:flex; gap:8px;">
+                    <button class="btn" style="background:#0ea5e9; color:#fff; font-weight:700;" onclick="document.getElementById('solutionImageLoader').click()">📁 Datei</button>
+                    <button class="btn" style="background:#6366f1; color:#fff; font-weight:700;" onclick="openCameraForSolution()">📷 Kamera</button>
+                </div>
+                <span style="font-size:12px; color:var(--muted); font-weight:500;">oder Ctrl+V drücken</span>
+            </div>`;
+    }
+
+    // Smart Clipboard Paste Handler
     window.addEventListener('paste', e => {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (const item of items) {
             if (item.type.startsWith('image/')) {
-                if (currentTaskOption === 'gen') setTaskOption('own');
-                renderImageToPinboard(item.getAsFile());
+                const file = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    if (currentActiveMode === 'image') {
+                        displaySolutionImage(ev.target.result);
+                        showToast('🖼️ Foto in Lösungsweg eingefügt!');
+                    } else {
+                        if (currentTaskOption === 'gen') setTaskOption('own');
+                        displayLoadedImage(ev.target.result);
+                        showToast('🖼️ Bild auf Aufgaben-Pinnwand geladen!');
+                    }
+                };
+                reader.readAsDataURL(file);
                 e.preventDefault();
-                showToast('🖼️ Bild aus Zwischenablage geladen!');
                 return;
             }
         }
@@ -869,11 +971,21 @@
         if (currentTaskOption === 'gen') {
             block.innerHTML = `<button class="action-btn-full green" onclick="copyTaskGenerationPromptOnly()">✨ Aufgaben-Prompt kopieren → bei ${selectedKI} einfügen</button>`;
         } else if (loadedImageSrc) {
-            block.innerHTML = `<button class="action-btn-full green" onclick="copyImageToClipboardOnly()">🖼️ Bildaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            if (isTeacherMode) {
+                // Ermöglicht das Senden des Bildes kombiniert mit dem direkten Lösungstext für Lehrpersonen
+                block.innerHTML = `
+                    <div style="display:flex; gap:6px; width:100%;">
+                        <button class="action-btn-full green" style="flex:1;" onclick="copyImageToClipboardOnly()">🖼️ 1. Bildaufgabe kopieren</button>
+                        <button class="action-btn-full neutral" style="flex:1;" onclick="copyOverrideInstructionOnly()">⚠️ 2. Musterlösungs-Text kopieren</button>
+                    </div>`;
+            } else {
+                block.innerHTML = `<button class="action-btn-full green" onclick="copyImageToClipboardOnly()">🖼️ Bildaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            }
         } else if (document.getElementById('universalTaskText').value.trim()) {
-            block.innerHTML = `<button class="action-btn-full green" onclick="copyPinboardTextOnly()">📋 Textaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            const btnText = isTeacherMode ? `🔓 Direkte Musterlösung anfordern → bei ${selectedKI} einfügen` : `📋 Textaufgabe kopieren → bei ${selectedKI} einfügen`;
+            block.innerHTML = `<button class="action-btn-full green" onclick="copyPinboardTextOnly()">${btnText}</button>`;
         } else {
-            block.innerHTML = `<div class="action-hint">💡 Erfasse oben deine Aufgabe (Text eintippen oder Bild einfügen), um sie an ${selectedKI} zu übergeben.</div>`;
+            block.innerHTML = `<div class="action-hint">💡 Erfasse oben eine Aufgabe (Text, Datei oder Kamera), um sie an ${selectedKI} zu übergeben.</div>`;
         }
     }
 
@@ -891,7 +1003,15 @@
 
     async function copyPinboardTextOnly() {
         const txt = document.getElementById('universalTaskText').value.trim();
-        await safeCopy(`[MEINE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Löse sie nicht auf, sondern warte auf meinen ersten Lösungsschritt oder meine erste Vermutung.`);
+        if (isTeacherMode) {
+            await safeCopy(`[MEINE AUFGABE - MASTER OVERRIDE]:\n${txt}\n\nLiefere mir zu dieser Aufgabe SOFORT die perfekte, vollständige und fehlerfreie Musterlösung mitsamt allen Zwischenschritten und Herleitungen.`);
+        } else {
+            await safeCopy(`[MEINE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Löse sie nicht auf, sondern warte auf meinen ersten Lösungsschritt oder meine erste Vermutung.`);
+        }
+    }
+
+    async function copyOverrideInstructionOnly() {
+        await safeCopy(`ACHTUNG MASTER-OVERRIDE: Analysiere das soeben hochgeladene Bild dieser Aufgabe und liefere mir SOFORT die perfekte, vollständige und fehlerfreie Musterlösung inklusive aller Herleitungen, Rechenwege und Zwischenschritte auf Schriftdeutsch.`);
     }
 
     async function copyImageToClipboardOnly() {
@@ -901,14 +1021,18 @@
             const blob = await resp.blob();
             await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
             showToast('🖼️ Bild kopiert! Ctrl+V im KI-Fenster einfügen.');
-        } catch { showToast('⚠️ Bildkopieren blockiert – bitte manuell einfügen.'); }
+        } catch { showToast('⚠️ Bildkopieren blockiert.'); }
     }
 
     async function copyTextSolutionWorkflowOnly() {
         const txt = document.getElementById('keyboardInput').value.trim();
         if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
-        await safeCopy(txt);
-        showToast('📋 Lösungsschritt kopiert!');
+        
+        if (isTeacherMode) {
+            await safeCopy(`[LEHRPERSONEN-EINGABE]:\n${txt}\n\nIgnoriere das sokratische Verhalten. Gib mir die direkte mathematische/fachliche Auflösung oder Bestätigung zu diesem Schritt.`);
+        } else {
+            await safeCopy(txt);
+        }
     }
 
     async function copyCanvasSolutionWorkflowOnly() {
@@ -916,9 +1040,19 @@
             if (!blob) { showToast('⚠️ Zeichenfeld ist leer.'); return; }
             try {
                 await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showToast('🖼️ Zeichnung kopiert!');
+                showToast(isTeacherMode ? '🖼️ Zeichnung kopiert! (Nutze Override-Text falls Direktlösung gewünscht)' : '🖼️ Zeichnung kopiert!');
             } catch { showToast('⚠️ Kopieren blockiert.'); }
         }, 'image/png');
+    }
+
+    async function copySolutionImageWorkflowOnly() {
+        if (!loadedSolutionImageSrc) { showToast('⚠️ Bitte zuerst ein Foto aufnehmen oder hochladen.'); return; }
+        try {
+            const resp = await fetch(loadedSolutionImageSrc);
+            const blob = await resp.blob();
+            await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+            showToast('🖼️ Foto des Lösungswegs kopiert! Drüben einfügen.');
+        } catch { showToast('⚠️ Kopieren fehlgeschlagen.'); }
     }
 
     // ── IMAGE POPUP ────────────────────────────────────────────
@@ -959,7 +1093,7 @@
     document.addEventListener('mousemove', e => { if (!isDragging) return; dragWin.style.left = (e.clientX-dX)+'px'; dragWin.style.top = (e.clientY-dY)+'px'; });
     document.addEventListener('mouseup', () => isDragging = false);
 
-    // ── CANVAS ─────────────────────────────────────────────────
+    // ── CANVAS DRAWING SYSTEM ──────────────────────────────────
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
         canvas.width  = wrapper.offsetWidth || 450;
@@ -1032,7 +1166,7 @@
     canvas.addEventListener('touchend',   stopDrawing);
     window.addEventListener('resize', initCanvas);
 
-    // ── TOAST ──────────────────────────────────────────────────
+    // ── STATUS SYSTEM ──────────────────────────────────────────
     function showToast(msg) {
         const t = document.getElementById('statusToast');
         t.textContent = msg; t.style.display = 'block';
