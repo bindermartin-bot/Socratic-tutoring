@@ -453,7 +453,7 @@
 
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
-        <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
+       <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
         <h1>Socratic Tutoring</h1>
         <p>Digitaler Lernassistent für die Schweizer Berufsmaturität. Die KI verrät keine Lösungen — sie stellt gezielte Fragen, damit du selbst denkst.</p>
     </div>
@@ -489,7 +489,7 @@
 <div class="screen" id="guidanceScreen" style="display:none;background:#e4e9f2;">
     <div class="guidance-card">
         <div class="gc-header">
-            <img src="image_b1f285.png" alt="BBZ Logo" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
+           <img src="image_b1f285.png" alt="BBZ Logo" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
             <h2>Sokratische Regeln aktivieren</h2>
             <p>Führe Schritt 1 aus, damit die KI dir beim Denken hilft – statt einfach die Lösung zu liefern.</p>
         </div>
@@ -529,7 +529,7 @@
             </div>
         </div>
 
-        <img src="image_b1f285.png" alt="BBZ" class="logo-mini" ondblclick="unlockTeacherMode()" title="Lehrpersonen-Modus aktivieren" onerror="this.style.display='none'">
+        <img src="image_b1f285.png" alt="BBZ" class="logo-mini" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
     </div>
 
     <div class="pinboard">
@@ -623,6 +623,25 @@
 <div class="toast" id="statusToast"></div>
 
 <script>
+    // ── GEHEIMER LEHRER-MODUS (DOPPELKLICK AUF LOGO) ──────────────────
+function triggerTeacherMode() {
+    // Hier kannst du dein Wunsch-Passwort definieren (aktuell: "sh-bm")
+    const masterPassword = "sh-bm"; 
+    
+    const input = prompt("🔐 Streng geheim! Bitte Lehrpersonen-Passwort eingeben:");
+    
+    if (input === masterPassword) {
+        showToast("🔓 Lehrer-Modus aktiviert!");
+        
+        // Aktion 1: Schaltet sofort den gesperrten "Weiter"-Button frei
+        unlockGuidanceNextBtn();
+        
+        // Aktion 2: Springt optional direkt ins Haupt-Arbeitsjournal
+        proceedToMainWorkspace();
+    } else if (input !== null) {
+        showToast("❌ Zugriff verweigert.");
+    }
+}
     // ── STATE ──────────────────────────────────────────────────
     const canvas    = document.getElementById('paintCanvas');
     const ctx       = canvas.getContext('2d');
