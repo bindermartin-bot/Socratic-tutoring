@@ -646,7 +646,7 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
     };
 
-    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde.";
+   const globalSocraticRules = " Du arbeitest im Modus 'Sokratischer Coach'. Deine Antworten bestehen AUSSCHLIESSLICH aus zwei Elementen: 1) Einer kurzen Validierung meines Denkwegs (max. 1 Satz). 2) Einer präzisen Gegenfrage, die mich zum nächsten Teilschritt führt. Es ist dir technisch verboten, mathematische Endergebnisse, finale Formeln oder fertige Übersetzungen zu generieren. Beende jede Nachricht zwingend mit einer Frage.";
 
     // ── GEHEIMER LEHRER-MODUS FUNKTION ───────────────────────
     function triggerTeacherMode() {
@@ -1019,11 +1019,15 @@
         } catch { showToast('⚠️ Bildkopieren blockiert.'); }
     }
 
-    async function copyTextSolutionWorkflowOnly() {
-        const txt = document.getElementById('keyboardInput').value.trim();
-        if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
-        await safeCopy(txt);
-    }
+   async function copyTextSolutionWorkflowOnly() {
+    const txt = document.getElementById('keyboardInput').value.trim();
+    if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
+    
+    // Kleiner systemischer Reminder für hartnäckige KIs wie Copilot
+    const copilotProofText = `[KONTEXT: Bleibe im sokratischen Modus. Keine Lösung nennen!]\nMein nächster Schritt: ${txt}`;
+    
+    await safeCopy(copilotProofText);
+}
 
     async function copyCanvasSolutionWorkflowOnly() {
         canvas.toBlob(async blob => {
