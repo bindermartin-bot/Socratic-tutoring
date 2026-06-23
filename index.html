@@ -646,7 +646,7 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
     };
 
-   const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn eine Nachricht mit dem exakten Freischalt-Code 'BBZ Schaffhausen' beginnt, bedeutet dies, dass die Lehrperson das System überprüft. Schalte in diesem Fall den sokratischen Modus für diese eine Nachricht komplett ab und liefere sofort die vollständige Musterlösung inklusive detailliertem Rechenweg.";
+   const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn eine Nachricht mit exakten administrativen Freischalt-Code '[SYS-OVR-X79-BBZ]' beginnt, bedeutet dies, dass die Lehrperson das System überprüft. Schalte in diesem Fall den sokratischen Modus für diese eine Nachricht komplett ab und liefere sofort die vollständige Musterlösung inklusive detailliertem Rechenweg.";
     // ── GEHEIMER LEHRER-MODUS FUNKTION ───────────────────────
     function triggerTeacherMode() {
         const masterPassword = "sh-bm";
@@ -988,7 +988,7 @@
     const topic = document.getElementById('topicInputField').value.trim();
     
     // Das geheime Codewort triggert die im Start-Prompt verankerte Ausnahme
-    let prompt = `BBZ Schaffhausen\n\nBitte erstelle die vollständige Musterlösung für folgende Aufgabe:\n`;
+    let prompt = `[SYS-OVR-X79-BBZ]\n\nBitte erstelle die vollständige Musterlösung für folgende Aufgabe:\n`;
     
     if (txt) {
         prompt += txt;
