@@ -999,11 +999,11 @@
         await safeCopy(prompt);
         showToast('🔑 Text-Prompt kopiert! Vergiss nicht, das Bild bei Copilot einzufügen.');
     } else if (currentTaskOption === 'gen' && topic) {
-        prompt = `BBZ Schaffhausen\n\nGeneriere eine anspruchsvolle Aufgabe zum Thema "${topic}" und liefere direkt die vollständige Musterlösung mit Rechenweg dazu.`;
+        prompt = `[SYS-OVR-X79-BBZ]\n\nGeneriere eine anspruchsvolle Aufgabe zum Thema "${topic}" und liefere direkt die vollständige Musterlösung mit Rechenweg dazu.`;
         await safeCopy(prompt);
         showToast('🔑 Lösungs-Prompt für generierte Aufgabe kopiert!');
     } else {
-        prompt = `BBZ Schaffhausen\n\nGib mir die vollständige Lösung für die aktuelle Aufgabe im Chat aus.`;
+        prompt = `[SYS-OVR-X79-BBZ]\n\nGib mir die vollständige Lösung für die aktuelle Aufgabe im Chat aus.`;
         await safeCopy(prompt);
         showToast('🔑 Lösungs-Prompt kopiert!');
     }
