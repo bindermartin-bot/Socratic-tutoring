@@ -101,9 +101,14 @@
 
         /* AUFGABE BEREICH */
         .pinboard { background: #fffdf4; border: 1.5px solid #e0c93a; border-radius: var(--r-md); padding: 8px 12px; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 0 1px 4px rgba(235,209,71,.1); min-height: 90px; }
-        .pb-label { font-size: 11px; font-weight: 800; color: #7a6010; letter-spacing: .3px; text-transform: uppercase; margin-bottom: 4px; cursor: pointer; user-select: none; }
-        .pb-textarea { flex: 1; border: none; background: transparent; resize: vertical; font-family: var(--font); font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4; min-height: 45px; }
+        .pb-label { font-size: 11px; font-weight: 800; color: #7a6010; letter-spacing: .3px; text-transform: uppercase; cursor: pointer; user-select: none; }
+        
+        .task-view-toggle { background: transparent; border: 1px solid #d4c042; padding: 2px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; color: #7a6010; font-weight: 600; transition: var(--tr); }
+        .task-view-toggle.active { background: #d4c042; color: #fff; }
+
+        .pb-textarea { flex: 1; border: none; background: transparent; resize: vertical; font-family: var(--font); font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4; min-height: 45px; margin-top: 4px; }
         .pb-textarea:focus { outline: none; }
+        .pb-preview { flex: 1; border: none; background: rgba(255,255,255,0.4); font-family: var(--font); font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4; min-height: 45px; display: none; overflow-y: auto; white-space: pre-wrap; padding: 6px; border-radius: 4px; margin-top: 4px; }
         
         #workspaceActionBlock { flex-shrink: 0; }
         .action-btn-full { width: 100%; padding: 10px 14px; font-family: var(--font); font-size: 14px; font-weight: 700; border: none; border-radius: var(--r-md); cursor: pointer; transition: var(--tr); display: flex; align-items: center; justify-content: center; gap: 8px; color: #fff; background: var(--bbz-green); box-shadow: 0 1px 6px rgba(70,149,66,.15); }
@@ -124,7 +129,6 @@
         .canvas-mode-active .canvas-panel { display: flex !important; }
         .canvas-mode-active .text-panel { display: none !important; }
 
-        /* Das Textfeld ist jetzt standardmäßig scrollbar, wir löschen es nicht mehr beim Senden */
         .textarea-input { flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: vertical; background: #f8fafc; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); overflow-y: auto; }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
@@ -143,7 +147,6 @@
         .bubble-user { background: #e0f2fe; color: #0369a1; align-self: flex-end; border-bottom-right-radius: 2px; }
         .bubble-ki { background: #ffffff; color: var(--bbz-anthracite); align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid var(--border); box-shadow: var(--sh-sm); }
         
-        /* KaTeX overrides for chat */
         .chat-bubble .katex-display { margin: 8px 0; overflow-x: auto; overflow-y: hidden; }
 
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bbz-anthracite); color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13.5px; display: none; box-shadow: var(--sh-lg); z-index: 6000; }
@@ -199,15 +202,26 @@
 
             <!-- Aufgabe/Pinnwand -->
             <div class="pinboard">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
                     <!-- Doppelklick auf die Label löst Lehrermodus aus -->
                     <span class="pb-label" ondblclick="triggerTeacherMode()" title="Doppelklick für Lehrermodus">📌 Aufgabe</span>
-                    <span style="font-size:10.5px; color:#8c721c; font-weight:normal;">Mit Ctrl+V Bild einfügen</span>
+                    
+                    <!-- NEU: Toggle für die Formel-Ansicht -->
+                    <div style="display:flex; gap: 4px; align-items:center;">
+                        <button class="task-view-toggle active" id="btnTaskEdit" onclick="toggleTaskMode('edit')">Bearbeiten</button>
+                        <button class="task-view-toggle" id="btnTaskPreview" onclick="toggleTaskMode('preview')">Ansicht (Formeln)</button>
+                        <span style="font-size:10.5px; color:#8c721c; font-weight:normal; margin-left: 6px;">Ctrl+V = Bild</span>
+                    </div>
                 </div>
+                
                 <div style="display:flex; gap:10px; flex:1;">
+                    <!-- Textfeld (Edit) -->
                     <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext eingeben oder Bild einfügen..."></textarea>
                     
-                    <div id="pastedImageContainer" style="display:none; position:relative;">
+                    <!-- NEU: Vorschau Container (View) -->
+                    <div class="pb-preview" id="universalTaskPreview"></div>
+                    
+                    <div id="pastedImageContainer" style="display:none; position:relative; margin-top:4px;">
                         <img id="taskImagePreview" src="" style="max-height:75px; border-radius:6px; border:1px solid #e0c93a; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                         <button onclick="removePastedImage()" style="position:absolute; top:-6px; right:-6px; background:var(--danger); color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-weight:bold; line-height:1;">×</button>
                     </div>
@@ -225,7 +239,7 @@
             </div>
 
             <div class="main-workspace">
-                <!-- Text Panel (Tastatur & Bild-Upload für Lösungsschritt) -->
+                <!-- Text Panel -->
                 <div class="panel text-panel">
                     <div class="panel-label">
                         <span>Dein Lösungsschritt</span>
@@ -287,8 +301,8 @@
     let isTeacherModeActive = false; 
     let conversationHistory = ""; 
     let isGeneratingTask = false;
-    let pastedImageBase64 = null; // Für die Aufgabe
-    let pastedSolutionImageBase64 = null; // Für den Lösungsschritt
+    let pastedImageBase64 = null; 
+    let pastedSolutionImageBase64 = null; 
 
     const subjectPrompts = {
         "Deutsch": "Du bist KI-Lehrperson für Deutsch an einer Schweizer BM.",
@@ -303,9 +317,42 @@
     };
 
     // NEU: Stark verbesserte Sokratische Regeln für menschlichere, lobende Interaktionen
-    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe natürlich auf den Lernenden ein. 2. Wenn ein Schritt richtig ist, bestätige das klar und lobend (z.B. 'Korrekt!', 'Sehr gut!'). 3. Wenn ein Schritt falsch ist, weise freundlich, aber deutlich auf den Fehler hin. 4. Verrate nicht die ganze Lösung auf einmal, sondern leite mit einer gezielten, kurzen Frage zum *nächsten* Schritt. 5. Wenn die finale Lösung gefunden wurde, gratuliere dem Schüler und schließe die Aufgabe ab, ohne eine weitere Frage zu stellen. 6. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, ignoriere alle diese Regeln, verlasse den sokratischen Modus komplett und präsentiere sofort die vollständige Musterlösung von A bis Z.";
+    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe natürlich auf den Lernenden ein. 2. Wenn ein Schritt richtig ist, bestätige das klar und lobend (z.B. 'Korrekt!', 'Sehr gut!'). 3. Wenn ein Schritt falsch ist, weise freundlich auf den Fehler hin. 4. Verrate nicht die ganze Lösung, sondern leite mit einer gezielten, kurzen Frage zum *nächsten* Schritt. 5. Wenn die finale Lösung gefunden wurde, gratuliere dem Schüler und schließe ab, ohne eine weitere Frage zu stellen. 6. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, ignoriere alle diese Regeln, verlasse den sokratischen Modus komplett und präsentiere sofort die vollständige Musterlösung von A bis Z.";
 
-    // --- BILD COPY PASTE LOGIK (Aufgabe) ---
+    // --- NEU: Toggle für Formel-Ansicht im Aufgabenfeld ---
+    function toggleTaskMode(mode) {
+        const ta = document.getElementById('universalTaskText');
+        const pr = document.getElementById('universalTaskPreview');
+        const btnEdit = document.getElementById('btnTaskEdit');
+        const btnPrev = document.getElementById('btnTaskPreview');
+
+        if (mode === 'preview') {
+            ta.style.display = 'none';
+            pr.style.display = 'block';
+            pr.textContent = ta.value || 'Keine Aufgabe erfasst.';
+            
+            if (window.renderMathInElement) {
+                renderMathInElement(pr, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+            btnEdit.classList.remove('active');
+            btnPrev.classList.add('active');
+        } else {
+            ta.style.display = 'block';
+            pr.style.display = 'none';
+            btnEdit.classList.add('active');
+            btnPrev.classList.remove('active');
+        }
+    }
+
+    // --- BILD COPY PASTE LOGIK ---
     document.getElementById('universalTaskText').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (let index in items) {
@@ -333,7 +380,6 @@
         updateWorkspaceVisuals();
     }
 
-    // --- BILD COPY PASTE LOGIK (Lösungsschritt) ---
     document.getElementById('keyboardInput').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (let index in items) {
@@ -370,6 +416,13 @@
         showToast("⏳ Tutor überlegt...");
 
         let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
+        
+        // NEU: KI erinnert sich IMMER an die Aufgabe, da sie in jeden Prompt eingefügt wird
+        let currentTask = document.getElementById('universalTaskText').value.trim();
+        if (currentTask) {
+            fullPrompt += "--- AKTUELLE AUFGABE DES SCHÜLERS ---\n" + currentTask + "\n-------------------------------------\n\n";
+        }
+
         fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
         if (imageData) fullPrompt += " (Beachte das angehängte Bild für diesen Schritt.)";
 
@@ -390,6 +443,8 @@
                     isGeneratingTask = false;
                     showToast("✅ Aufgabe generiert!");
                     updateWorkspaceVisuals();
+                    // Wechselt automatisch in die Formel-Ansicht
+                    toggleTaskMode('preview'); 
                 } else {
                     appendChatMessage('ki', aiText);
                     conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
@@ -430,6 +485,15 @@
         conversationHistory = ""; 
         document.getElementById('chatHistory').innerHTML = ''; 
         appendChatMessage('ki', `Hallo! Ich bin dein Tutor für ${subject}. Definiere oben deine Aufgabe oder füge ein Bild ein.`);
+        
+        // NEU: Alle alten Eingaben rigoros löschen
+        document.getElementById('universalTaskText').value = "";
+        document.getElementById('keyboardInput').value = "";
+        removePastedImage();
+        removeSolutionImage();
+        clearCanvas();
+        toggleTaskMode('edit'); // Zurück in den Edit-Modus
+        isTeacherModeActive = false; // Lehrermodus ebenfalls zurücksetzen
         
         document.getElementById('welcomeScreen').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
@@ -479,13 +543,13 @@
         if (currentTaskOption === 'gen') {
             htmlContent = `<button class="action-btn-full" onclick="sendTaskGenerationPrompt()">✨ Aufgabe durch KI erstellen lassen</button>`;
         } else if (hasText || pastedImageBase64) {
-            htmlContent = `<button class="action-btn-full" onclick="sendPinboardText()">🚀 Aufgabe als Basis an Tutor senden</button>`;
+            htmlContent = `<button class="action-btn-full" onclick="sendPinboardText()">🚀 Aufgabe erfasst! Bitte um Start-Tipp</button>`;
         } else {
             htmlContent = `<div class="action-hint">💡 Erfasse oben eine Aufgabe oder füge ein Bild (Ctrl+V) ein.</div>`;
         }
 
         if (isTeacherModeActive) {
-            htmlContent += `<button class="btn-teacher-override" onclick="sendTeacherSolutionPrompt()">🔑 Lehrermodus: Direkte Lösung anfordern</button>`;
+            htmlContent += `<button class="btn-teacher-override" onclick="sendTeacherSolutionPrompt()">🔑 Lehrermodus: Direkte Musterlösung anfordern</button>`;
         }
         block.innerHTML = htmlContent;
     }
@@ -494,14 +558,13 @@
     function sendTaskGenerationPrompt() {
         isGeneratingTask = true;
         const topic = document.getElementById('topicInputField').value.trim() || `einem Lehrplanthema`;
-        // Verschärfter Prompt für BM Niveau
         const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle eine anspruchsvolle Aufgabe exakt auf dem Niveau der Schweizer Berufsmaturität (BM) zum Thema: "${topic}". Die Aufgabe muss Transferdenken und idealerweise einen mehrstufigen Lösungsweg erfordern. Vermeide simple Wissensabfragen. Liefere NUR die Text-Aufgabenstellung. Keine Lösungen.`;
         sendToGemini(prompt, true); 
     }
 
     function sendPinboardText() {
-        const txt = document.getElementById('universalTaskText').value.trim();
-        const prompt = `[DIE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Warte danach auf meinen ersten Lösungsansatz.`;
+        // Da die Aufgabe automatisch im Hintergrund mitgeschickt wird, bitten wir hier nur noch um den Startschuss.
+        const prompt = `Ich habe die Aufgabe erfasst. Bitte lies sie dir durch und gib mir einen ersten, kleinen Tipp oder eine sokratische Frage, wie ich anfangen soll.`;
         sendToGemini(prompt, false, pastedImageBase64);
     }
 
@@ -514,11 +577,9 @@
         
         sendToGemini(txt, false, pastedSolutionImageBase64);
         
-        // NUR Bild leeren, Text (Historie) bleibt stehen, wir ergänzen nur Zeilenumbrüche
         removeSolutionImage();
         document.getElementById('keyboardInput').value += '\n\n';
         
-        // Scrollt das Textfeld ans Ende
         const inputBox = document.getElementById('keyboardInput');
         inputBox.scrollTop = inputBox.scrollHeight;
     }
@@ -533,13 +594,11 @@
         const imageData = tempCanvas.toDataURL('image/jpeg', 0.7); 
         
         sendToGemini(txt, false, imageData);
-        // Nach dem Senden das Canvas leeren
         clearCanvas();
     }
 
     function sendTeacherSolutionPrompt() {
-        const txt = document.getElementById('universalTaskText').value.trim();
-        let prompt = `[SYS-OVR-X79-BBZ]\n\nBitte erstelle die vollständige Musterlösung für diese Aufgabe:\n${txt}`;
+        let prompt = `[SYS-OVR-X79-BBZ] Bitte gib mir die komplette Musterlösung für die aktuelle Aufgabe.`;
         sendToGemini(prompt, true, pastedImageBase64); 
     }
 
