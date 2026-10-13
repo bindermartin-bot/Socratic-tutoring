@@ -107,7 +107,6 @@
         .subject-badge { background: var(--bbz-anthracite); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
         .task-bar-label { font-size: 13px; font-weight: 700; color: var(--bbz-anthracite); }
         
-        /* Deutlich erkennbare Buttons für die Aufgabenwahl */
         .task-toggle { padding: 8px 14px; background: var(--panel); border: 1px solid var(--border-strong); border-radius: var(--r-md); cursor: pointer; font-family: var(--font); font-size: 13.5px; font-weight: 600; transition: var(--tr); color: var(--bbz-anthracite); box-shadow: var(--sh-sm); }
         .task-toggle.active { background: #ecfdf5; color: var(--bbz-green-dark); border-color: var(--bbz-green); box-shadow: 0 0 0 1px var(--bbz-green); }
         .task-toggle:hover:not(.active) { background: #f9fafb; border-color: var(--muted); }
@@ -301,7 +300,6 @@
         <!-- RECHTS: Fixierter Chat -->
         <div class="right-sidebar">
             <div class="chat-header">
-                <!-- Dein eigenes Logo -->
                 <img src="Logo 05 - klein.png" alt="Logo">
                 <span>Tutor Chat</span>
             </div>
@@ -344,7 +342,8 @@
         "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
-    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe natürlich auf den Lernenden ein. 2. Wenn ein Schritt richtig ist, bestätige das klar und lobend (z.B. 'Korrekt!', 'Sehr gut!'). 3. Wenn ein Schritt falsch ist, weise freundlich auf den Fehler hin. 4. Verrate nicht die ganze Lösung, sondern leite mit einer gezielten, kurzen Frage zum *nächsten* Schritt. 5. Wenn die finale Lösung gefunden wurde, gratuliere dem Schüler und schließe ab, ohne eine weitere Frage zu stellen. 6. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, ignoriere alle diese Regeln, verlasse den sokratischen Modus komplett und präsentiere sofort die vollständige Musterlösung von A bis Z.";
+    // NEU: Bild-Lese-Regel und entspannte, hilfreiche Feedback-Regeln
+    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ und natürlich auf den Lernenden ein. 2. BILDER LESEN: Wenn ein Bild angehängt ist, starte deine Antwort zwingend damit, dass du in Text oder LaTeX kurz wiedergibst, was du auf dem Bild abgelesen hast (z.B. 'Ich sehe auf deiner Skizze die Gleichung...'). 3. FEEDBACK: Lobe richtige Schritte explizit ('Sehr gut!', 'Korrekt!'). Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Sei eine echte Hilfe. Wenn der Lernende feststeckt, darfst du Teilschritte vorrechnen, konkrete Tipps geben oder Zusammenhänge erklären. Weiche gerne vom reinen Fragenstellen ab, um den Lernprozess zu unterstützen. Die einzige harte Grenze: Verrate nicht die komplette Endlösung auf einmal. 5. ABSCHLUSS: Wenn die Endlösung erreicht ist, gratuliere und stelle keine neuen Fragen mehr. 6. FORMAT: Nutze zwingend LaTeX für Formeln ($$...$$ für abgesetzt, $...$ für Inline). AUSNAHME: Bei der Nachricht '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung von A bis Z.";
 
     function toggleTaskMode(mode) {
         const ta = document.getElementById('universalTaskText');
@@ -576,7 +575,6 @@
 
     function sendTaskGenerationPrompt() {
         isGeneratingTask = true;
-        // Zieht das aktuell gewählte Fach zwingend in den Prompt, wenn das Textfeld leer ist
         const topic = document.getElementById('topicInputField').value.trim() || `einem Standard-Lehrplanthema aus dem Fach ${selectedSubject}`;
         const difficulty = document.getElementById('taskDifficulty').value;
         
