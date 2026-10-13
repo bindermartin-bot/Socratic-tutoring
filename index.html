@@ -55,7 +55,7 @@
             border-top: 5px solid var(--bbz-green); padding: 36px 32px; max-width: 840px; width: 100%;
             box-shadow: var(--sh-lg); text-align: center; margin-bottom: 28px;
         }
-        .hero-card h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 10px; cursor: pointer; }
+        .hero-card h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 10px; cursor: pointer; user-select: none; }
         .hero-card p { font-size: 15px; color: var(--muted); max-width: 680px; margin: 0 auto; line-height: 1.6; }
         .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 14px; }
         .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; max-width: 860px; width: 100%; margin-bottom: 30px; }
@@ -82,7 +82,7 @@
         .btn-danger { background: #fff1f1; color: var(--danger); border: 1.5px solid #fecaca; padding: 6px 12px; font-size: 13px; }
         .btn-danger:hover { background: #fee2e2; }
         
-        .btn-action-text, .btn-action-canvas { width: 100%; padding: 11px; font-size: 14px; margin-top: 8px; border-radius: var(--r-md); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .btn-action-text, .btn-action-canvas { width: 100%; padding: 11px; font-size: 14px; margin-top: 8px; border-radius: var(--r-md); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border: none; cursor: pointer; font-weight: bold; transition: var(--tr); }
         .btn-action-text { background: var(--bbz-anthracite); }
         .btn-action-text:hover { background: #1e1e28; }
         .btn-action-canvas { background: var(--bbz-teal); }
@@ -96,7 +96,7 @@
         .task-toggle.active { background: #f0faf0; color: var(--bbz-green); border-color: var(--bbz-green); }
         
         .topic-wrap { display: none; align-items: center; gap: 6px; flex: 1; max-width: 260px; }
-        .topic-input { padding: 4px 10px; border: 1.5px solid var(--border); border-radius: var(--r-sm); width: 100%; font-family: var(--font); font-size: 13px; background: #f8fafc; transition: var(--tr); }
+        .topic-input { padding: 4px 10px; border: 1.5px solid var(--border); border-radius: var(--r-sm); width: 100%; font-family: var(--font); font-size: 13px; background: #f8fafc; transition: var(--tr); color: var(--bbz-anthracite); }
         .topic-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
         /* AUFGABE BEREICH */
@@ -117,7 +117,7 @@
         
         .main-workspace { display: flex; gap: 8px; flex: 1; min-height: 0; }
         .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 10px; display: flex; flex-direction: column; flex: 1; min-height: 0; box-shadow: var(--sh-md); }
-        .panel-label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+        .panel-label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; display: flex; justify-content: space-between; }
 
         .text-mode-active .text-panel { display: flex !important; }
         .text-mode-active .canvas-panel { display: none !important; }
@@ -195,16 +195,15 @@
                 </div>
             </div>
 
-            <!-- Neue Aufgabe/Pinnwand -->
+            <!-- Aufgabe/Pinnwand -->
             <div class="pinboard">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
                     <span class="pb-label">📌 Aufgabe</span>
-                    <span style="font-size:10.5px; color:#8c721c;">Mit Ctrl+V Bild einfügen</span>
+                    <span style="font-size:10.5px; color:#8c721c; font-weight:normal;">Mit Ctrl+V Bild einfügen</span>
                 </div>
                 <div style="display:flex; gap:10px; flex:1;">
                     <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext eingeben oder Bild einfügen..."></textarea>
                     
-                    <!-- Bild-Vorschau Bereich -->
                     <div id="pastedImageContainer" style="display:none; position:relative;">
                         <img id="taskImagePreview" src="" style="max-height:75px; border-radius:6px; border:1px solid #e0c93a; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                         <button onclick="removePastedImage()" style="position:absolute; top:-6px; right:-6px; background:var(--danger); color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-weight:bold; line-height:1;">×</button>
@@ -223,10 +222,20 @@
             </div>
 
             <div class="main-workspace">
-                <!-- Text Panel -->
+                <!-- Text Panel (Tastatur & Bild-Upload für Lösungsschritt) -->
                 <div class="panel text-panel">
-                    <div class="panel-label">Dein Lösungsschritt</div>
-                    <textarea id="keyboardInput" class="textarea-input" placeholder="Tippe deinen Lösungsansatz hier ein..."></textarea>
+                    <div class="panel-label">
+                        <span>Dein Lösungsschritt</span>
+                        <span style="font-size:10.5px; color:var(--muted-light); font-weight:normal; text-transform:none; letter-spacing:0;">Mit Ctrl+V Bild einfügen</span>
+                    </div>
+                    <div style="display:flex; gap:10px; flex:1;">
+                        <textarea id="keyboardInput" class="textarea-input" placeholder="Tippe deinen Lösungsansatz hier ein oder füge ein Foto deines Notizblattes ein..."></textarea>
+                        
+                        <div id="pastedSolutionImageContainer" style="display:none; position:relative;">
+                            <img id="solutionImagePreview" src="" style="max-height:120px; border-radius:6px; border:1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <button onclick="removeSolutionImage()" style="position:absolute; top:-6px; right:-6px; background:var(--danger); color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-weight:bold; line-height:1;">×</button>
+                        </div>
+                    </div>
                     <button class="btn btn-action-text" onclick="sendTextSolution()">🚀 Lösungsschritt senden</button>
                 </div>
 
@@ -275,23 +284,24 @@
     let isTeacherModeActive = false; 
     let conversationHistory = ""; 
     let isGeneratingTask = false;
-    let pastedImageBase64 = null; // Speichert eingefügte Aufgabenbilder
+    let pastedImageBase64 = null; // Für die Aufgabe
+    let pastedSolutionImageBase64 = null; // Für den Lösungsschritt
 
     const subjectPrompts = {
-        "Deutsch": "Du bist KI-Lehrperson für Deutsch (CH-Berufsmaturität).",
-        "Französisch": "Du bist KI-Lehrperson für Französisch (CH-Berufsmaturität).",
-        "Englisch": "Du bist KI-Lehrperson für Englisch (CH-Berufsmaturität).",
-        "Mathematik": "Du bist KI-Lehrperson für Mathematik (CH-Berufsmaturität).",
-        "Geschichte": "Du bist KI-Lehrperson für Geschichte (CH-Berufsmaturität).",
-        "Wirtschaft und Recht": "Du bist KI-Lehrperson für W&R (CH-Berufsmaturität).",
-        "Biologie": "Du bist KI-Lehrperson für Biologie (CH-Berufsmaturität).",
-        "Physik": "Du bist KI-Lehrperson für Physik (CH-Berufsmaturität).",
-        "Chemie": "Du bist KI-Lehrperson für Chemie (CH-Berufsmaturität)."
+        "Deutsch": "Du bist KI-Lehrperson für Deutsch an einer Schweizer BM.",
+        "Französisch": "Du bist KI-Lehrperson für Französisch an einer Schweizer BM.",
+        "Englisch": "Du bist KI-Lehrperson für Englisch an einer Schweizer BM.",
+        "Mathematik": "Du bist KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule.",
+        "Geschichte": "Du bist KI-Lehrperson für Geschichte an einer Schweizer BM.",
+        "Wirtschaft und Recht": "Du bist KI-Lehrperson für W&R an einer Schweizer BM.",
+        "Biologie": "Du bist KI-Lehrperson für Biologie an einer Schweizer BM.",
+        "Physik": "Du bist KI-Lehrperson für Physik an einer Schweizer BM.",
+        "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz. Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung.";
 
-    // --- BILD COPY PASTE LOGIK ---
+    // --- BILD COPY PASTE LOGIK (Aufgabe) ---
     document.getElementById('universalTaskText').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (let index in items) {
@@ -319,7 +329,33 @@
         updateWorkspaceVisuals();
     }
 
-    // --- API KOMMUNIKATION (VIA VERCEL BACKEND) ---
+    // --- BILD COPY PASTE LOGIK (Lösungsschritt) ---
+    document.getElementById('keyboardInput').addEventListener('paste', function(e) {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let index in items) {
+            const item = items[index];
+            if (item.kind === 'file' && item.type.includes('image/')) {
+                const blob = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    pastedSolutionImageBase64 = event.target.result;
+                    document.getElementById('solutionImagePreview').src = pastedSolutionImageBase64;
+                    document.getElementById('pastedSolutionImageContainer').style.display = 'block';
+                    showToast("Bild als Lösungsschritt hinzugefügt!");
+                };
+                reader.readAsDataURL(blob);
+                e.preventDefault(); 
+            }
+        }
+    });
+
+    function removeSolutionImage() {
+        pastedSolutionImageBase64 = null;
+        document.getElementById('solutionImagePreview').src = "";
+        document.getElementById('pastedSolutionImageContainer').style.display = 'none';
+    }
+
+    // --- API KOMMUNIKATION ---
     async function sendToGemini(userText, isSystemCommand = false, imageData = null) {
         if (!isSystemCommand) {
             let display = userText;
@@ -345,7 +381,6 @@
             if (data.status === 'success') {
                 const aiText = data.response;
                 
-                // Routing: Geht der Text in den Chat oder in das Aufgabenfeld?
                 if (isGeneratingTask) {
                     document.getElementById('universalTaskText').value = aiText;
                     isGeneratingTask = false;
@@ -370,7 +405,6 @@
         msg.textContent = text;
         document.getElementById('chatHistory').appendChild(msg);
         
-        // Mathe-Formeln mit KaTeX rendern (falls vorhanden)
         if (window.renderMathInElement) {
             renderMathInElement(msg, {
                 delimiters: [
@@ -383,7 +417,6 @@
             });
         }
 
-        // Automatisches Scrollen nach unten
         const historyDiv = document.getElementById('chatHistory');
         historyDiv.scrollTop = historyDiv.scrollHeight;
     }
@@ -391,7 +424,7 @@
     function selectSubject(subject, icon) {
         selectedSubject = subject;
         conversationHistory = ""; 
-        document.getElementById('chatHistory').innerHTML = ''; // Chat leeren
+        document.getElementById('chatHistory').innerHTML = ''; 
         appendChatMessage('ki', `Hallo! Ich bin dein Tutor für ${subject}. Definiere oben deine Aufgabe oder füge ein Bild ein.`);
         
         document.getElementById('welcomeScreen').style.display = 'none';
@@ -457,32 +490,43 @@
     function sendTaskGenerationPrompt() {
         isGeneratingTask = true;
         const topic = document.getElementById('topicInputField').value.trim() || `einem Lehrplanthema`;
-        const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle eine Aufgabe auf BM-Niveau zum Thema: "${topic}". Liefere NUR die Text-Aufgabenstellung. Keine Lösungen.`;
-        sendToGemini(prompt, true); // true = versteckter Befehl
+        // Verschärfter Prompt für BM Niveau
+        const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle eine anspruchsvolle Aufgabe exakt auf dem Niveau der Schweizer Berufsmaturität (BM) zum Thema: "${topic}". Die Aufgabe muss Transferdenken und idealerweise einen mehrstufigen Lösungsweg erfordern. Vermeide simple Wissensabfragen. Liefere NUR die Text-Aufgabenstellung. Keine Lösungen.`;
+        sendToGemini(prompt, true); 
     }
 
     function sendPinboardText() {
         const txt = document.getElementById('universalTaskText').value.trim();
         const prompt = `[DIE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Warte danach auf meinen ersten Lösungsansatz.`;
-        // pastedImageBase64 mitsenden, falls vorhanden
         sendToGemini(prompt, false, pastedImageBase64);
     }
 
     function sendTextSolution() {
         const txt = document.getElementById('keyboardInput').value.trim();
-        if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
-        sendToGemini(txt, false);
+        if (!txt && !pastedSolutionImageBase64) { 
+            showToast('⚠️ Bitte zuerst einen Lösungsschritt oder ein Bild eingeben.'); 
+            return; 
+        }
+        
+        sendToGemini(txt, false, pastedSolutionImageBase64);
+        
+        // Auto-Reset: Eingabefeld und Bild nach dem Senden leeren
+        document.getElementById('keyboardInput').value = '';
+        removeSolutionImage();
     }
 
     function sendCanvasSolution() {
-        const txt = document.getElementById('keyboardInput').value.trim() || "Hier ist meine Skizze zur Aufgabe.";
+        const txt = "Hier ist meine Skizze als Lösungsansatz.";
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
         const tCtx = tempCanvas.getContext('2d');
         tCtx.fillStyle = '#ffffff'; tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
         tCtx.drawImage(canvas, 0, 0);
         const imageData = tempCanvas.toDataURL('image/jpeg', 0.7); 
+        
         sendToGemini(txt, false, imageData);
+        // Nach dem Senden das Canvas leeren
+        clearCanvas();
     }
 
     function sendTeacherSolutionPrompt() {
