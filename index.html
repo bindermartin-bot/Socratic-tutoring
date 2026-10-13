@@ -477,7 +477,8 @@
             const response = await fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ prompt: fullPrompt }),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                redirect: 'follow' // <--- Diese Zeile zwingt den Browser, Googles Weiterleitung zu akzeptieren!
             });
             const data = await response.json();
             
