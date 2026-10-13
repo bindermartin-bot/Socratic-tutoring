@@ -422,25 +422,28 @@
 
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung ohne weitere Fragen.";
 
-   async function sendToGemini(userText, isSystemCommand = false) {
+  async function sendToGemini(userText, isSystemCommand = false, imageData = null) {
     const chatWindow = document.getElementById('chatWindow');
     chatWindow.style.display = 'flex';
 
     if (!isSystemCommand) {
-        appendChatMessage('user', userText);
+        let display = userText;
+        if (imageData) display += "\n[Skizze/Bild wurde angehängt]";
+        appendChatMessage('user', display);
     }
 
     showToast("⏳ Tutor überlegt...");
 
     let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
     fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
+    if (imageData) fullPrompt += " (Beachte zwingend das angehängte Bild für diesen Schritt.)";
 
     try {
-        // Wir rufen jetzt unser EIGENES sicheres Backend auf
+        // Senden an Vercel inklusive 'image'
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: fullPrompt })
+            body: JSON.stringify({ prompt: fullPrompt, image: imageData })
         });
         
         const data = await response.json();
@@ -448,7 +451,7 @@
         if (data.status === 'success') {
             const aiText = data.response;
             appendChatMessage('ki', aiText);
-            conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+            conversationHistory += `Schüler: ${userText} ${imageData ? '(mit Bild)' : ''}\nTutor: ${aiText}\n`;
         } else {
             appendChatMessage('ki', '❌ API Fehler: ' + (data.error || "Unbekannter Fehler"));
         }
@@ -457,6 +460,23 @@
     }
 }
 
+// Wandelt das Canvas in ein Bild um und sendet es
+function sendCanvasSolution() {
+    const txt = document.getElementById('keyboardInput').value.trim() || "Hier ist meine Skizze zur Aufgabe.";
+    
+    // Zwingend weißer Hintergrund, da OpenAI transparente Pixel oft schwarz liest
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tCtx = tempCanvas.getContext('2d');
+    tCtx.fillStyle = '#ffffff';
+    tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+    tCtx.drawImage(canvas, 0, 0);
+    
+    const imageData = tempCanvas.toDataURL('image/jpeg', 0.7); // 70% Qualität reicht völlig
+    
+    sendToGemini(txt, false, imageData);
+}
     function appendChatMessage(sender, text) {
         const msg = document.createElement('div');
         msg.className = `chat-bubble ${sender === 'user' ? 'bubble-user' : 'bubble-ki'}`;
