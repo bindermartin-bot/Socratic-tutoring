@@ -454,44 +454,47 @@
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung.";
 
     // ── NEUE API KOMMUNIKATION ─────────────────────────────────
-    async function sendToGemini(userText, isSystemCommand = false) {
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "DEINE_WEB_APP_URL_HIER_EINFUEGEN") {
-            alert("Achtung: Du musst noch die APPS_SCRIPT_URL im Code eintragen!");
-            return;
-        }
+   async function sendToGemini(userText, isSystemCommand = false) {
+    // 🔴 SCHLÜSSEL DIREKT HIER REIN (inklusive der Anführungszeichen)
+    const GEMINI_API_KEY = "DEIN_AQ_ODER_AI_SCHLÜSSEL_HIER"; 
+    
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.style.display = 'flex';
 
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.style.display = 'flex';
-
-        if (!isSystemCommand) {
-            appendChatMessage('user', userText);
-        }
-
-        showToast("⏳ Tutor tippt...");
-
-        // Prompt mit Kontext zusammenbauen
-        let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
-        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
-
-        try {
-            const response = await fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify({ prompt: fullPrompt }),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                redirect: 'follow' // <--- Diese Zeile zwingt den Browser, Googles Weiterleitung zu akzeptieren!
-            });
-            const data = await response.json();
-            
-            if (data.status === 'success') {
-                appendChatMessage('ki', data.response);
-                conversationHistory += `Schüler: ${userText}\nTutor: ${data.response}\n`;
-            } else {
-                appendChatMessage('ki', '❌ Fehler vom Server: ' + data.response);
-            }
-        } catch (e) {
-            appendChatMessage('ki', '❌ Netzwerkfehler. Ist die Apps Script URL korrekt?');
-        }
+    if (!isSystemCommand) {
+        appendChatMessage('user', userText);
     }
+
+    showToast("⏳ Tutor tippt...");
+
+    let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
+    fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
+
+    // Wir rufen Gemini direkt aus dem Browser auf!
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY;
+    const payload = {
+        contents: [{ parts: [{ text: fullPrompt }] }]
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        
+        if (response.ok && data.candidates && data.candidates[0].content) {
+            const aiText = data.candidates[0].content.parts[0].text;
+            appendChatMessage('ki', aiText);
+            conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+        } else {
+            appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
+        }
+    } catch (e) {
+        appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+    }
+}
 
     function appendChatMessage(sender, text) {
         const msg = document.createElement('div');
