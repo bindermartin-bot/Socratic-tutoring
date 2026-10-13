@@ -160,7 +160,9 @@
         .canvas-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-shrink: 0; background: #f9fafb; padding: 4px; border-radius: var(--r-md); border: 1px solid var(--border); }
         .canvas-hint { font-size: 12px; color: var(--muted-light); font-weight: 500; margin-left: auto; margin-right: 10px; }
         .scroll-wrap { flex: 1; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--r-md); background: #fff; min-height: 0; }
-        .canvas-wrap { position: relative; width: 100%; height: 2400px; }
+        
+        /* Enorm langes Canvas-Papier */
+        .canvas-wrap { position: relative; width: 100%; height: 6000px; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
         /* --- RIGHT SIDEBAR CHAT --- */
@@ -300,7 +302,7 @@
                             <canvas id="paintCanvas"></canvas>
                         </div>
                     </div>
-                    <button class="btn btn-action-canvas" onclick="sendCanvasSolution()">🖼️ Skizze senden</button>
+                    <button class="btn btn-action-canvas" onclick="sendCanvasSolution()">🖼️ Skizze an Tutor senden</button>
                 </div>
             </div>
         </div>
@@ -342,6 +344,7 @@
     let isGeneratingTask = false;
     let pastedImageBase64 = null; 
     let pastedSolutionImageBase64 = null; 
+    let savedDrawingData = null; // Speichert das Canvas bei Resize
 
     const subjectPrompts = {
         "Deutsch": "Du bist KI-Lehrperson für Deutsch an einer Schweizer BM.",
@@ -356,7 +359,6 @@
         "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
-    // NEU: Kürzere Sätze, geduldiger Tutor, der nicht alles sofort verrät
     const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ auf den Lernenden ein, aber fasse dich kurz (max. 2-3 Sätze pro Antwort). 2. BILDER: Wenn ein Bild angehängt ist, beschreibe kurz in Text/LaTeX, was du abliest. 3. FEEDBACK: Lobe richtige Schritte explizit. Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Gib nicht sofort den nächsten kompletten Schritt vor! Stelle eine gezielte Frage oder gib einen kleinen Tipp, damit der Schüler selbst auf die Idee kommt. Löse den Teilschritt nur auf, wenn der Schüler sichtlich feststeckt oder frustriert ist. 5. ABSCHLUSS: Gratuliere am Ende und stelle keine Fragen mehr. 6. FORMAT: Zwingend LaTeX ($$...$$ / $...$). AUSNAHME: Bei '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung.";
 
     // --- RESIZER LOGIK ---
@@ -384,6 +386,10 @@
             isResizing = false;
             resizer.classList.remove('active');
             document.body.style.cursor = 'default';
+            // Nach dem Resizing das Canvas neu anpassen
+            if (currentActiveMode === 'canvas') {
+                setTimeout(initCanvas, 50);
+            }
         }
     });
 
@@ -553,6 +559,7 @@
         removePastedImage();
         removeSolutionImage();
         clearCanvas();
+        savedDrawingData = null; // Canvas Reset
         toggleTaskMode('edit'); 
         isTeacherModeActive = false; 
         
@@ -655,10 +662,12 @@
         const tCtx = tempCanvas.getContext('2d');
         tCtx.fillStyle = '#ffffff'; tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
         tCtx.drawImage(canvas, 0, 0);
-        const imageData = tempCanvas.toDataURL('image/jpeg', 0.7); 
+        // Wir senden das Bild mit 50% Qualität, da das Bild nun sehr groß (6000px) ist
+        const imageData = tempCanvas.toDataURL('image/jpeg', 0.5); 
         
         sendToGemini(txt, false, imageData);
-        clearCanvas();
+        // ACHTUNG: Kein clearCanvas() mehr hier, damit die Zeichnung stehen bleibt!
+        showToast("✅ Skizze gesendet!");
     }
 
     function sendTeacherSolutionPrompt() {
@@ -668,10 +677,24 @@
 
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
+        
+        // Retten der bisherigen Zeichnung vor dem Resize
+        if (canvas.width > 0 && canvas.height > 0) {
+            savedDrawingData = canvas.toDataURL();
+        }
+
         canvas.width  = wrapper.offsetWidth || 450;
-        canvas.height = 2400;
+        canvas.height = 6000; // Massiv verlängertes Endlos-Papier
         redrawEverything();
+
+        // Zeichnung wiederherstellen
+        if (savedDrawingData && savedDrawingData !== 'data:,') {
+            const img = new Image();
+            img.onload = () => { ctx.drawImage(img, 0, 0); };
+            img.src = savedDrawingData;
+        }
     }
+    
     function redrawEverything() {
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1;
@@ -680,18 +703,25 @@
         for (let y = 0; y < canvas.height; y += g)  { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke(); }
         updateStyles();
     }
+    
     function setTool(t) {
         currentTool = t;
         document.getElementById('tool-pencil').classList.toggle('active', t === 'pencil');
         document.getElementById('tool-eraser').classList.toggle('active', t === 'eraser');
         updateStyles();
     }
+    
     function updateStyles() {
         if (currentTool === 'pencil') { ctx.strokeStyle = '#1f2937'; ctx.lineWidth = 2.5; }
         else { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 35; }
         ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     }
-    function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); redrawEverything(); }
+    
+    function clearCanvas() { 
+        savedDrawingData = null; 
+        ctx.clearRect(0,0,canvas.width,canvas.height); 
+        redrawEverything(); 
+    }
     
     function getCoords(e) {
         const r  = canvas.getBoundingClientRect();
