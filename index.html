@@ -422,67 +422,40 @@
 
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung ohne weitere Fragen.";
 
-    async function sendToGemini(userText, isSystemCommand = false) {
-        if (!GEMINI_API_KEY || GEMINI_API_KEY === "DEIN_AIza_SCHLUESSEL_HIER") {
-            alert("Achtung: Du musst noch deinen API-Schlüssel im Code eintragen!");
-            return;
-        }
+   async function sendToGemini(userText, isSystemCommand = false) {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.style.display = 'flex';
 
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.style.display = 'flex';
-
-        if (!isSystemCommand) {
-            appendChatMessage('user', userText);
-        }
-
-        showToast("⏳ Tutor überlegt...");
-
-        let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
-        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
-
-        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=" + GEMINI_API_KEY;
-        const payload = { contents: [{ parts: [{ text: fullPrompt }] }] };
-        const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-        let success = false;
-        let attempt = 0;
-        let maxAttempts = 5;
-
-        while (attempt < maxAttempts && !success) {
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await response.json();
-                
-                if (response.ok && data.candidates && data.candidates[0].content) {
-                    const aiText = data.candidates[0].content.parts[0].text;
-                    appendChatMessage('ki', aiText);
-                    conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
-                    success = true;
-                } else if (data.error && data.error.code === 503) {
-                    attempt++;
-                    if (attempt < maxAttempts) {
-                        showToast(`⏳ Server ausgelastet. Versuch ${attempt}/${maxAttempts}...`);
-                        await sleep(2500); 
-                    }
-                } else {
-                    appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
-                    success = true; 
-                }
-            } catch (e) {
-                appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
-                success = true; 
-            }
-        }
-
-        if (!success) {
-            appendChatMessage('ki', '❌ Die Google-Server sind aktuell komplett überlastet. Bitte versuche es später noch einmal.');
-            showToast("❌ Timeout.");
-        }
+    if (!isSystemCommand) {
+        appendChatMessage('user', userText);
     }
+
+    showToast("⏳ Tutor überlegt...");
+
+    let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
+    fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
+
+    try {
+        // Wir rufen jetzt unser EIGENES sicheres Backend auf
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: fullPrompt })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            const aiText = data.response;
+            appendChatMessage('ki', aiText);
+            conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+        } else {
+            appendChatMessage('ki', '❌ API Fehler: ' + (data.error || "Unbekannter Fehler"));
+        }
+    } catch (e) {
+        appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+    }
+}
 
     function appendChatMessage(sender, text) {
         const msg = document.createElement('div');
