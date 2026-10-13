@@ -4,8 +4,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { prompt } = req.body;
-    const apiKey = process.env.OPENAI_API_KEY; // Zieht den Schlüssel sicher aus Vercel
+    const { prompt, image } = req.body;
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    // OpenAI erwartet Text und Bild separat in einem Array
+    let messageContent = [{ type: 'text', text: prompt }];
+    
+    if (image) {
+      messageContent.push({
+        type: 'image_url',
+        image_url: { url: image }
+      });
+    }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -15,8 +25,8 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3 // Etwas niedriger für logischere, fokussiertere Antworten
+        messages: [{ role: 'user', content: messageContent }],
+        temperature: 0.3
       })
     });
 
