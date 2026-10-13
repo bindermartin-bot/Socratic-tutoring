@@ -43,7 +43,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── WELCOME SCREEN ─────────────────────────────── */
         .screen {
             position: fixed; inset: 0;
             display: flex; flex-direction: column;
@@ -86,7 +85,6 @@
             margin-bottom: 14px;
         }
 
-        /* Subject grid */
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -118,7 +116,6 @@
             color: var(--bbz-green-dark);
         }
 
-        /* ── GLOBAL BUTTONS ─────────────────────────────── */
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
             gap: 6px; padding: 8px 14px;
@@ -151,21 +148,15 @@
         }
         .btn-danger:hover { background: #fee2e2; }
 
-        .btn-action-text {
-            background: var(--bbz-anthracite); color: #fff;
+        .btn-action-text, .btn-action-canvas {
             width: 100%; padding: 11px; font-size: 14px;
-            margin-top: 8px; border-radius: var(--r-md);
+            margin-top: 8px; border-radius: var(--r-md); color: #fff;
         }
+        .btn-action-text { background: var(--bbz-anthracite); }
         .btn-action-text:hover { background: #1e1e28; }
-
-        .btn-action-canvas {
-            background: var(--bbz-teal); color: #fff;
-            width: 100%; padding: 11px; font-size: 14px;
-            margin-top: 8px; border-radius: var(--r-md);
-        }
+        .btn-action-canvas { background: var(--bbz-teal); }
         .btn-action-canvas:hover { background: #12302b; }
 
-        /* ── APP CONTAINER ──────────────────────────────── */
         #appContainer {
             display: none; position: fixed; inset: 0;
             flex-direction: column; padding: 5px; gap: 5px; background: var(--bg);
@@ -199,21 +190,18 @@
         }
         .topic-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
-        /* Pinboard Layout */
         .pinboard {
             background: #fffdf4; border: 1.5px solid #e0c93a; border-radius: var(--r-md); padding: 6px 10px;
             display: flex; gap: 10px; height: 92px; flex-shrink: 0; box-shadow: 0 1px 4px rgba(235,209,71,.1);
         }
         .pb-left { flex: 3; display: flex; flex-direction: column; gap: 2px; }
         .pb-label { font-size: 10.5px; font-weight: 700; color: #7a6010; letter-spacing: .2px; text-transform: uppercase; }
-
         .pb-textarea {
             flex: 1; border: none; background: transparent; resize: none; font-family: var(--font);
             font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4;
         }
         .pb-textarea:focus { outline: none; }
         
-        /* Pivot Switcher */
         .pivot { display: flex; background: #eaeff6; padding: 2px; border-radius: var(--r-md); gap: 2px; }
         .pivot-btn {
             background: transparent; border: none; padding: 5px 11px; font-family: var(--font);
@@ -226,9 +214,7 @@
         #btn-mode-canvas.active { background: #e6fffa !important; color: #0d9488 !important; border: 1px solid #99f6e4 !important; }
         .pivot-btn:hover:not(.active) { color: var(--bbz-anthracite); background: rgba(255,255,255,.6); }
 
-        /* Action block */
         #workspaceActionBlock { flex-shrink: 0; }
-
         .action-btn-full {
             width: 100%; padding: 10px 14px; font-family: var(--font); font-size: 14px; font-weight: 700;
             border: none; border-radius: var(--r-md); cursor: pointer; transition: var(--tr);
@@ -241,7 +227,6 @@
             border-radius: var(--r-md); font-size: 13px; font-weight: 500; text-align: center;
         }
 
-        /* Panels */
         .main-workspace { display: flex; gap: 8px; flex: 1; min-height: 0; }
         .panel {
             background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg);
@@ -251,7 +236,6 @@
 
         .text-mode-active .text-panel { display: flex !important; }
         .text-mode-active .canvas-panel { display: none !important; }
-
         .canvas-mode-active .canvas-panel { display: flex !important; }
         .canvas-mode-active .text-panel { display: none !important; }
 
@@ -262,14 +246,12 @@
         }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
-        /* Canvas */
         .canvas-toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
         .canvas-hint { font-size: 11.5px; color: var(--muted-light); font-weight: 500; margin-left: 6px; }
         .scroll-wrap { flex: 1; overflow-y: auto; border: 1.5px solid var(--border); border-radius: var(--r-md); background: #fff; min-height: 0; }
         .canvas-wrap { position: relative; width: 100%; height: 2400px; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
-        /* Chat Modal */
         .chat-popup {
             position: fixed; top: 80px; right: 24px; width: 400px; height: 500px; background: var(--panel);
             border: 1px solid var(--border); box-shadow: var(--sh-lg); z-index: 3000; border-radius: var(--r-lg);
@@ -288,9 +270,7 @@
         .chat-bubble {
             padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 85%; white-space: pre-wrap; line-height: 1.5;
         }
-        .bubble-user {
-            background: #e0f2fe; color: #0369a1; align-self: flex-end; border-bottom-right-radius: 2px;
-        }
+        .bubble-user { background: #e0f2fe; color: #0369a1; align-self: flex-end; border-bottom-right-radius: 2px; }
         .bubble-ki {
             background: #ffffff; color: var(--bbz-anthracite); align-self: flex-start; border-bottom-left-radius: 2px;
             border: 1px solid var(--border); box-shadow: var(--sh-sm);
@@ -399,7 +379,6 @@
     <div class="footer">presented by Methoden-Freitag</div>
 </div>
 
-<!-- Chat Window -->
 <div class="chat-popup" id="chatWindow">
     <div class="popup-header" id="chatHeader">
         <span>🤖 Tutor Chat</span>
@@ -413,13 +392,12 @@
 <div class="toast" id="statusToast"></div>
 
 <script>
-    // 🔴🔴🔴 HIER DEINEN AIza-SCHLÜSSEL EINFÜGEN 🔴🔴🔴
+    // 🔴🔴🔴 HIER DEINEN SCHLÜSSEL EINFÜGEN 🔴🔴🔴
     const GEMINI_API_KEY = "AQ.Ab8RN6K3mFp4k35Z5MYRcn_es2NmODtipihOomb1zMDbFAKP6A"; 
     
-    // ── STATE ──────────────────────────────────────────────────
-    const canvas    = document.getElementById('paintCanvas');
-    const ctx       = canvas.getContext('2d');
-    const wrapper   = document.getElementById('canvas-wrapper');
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    const wrapper = document.getElementById('canvas-wrapper');
     const scrollCon = document.getElementById('scrollContainer');
 
     let drawing = false, currentTool = 'pencil';
@@ -430,25 +408,26 @@
     let conversationHistory = ""; 
 
     const subjectPrompts = {
-        "Deutsch":              "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte auf präzise Textanalyse.",
-        "Französisch":          "Du bist eine KI-Lehrperson für Französisch an einer Schweizer BM. Stelle sokratische Fragen auf Französisch.",
-        "Englisch":             "Du bist eine KI-Lehrperson für Englisch an einer Schweizer BM. Stelle sokratische Fragen auf Englisch.",
-        "Mathematik":           "Du bist eine KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule (BM). Analysiere meine Lösungswege mathematisch exakt.",
-        "Geschichte":           "Du bist eine KI-Lehrperson für Geschichte an einer Schweizer BM.",
+        "Deutsch": "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte auf präzise Textanalyse.",
+        "Französisch": "Du bist eine KI-Lehrperson für Französisch an einer Schweizer BM. Stelle sokratische Fragen auf Französisch.",
+        "Englisch": "Du bist eine KI-Lehrperson für Englisch an einer Schweizer BM. Stelle sokratische Fragen auf Englisch.",
+        "Mathematik": "Du bist eine KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule (BM). Analysiere meine Lösungswege mathematisch exakt.",
+        "Geschichte": "Du bist eine KI-Lehrperson für Geschichte an einer Schweizer BM.",
         "Wirtschaft und Recht": "Du bist eine KI-Lehrperson für W&R an einer Schweizer BM.",
-        "Biologie":             "Du bist eine KI-Lehrperson für Biologie an einer Schweizer BM.",
-        "Physik":               "Du bist eine KI-Lehrperson für Physik an einer Schweizer BM.",
-        "Chemie":               "Du bist eine KI-Lehrperson für Chemie an einer Schweizer BM.",
+        "Biologie": "Du bist eine KI-Lehrperson für Biologie an einer Schweizer BM.",
+        "Physik": "Du bist eine KI-Lehrperson für Physik an einer Schweizer BM.",
+        "Chemie": "Du bist eine KI-Lehrperson für Chemie an einer Schweizer BM.",
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften an einer Schweizer BM."
     };
 
     const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung ohne weitere Fragen.";
 
-    // ── NEUE DIREKTE API KOMMUNIKATION (OHNE APPS SCRIPT) ───────
     async function sendToGemini(userText, isSystemCommand = false) {
-        // 🔴 SCHLÜSSEL HIER EINFÜGEN
-        const GEMINI_API_KEY = "AIzaSyAWpWGRWYDxGVm9KZJKomSKRGisHkx6qsg"; 
-        
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === "DEIN_AIza_SCHLUESSEL_HIER") {
+            alert("Achtung: Du musst noch deinen API-Schlüssel im Code eintragen!");
+            return;
+        }
+
         const chatWindow = document.getElementById('chatWindow');
         chatWindow.style.display = 'flex';
 
@@ -485,20 +464,23 @@
                     success = true;
                 } else if (data.error && data.error.code === 503) {
                     attempt++;
-                    showToast(`⏳ Server stark ausgelastet. Automatischer Versuch ${attempt}/${maxAttempts}...`);
-                    await sleep(2500); // 2,5 Sekunden warten vor dem nächsten Versuch
+                    if (attempt < maxAttempts) {
+                        showToast(`⏳ Server ausgelastet. Versuch ${attempt}/${maxAttempts}...`);
+                        await sleep(2500); 
+                    }
                 } else {
                     appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
-                    success = true; // Schleife bei echten Fehlern abbrechen
+                    success = true; 
                 }
             } catch (e) {
                 appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
-                success = true; // Schleife bei Netzwerkabbruch abbrechen
+                success = true; 
             }
         }
 
         if (!success) {
-            appendChatMessage('ki', '❌ Die Google-Server sind aktuell komplett überlastet. Bitte versuche es in ein paar Minuten noch einmal.');
+            appendChatMessage('ki', '❌ Die Google-Server sind aktuell komplett überlastet. Bitte versuche es später noch einmal.');
+            showToast("❌ Timeout.");
         }
     }
 
@@ -515,7 +497,6 @@
         w.style.display = w.style.display === 'none' || w.style.display === '' ? 'flex' : 'none';
     }
 
-    // ── ROUTING & NAVIGATION ───────────────────────────────────
     function selectSubject(subject, icon) {
         selectedSubject = subject;
         conversationHistory = ""; 
@@ -561,7 +542,6 @@
         updateWorkspaceVisuals();
     }
 
-    // ── BUTTON AKTIONEN ────────────────────────────────────────
     function updateWorkspaceVisuals() {
         const block = document.getElementById('workspaceActionBlock');
         let htmlContent = '';
@@ -604,7 +584,6 @@
         sendToGemini(prompt, true); 
     }
 
-    // ── CANVAS SYSTEM ──────────────────────────────────────────
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
         canvas.width  = wrapper.offsetWidth || 450;
@@ -677,7 +656,6 @@
     canvas.addEventListener('touchend',   stopDrawing);
     window.addEventListener('resize', initCanvas);
 
-    // ── CHAT POPUP DRAG ──────────────────────────────────────────
     const dragWin = document.getElementById('chatWindow');
     const dragHdr = document.getElementById('chatHeader');
     let isDragging = false, dX, dY;
