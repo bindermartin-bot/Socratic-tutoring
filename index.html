@@ -6,32 +6,28 @@
     <meta name="theme-color" content="#10b981">
     <title>Socratic Tutoring – BBZ Schaffhausen</title>
     
-    <!-- Google Fonts für ein modernes Schriftbild -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- KaTeX für mathematische Formeln -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
     <style>
         :root {
-            /* Modernisierte Farbpalette */
-            --bbz-anthracite:  #1f2937; /* Weicheres, modernes Dunkelgrau */
-            --bbz-green:       #10b981; /* Frisches Emerald-Grün */
+            --bbz-anthracite:  #1f2937; 
+            --bbz-green:       #10b981; 
             --bbz-green-dark:  #059669;
             --bbz-teal:        #0f766e;
             --danger:          #ef4444;
-            --bg:              #f3f4f6; /* Helles, neutrales Grau für den Hintergrund */
+            --bg:              #f3f4f6; 
             --panel:           #ffffff;
             --muted:           #6b7280;
             --muted-light:     #9ca3af;
             --border:          #e5e7eb;
             --border-strong:   #d1d5db;
             
-            /* Feinere Abrundungen und Schatten */
             --r-sm:            6px;
             --r-md:            10px;
             --r-lg:            16px;
@@ -62,15 +58,12 @@
             box-shadow: var(--sh-md); text-align: center; margin-bottom: 32px;
             position: relative; overflow: hidden;
         }
-        /* Dezenter oberer Farbbalken */
         .hero-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
             background: linear-gradient(90deg, var(--bbz-green), var(--bbz-teal));
         }
         
-        .hero-logo { height: 48px; margin-bottom: 16px; border-radius: 8px; }
-        
-        .hero-card h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; cursor: pointer; user-select: none; color: #111827; }
+        .hero-card h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; cursor: pointer; user-select: none; color: #000000; }
         .hero-card p { font-size: 15px; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
         
         .section-label { font-size: 12px; font-weight: 700; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
@@ -91,7 +84,7 @@
 
         /* --- BUTTONS --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; font-family: var(--font); font-size: 13.5px; font-weight: 600; border: none; border-radius: var(--r-md); cursor: pointer; transition: var(--tr); }
-        .btn-ghost { background: #f9fafb; color: var(--bbz-anthracite); border: 1px solid var(--border); }
+        .btn-ghost { background: #f9fafb; color: var(--bbz-anthracite); border: 1px solid var(--border); box-shadow: var(--sh-sm); }
         .btn-ghost:hover { background: #f3f4f6; border-color: var(--border-strong); }
         .btn-tool { background: transparent; color: var(--muted); border: 1px solid transparent; padding: 6px 12px; font-size: 13px; }
         #tool-pencil.active { background: #f3f4f6 !important; color: var(--bbz-anthracite) !important; border-color: var(--border) !important; }
@@ -112,16 +105,17 @@
         /* --- LEFT WORKSPACE --- */
         .top-bar { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 8px 16px; box-shadow: var(--sh-sm); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0; }
         .subject-badge { background: var(--bbz-anthracite); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
-        .task-bar-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+        .task-bar-label { font-size: 13px; font-weight: 700; color: var(--bbz-anthracite); }
         
-        .task-toggle { padding: 6px 12px; background: transparent; border: 1px solid transparent; border-radius: var(--r-md); cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500; transition: var(--tr); color: var(--muted); }
-        .task-toggle.active { background: #ecfdf5; color: var(--bbz-green-dark); border-color: #a7f3d0; font-weight: 600; }
-        .task-toggle:hover:not(.active) { background: #f3f4f6; color: var(--bbz-anthracite); }
+        /* Deutlich erkennbare Buttons für die Aufgabenwahl */
+        .task-toggle { padding: 8px 14px; background: var(--panel); border: 1px solid var(--border-strong); border-radius: var(--r-md); cursor: pointer; font-family: var(--font); font-size: 13.5px; font-weight: 600; transition: var(--tr); color: var(--bbz-anthracite); box-shadow: var(--sh-sm); }
+        .task-toggle.active { background: #ecfdf5; color: var(--bbz-green-dark); border-color: var(--bbz-green); box-shadow: 0 0 0 1px var(--bbz-green); }
+        .task-toggle:hover:not(.active) { background: #f9fafb; border-color: var(--muted); }
         
-        .topic-wrap { display: none; align-items: center; gap: 8px; flex: 1; max-width: 400px; }
-        .topic-input { padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--r-md); font-family: var(--font); font-size: 13px; background: #f9fafb; transition: var(--tr); color: var(--bbz-anthracite); width: 100%; }
-        .topic-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
-        select.topic-input { cursor: pointer; padding-right: 24px; }
+        .topic-wrap { display: none; align-items: center; gap: 8px; flex: 1; max-width: 400px; margin-left: 4px; }
+        .topic-input { padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: var(--r-md); font-family: var(--font); font-size: 13.5px; background: #fff; transition: var(--tr); color: var(--bbz-anthracite); width: 100%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+        .topic-input:focus { outline: none; border-color: var(--bbz-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+        select.topic-input { cursor: pointer; padding-right: 24px; font-weight: 500; }
 
         /* AUFGABE BEREICH */
         .pinboard { background: #fffbeb; border: 1px solid #fcd34d; border-radius: var(--r-lg); padding: 12px 16px; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: var(--sh-sm); min-height: 90px; }
@@ -130,7 +124,6 @@
         .task-view-toggle { background: transparent; border: 1px solid #fcd34d; padding: 4px 10px; font-size: 12px; border-radius: var(--r-sm); cursor: pointer; color: #b45309; font-weight: 600; transition: var(--tr); }
         .task-view-toggle.active { background: #fbbf24; color: #fff; border-color: #fbbf24; }
 
-        /* Beschränkung der Höhe für das Aufgabenfeld + Resize */
         .pb-textarea, .pb-preview {
             flex: 1; border: none; font-family: var(--font); font-size: 14px; color: var(--bbz-anthracite); line-height: 1.5; 
             min-height: 45px; max-height: 200px; margin-top: 8px; overflow-y: auto; resize: vertical;
@@ -142,7 +135,7 @@
         #workspaceActionBlock { flex-shrink: 0; }
         .action-hint { background: var(--panel); border: 1px dashed var(--border-strong); color: var(--muted); padding: 12px; border-radius: var(--r-md); font-size: 13px; font-weight: 500; text-align: center; }
 
-        .pivot { display: flex; background: #f3f4f6; padding: 4px; border-radius: var(--r-md); gap: 4px; }
+        .pivot { display: flex; background: #e5e7eb; padding: 4px; border-radius: var(--r-md); gap: 4px; }
         .pivot-btn { background: transparent; border: none; padding: 6px 14px; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; border-radius: var(--r-sm); transition: var(--tr); }
         #btn-mode-text.active { background: #fff !important; color: var(--bbz-anthracite) !important; box-shadow: var(--sh-sm); }
         #btn-mode-canvas.active { background: #fff !important; color: var(--bbz-anthracite) !important; box-shadow: var(--sh-sm); }
@@ -156,8 +149,8 @@
         .canvas-mode-active .canvas-panel { display: flex !important; }
         .canvas-mode-active .text-panel { display: none !important; }
 
-        .textarea-input { flex: 1; padding: 14px; border: 1px solid var(--border); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: vertical; background: #f9fafb; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); overflow-y: auto; }
-        .textarea-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+        .textarea-input { flex: 1; padding: 14px; border: 1px solid var(--border-strong); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: vertical; background: #fff; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); overflow-y: auto; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+        .textarea-input:focus { outline: none; border-color: var(--bbz-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
 
         /* CANVAS */
         .canvas-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-shrink: 0; background: #f9fafb; padding: 4px; border-radius: var(--r-md); border: 1px solid var(--border); }
@@ -167,8 +160,8 @@
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
         /* --- RIGHT SIDEBAR CHAT --- */
-        .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); color: var(--bbz-anthracite); padding: 16px; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .chat-header img { height: 26px; border-radius: 4px; }
+        .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); color: #000000; padding: 16px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .chat-header img { height: 28px; border-radius: 6px; }
         .chat-history { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
         
         .chat-bubble { padding: 14px 16px; border-radius: 14px; font-size: 14.5px; max-width: 92%; line-height: 1.6; word-wrap: break-word; box-shadow: var(--sh-sm); }
@@ -187,8 +180,6 @@
 
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
-        <!-- Neues Logo im Welcome Screen -->
-        <img src="Logo 05 - klein.png" alt="Socratic Tutoring Logo" class="hero-logo">
         <h1 ondblclick="triggerTeacherMode()" title="Doppelklick für Lehrermodus">Socratic Tutoring</h1>
         <p>Digitaler Lernassistent für die Schweizer Berufsmaturität. Die KI verrät keine Lösungen — sie stellt gezielte Fragen, damit du selbst denkst.</p>
     </div>
@@ -223,17 +214,16 @@
                 
                 <div style="display:flex;gap:8px;align-items:center;flex:1;justify-content:center;">
                     <span class="task-bar-label">Aufgabe:</span>
-                    <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">Eigene</button>
+                    <button class="task-toggle active" id="taskToggleOwn" onclick="setTaskOption('own')">📁 Eigene (Bild/Text)</button>
                     <button class="task-toggle" id="taskToggleGen" onclick="setTaskOption('gen')">✨ KI generiert</button>
                     
                     <div class="topic-wrap" id="topicContainerBlock">
-                        <!-- Dropdown für Schwierigkeitsgrad -->
-                        <select id="taskDifficulty" class="topic-input" style="width:100px; flex-shrink:0;">
+                        <select id="taskDifficulty" class="topic-input" style="width:105px; flex-shrink:0;">
                             <option value="Leicht">Leicht</option>
                             <option value="Mittel" selected>Mittel</option>
                             <option value="Schwer">Schwer</option>
                         </select>
-                        <input type="text" class="topic-input" id="topicInputField" oninput="updateWorkspaceVisuals()" placeholder="Thema (z.B. Brüche)...">
+                        <input type="text" class="topic-input" id="topicInputField" oninput="updateWorkspaceVisuals()" placeholder="Thema (optional)...">
                     </div>
                 </div>
             </div>
@@ -246,7 +236,7 @@
                     <div style="display:flex; gap: 6px; align-items:center;">
                         <button class="task-view-toggle active" id="btnTaskEdit" onclick="toggleTaskMode('edit')">Bearbeiten</button>
                         <button class="task-view-toggle" id="btnTaskPreview" onclick="toggleTaskMode('preview')">Ansicht (Formeln)</button>
-                        <span style="font-size:11px; color:#b45309; font-weight:500; margin-left: 8px;">Ctrl+V = Bild</span>
+                        <span style="font-size:11px; color:#b45309; font-weight:600; margin-left: 8px;">Ctrl+V = Bild</span>
                     </div>
                 </div>
                 
@@ -264,7 +254,7 @@
             <div id="workspaceActionBlock"></div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 4px 0; flex-shrink:0;">
-                <span class="task-bar-label">💬 Lösungsweg via:</span>
+                <span class="task-bar-label" style="font-size: 13px;">💬 Lösungsweg via:</span>
                 <div class="pivot">
                     <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur</button>
                     <button class="pivot-btn" id="btn-mode-canvas" onclick="setInputMode('canvas')">✏️ Skizze</button>
@@ -311,7 +301,7 @@
         <!-- RECHTS: Fixierter Chat -->
         <div class="right-sidebar">
             <div class="chat-header">
-                <!-- Chat Logo -->
+                <!-- Dein eigenes Logo -->
                 <img src="Logo 05 - klein.png" alt="Logo">
                 <span>Tutor Chat</span>
             </div>
@@ -586,13 +576,14 @@
 
     function sendTaskGenerationPrompt() {
         isGeneratingTask = true;
-        const topic = document.getElementById('topicInputField').value.trim() || `einem Lehrplanthema`;
+        // Zieht das aktuell gewählte Fach zwingend in den Prompt, wenn das Textfeld leer ist
+        const topic = document.getElementById('topicInputField').value.trim() || `einem Standard-Lehrplanthema aus dem Fach ${selectedSubject}`;
         const difficulty = document.getElementById('taskDifficulty').value;
         
-        // Aktualisierter Prompt für Schwierigkeitsgrad und Längenbeschränkung
         const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle eine Aufgabe auf dem Niveau der Schweizer Berufsmaturität (BM) zum Thema: "${topic}". 
         Schwierigkeitsgrad: ${difficulty}. 
         WICHTIGE REGELN: Die Aufgabe darf MAXIMAL 3 Teilfragen (a, b, c) umfassen. Vermeide simple Wissensabfragen, fordere Transferdenken. Liefere NUR die Text-Aufgabenstellung. Keine Lösungen, keine Tipps. Formeln in LaTeX formatieren.`;
+        
         sendToGemini(prompt, true); 
     }
 
@@ -643,7 +634,7 @@
     }
     function redrawEverything() {
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#f0f4f8'; ctx.lineWidth = 1;
+        ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 1;
         const g = 25;
         for (let x = 0; x < canvas.width; x += g)  { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke(); }
         for (let y = 0; y < canvas.height; y += g)  { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke(); }
