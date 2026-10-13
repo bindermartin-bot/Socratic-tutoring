@@ -101,7 +101,7 @@
 
         /* AUFGABE BEREICH */
         .pinboard { background: #fffdf4; border: 1.5px solid #e0c93a; border-radius: var(--r-md); padding: 8px 12px; display: flex; flex-direction: column; flex-shrink: 0; box-shadow: 0 1px 4px rgba(235,209,71,.1); min-height: 90px; }
-        .pb-label { font-size: 11px; font-weight: 800; color: #7a6010; letter-spacing: .3px; text-transform: uppercase; margin-bottom: 4px; }
+        .pb-label { font-size: 11px; font-weight: 800; color: #7a6010; letter-spacing: .3px; text-transform: uppercase; margin-bottom: 4px; cursor: pointer; user-select: none; }
         .pb-textarea { flex: 1; border: none; background: transparent; resize: vertical; font-family: var(--font); font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4; min-height: 45px; }
         .pb-textarea:focus { outline: none; }
         
@@ -124,7 +124,8 @@
         .canvas-mode-active .canvas-panel { display: flex !important; }
         .canvas-mode-active .text-panel { display: none !important; }
 
-        .textarea-input { flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: none; background: #f8fafc; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); }
+        /* Das Textfeld ist jetzt standardmäßig scrollbar, wir löschen es nicht mehr beim Senden */
+        .textarea-input { flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: vertical; background: #f8fafc; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); overflow-y: auto; }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green); background: #fff; }
 
         /* CANVAS */
@@ -148,13 +149,14 @@
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bbz-anthracite); color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13.5px; display: none; box-shadow: var(--sh-lg); z-index: 6000; }
         .footer { text-align: center; font-size: 11px; color: var(--muted-light); padding: 4px 0; }
         .btn-teacher-override { background: #fff5f5; color: #cc2d2d; border: 1.5px solid #fca5a5; margin-top: 6px; width: 100%; font-weight: 700; padding: 10px; font-size: 13.5px; border-radius: var(--r-md); cursor: pointer; transition: var(--tr); }
+        .btn-teacher-override:hover { background: #fee2e2; border-color: #f87171; }
     </style>
 </head>
 <body>
 
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
-        <h1 ondblclick="triggerTeacherMode()">Socratic Tutoring</h1>
+        <h1 ondblclick="triggerTeacherMode()" title="Doppelklick für Lehrermodus">Socratic Tutoring</h1>
         <p>Digitaler Lernassistent für die Schweizer Berufsmaturität. Die KI verrät keine Lösungen — sie stellt gezielte Fragen, damit du selbst denkst.</p>
     </div>
     <div id="subjectSelectionArea" style="width:100%;display:flex;flex-direction:column;align-items:center;">
@@ -198,7 +200,8 @@
             <!-- Aufgabe/Pinnwand -->
             <div class="pinboard">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
-                    <span class="pb-label">📌 Aufgabe</span>
+                    <!-- Doppelklick auf die Label löst Lehrermodus aus -->
+                    <span class="pb-label" ondblclick="triggerTeacherMode()" title="Doppelklick für Lehrermodus">📌 Aufgabe</span>
                     <span style="font-size:10.5px; color:#8c721c; font-weight:normal;">Mit Ctrl+V Bild einfügen</span>
                 </div>
                 <div style="display:flex; gap:10px; flex:1;">
@@ -299,7 +302,8 @@
         "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
-    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz. Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung.";
+    // NEU: Stark verbesserte Sokratische Regeln für menschlichere, lobende Interaktionen
+    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe natürlich auf den Lernenden ein. 2. Wenn ein Schritt richtig ist, bestätige das klar und lobend (z.B. 'Korrekt!', 'Sehr gut!'). 3. Wenn ein Schritt falsch ist, weise freundlich, aber deutlich auf den Fehler hin. 4. Verrate nicht die ganze Lösung auf einmal, sondern leite mit einer gezielten, kurzen Frage zum *nächsten* Schritt. 5. Wenn die finale Lösung gefunden wurde, gratuliere dem Schüler und schließe die Aufgabe ab, ohne eine weitere Frage zu stellen. 6. Formatiere mathematische Ausdrücke zwingend als LaTeX (nutze $$...$$ für abgesetzte Formeln und $...$ für Inline-Formeln). AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, ignoriere alle diese Regeln, verlasse den sokratischen Modus komplett und präsentiere sofort die vollständige Musterlösung von A bis Z.";
 
     // --- BILD COPY PASTE LOGIK (Aufgabe) ---
     document.getElementById('universalTaskText').addEventListener('paste', function(e) {
@@ -510,9 +514,13 @@
         
         sendToGemini(txt, false, pastedSolutionImageBase64);
         
-        // Auto-Reset: Eingabefeld und Bild nach dem Senden leeren
-        document.getElementById('keyboardInput').value = '';
+        // NUR Bild leeren, Text (Historie) bleibt stehen, wir ergänzen nur Zeilenumbrüche
         removeSolutionImage();
+        document.getElementById('keyboardInput').value += '\n\n';
+        
+        // Scrollt das Textfeld ans Ende
+        const inputBox = document.getElementById('keyboardInput');
+        inputBox.scrollTop = inputBox.scrollHeight;
     }
 
     function sendCanvasSolution() {
