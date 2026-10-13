@@ -80,7 +80,12 @@
         #appContainer { display: none; position: fixed; inset: 0; background: var(--bg); }
         .app-layout { display: flex; width: 100%; height: 100%; }
         .left-workspace { flex: 1; display: flex; flex-direction: column; padding: 12px; gap: 12px; min-width: 0; }
-        .right-sidebar { width: 400px; background: var(--panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; box-shadow: -4px 0 15px rgba(0,0,0,0.03); z-index: 10; }
+        
+        /* RESIZER */
+        .resizer { width: 6px; background: var(--border); cursor: col-resize; flex-shrink: 0; transition: background 0.2s; z-index: 20; }
+        .resizer:hover, .resizer.active { background: var(--bbz-green); }
+        
+        .right-sidebar { width: 450px; background: var(--panel); display: flex; flex-direction: column; flex-shrink: 0; box-shadow: -4px 0 15px rgba(0,0,0,0.03); z-index: 10; min-width: 300px; max-width: 800px; }
 
         /* --- BUTTONS --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; font-family: var(--font); font-size: 13.5px; font-weight: 600; border: none; border-radius: var(--r-md); cursor: pointer; transition: var(--tr); }
@@ -159,8 +164,11 @@
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
         /* --- RIGHT SIDEBAR CHAT --- */
-        .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); color: #000000; padding: 16px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); color: #000000; padding: 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .chat-header-title { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 800; }
         .chat-header img { height: 28px; border-radius: 6px; }
+        .chat-header-footer { font-size: 10.5px; font-weight: 500; color: var(--muted-light); letter-spacing: 0.02em; }
+
         .chat-history { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
         
         .chat-bubble { padding: 14px 16px; border-radius: 14px; font-size: 14.5px; max-width: 92%; line-height: 1.6; word-wrap: break-word; box-shadow: var(--sh-sm); }
@@ -170,7 +178,8 @@
         .chat-bubble .katex-display { margin: 12px 0; overflow-x: auto; overflow-y: hidden; }
 
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #111827; color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: 500; font-size: 14px; display: none; box-shadow: var(--sh-lg); z-index: 6000; }
-        .footer { text-align: center; font-size: 12px; color: var(--muted-light); padding: 8px 0; }
+        
+        .welcome-footer { text-align: center; font-size: 12px; color: var(--muted-light); padding: 8px 0; margin-top: auto; padding-top: 20px; }
         .btn-teacher-override { background: #fef2f2; color: #b91c1c; border: 1px dashed #fca5a5; margin-top: 8px; width: 100%; font-weight: 600; padding: 12px; font-size: 13.5px; border-radius: var(--r-md); cursor: pointer; transition: var(--tr); }
         .btn-teacher-override:hover { background: #fee2e2; border-style: solid; }
     </style>
@@ -197,7 +206,7 @@
             <button class="subject-btn" onclick="selectSubject('Chemie','🧪')">🧪 Chemie</button>
         </div>
     </div>
-    <div class="footer" style="margin-top:auto;padding-top:20px;">presented by Methoden-Freitag</div>
+    <div class="welcome-footer">presented by Methoden-Freitag</div>
 </div>
 
 <div id="appContainer">
@@ -294,14 +303,19 @@
                     <button class="btn btn-action-canvas" onclick="sendCanvasSolution()">🖼️ Skizze senden</button>
                 </div>
             </div>
-            <div class="footer">presented by Methoden-Freitag</div>
         </div>
 
+        <!-- RESIZER: Der graue Balken zum Verziehen des Layouts -->
+        <div class="resizer" id="dragMe"></div>
+
         <!-- RECHTS: Fixierter Chat -->
-        <div class="right-sidebar">
+        <div class="right-sidebar" id="rightSidebar">
             <div class="chat-header">
-                <img src="Logo 05 - klein.png" alt="Logo">
-                <span>Tutor Chat</span>
+                <div class="chat-header-title">
+                    <img src="Logo 05 - klein.png" alt="Logo">
+                    <span>Tutor Chat</span>
+                </div>
+                <div class="chat-header-footer">presented by Methoden-Freitag</div>
             </div>
             <div class="chat-history" id="chatHistory">
                 <!-- Initial Bubble is injected via JS -->
@@ -342,8 +356,36 @@
         "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
-    // NEU: Bild-Lese-Regel und entspannte, hilfreiche Feedback-Regeln
-    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ und natürlich auf den Lernenden ein. 2. BILDER LESEN: Wenn ein Bild angehängt ist, starte deine Antwort zwingend damit, dass du in Text oder LaTeX kurz wiedergibst, was du auf dem Bild abgelesen hast (z.B. 'Ich sehe auf deiner Skizze die Gleichung...'). 3. FEEDBACK: Lobe richtige Schritte explizit ('Sehr gut!', 'Korrekt!'). Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Sei eine echte Hilfe. Wenn der Lernende feststeckt, darfst du Teilschritte vorrechnen, konkrete Tipps geben oder Zusammenhänge erklären. Weiche gerne vom reinen Fragenstellen ab, um den Lernprozess zu unterstützen. Die einzige harte Grenze: Verrate nicht die komplette Endlösung auf einmal. 5. ABSCHLUSS: Wenn die Endlösung erreicht ist, gratuliere und stelle keine neuen Fragen mehr. 6. FORMAT: Nutze zwingend LaTeX für Formeln ($$...$$ für abgesetzt, $...$ für Inline). AUSNAHME: Bei der Nachricht '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung von A bis Z.";
+    // NEU: Kürzere Sätze, geduldiger Tutor, der nicht alles sofort verrät
+    const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ auf den Lernenden ein, aber fasse dich kurz (max. 2-3 Sätze pro Antwort). 2. BILDER: Wenn ein Bild angehängt ist, beschreibe kurz in Text/LaTeX, was du abliest. 3. FEEDBACK: Lobe richtige Schritte explizit. Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Gib nicht sofort den nächsten kompletten Schritt vor! Stelle eine gezielte Frage oder gib einen kleinen Tipp, damit der Schüler selbst auf die Idee kommt. Löse den Teilschritt nur auf, wenn der Schüler sichtlich feststeckt oder frustriert ist. 5. ABSCHLUSS: Gratuliere am Ende und stelle keine Fragen mehr. 6. FORMAT: Zwingend LaTeX ($$...$$ / $...$). AUSNAHME: Bei '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung.";
+
+    // --- RESIZER LOGIK ---
+    const resizer = document.getElementById('dragMe');
+    const rightSidebar = document.getElementById('rightSidebar');
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', function(e) {
+        isResizing = true;
+        resizer.classList.add('active');
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+        const newWidth = document.body.clientWidth - e.clientX;
+        if (newWidth >= 300 && newWidth <= 800) {
+            rightSidebar.style.width = newWidth + 'px';
+        }
+    });
+
+    window.addEventListener('mouseup', function() {
+        if (isResizing) {
+            isResizing = false;
+            resizer.classList.remove('active');
+            document.body.style.cursor = 'default';
+        }
+    });
 
     function toggleTaskMode(mode) {
         const ta = document.getElementById('universalTaskText');
