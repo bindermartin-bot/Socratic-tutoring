@@ -12,8 +12,6 @@
             --bbz-anthracite:  #32323e;
             --bbz-green:       #469542;
             --bbz-green-dark:  #357030;
-            --bbz-green-light: #89b04b;
-            --bbz-yellow:      #ebd147;
             --bbz-teal:        #1b443c;
             --danger:          #d92d20;
             --bg:              #eef1f6;
@@ -21,7 +19,7 @@
             --muted:           #6b7280;
             --muted-light:     #9ca3af;
             --border:          #e2e6ed;
-            --border-strong:   #c9d1dc;        
+            --border-strong:   #c9d1dc;
             --r-sm:            5px;
             --r-md:            8px;
             --r-lg:            12px;
@@ -65,12 +63,6 @@
             box-shadow: var(--sh-lg);
             text-align: center;
             margin-bottom: 28px;
-        }
-
-        .hero-card .logo {
-            max-height: 70px; width: auto;
-            margin-bottom: 18px;
-            cursor: pointer;
         }
 
         .hero-card h1 {
@@ -125,84 +117,6 @@
             color: var(--bbz-green-dark);
         }
 
-        /* KI selection */
-        #kiSelectionArea { display: none; flex-direction: column; align-items: center; gap: 14px; }
-
-        .ki-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px; max-width: 600px; width: 100%;
-        }
-
-        .ki-btn {
-            background: var(--panel);
-            border: 1.5px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 20px 14px;
-            font-family: var(--font);
-            font-size: 14.5px; font-weight: 700;
-            color: var(--bbz-anthracite);
-            cursor: pointer;
-            transition: var(--tr);
-            display: flex; flex-direction: column;
-            align-items: center; gap: 8px;
-            box-shadow: var(--sh-sm);
-        }
-        .ki-btn .ki-icon { font-size: 24px; }
-        .ki-btn.chatgpt { border-top: 4px solid #19c37d; }
-        .ki-btn.gemini  { border-top: 4px solid #1a73e8; }
-        .ki-btn.copilot { border-top: 4px solid #0078d4; }
-        .ki-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--sh-md);
-        }
-        .ki-btn.chatgpt:hover { background: #f0fdf8; border-color: #19c37d; }
-        .ki-btn.gemini:hover  { background: #eff6ff; border-color: #1a73e8; }
-        .ki-btn.copilot:hover { background: #eff6ff; border-color: #0078d4; }
-
-        /* ── GUIDANCE SCREEN ────────────────────────────── */
-        #guidanceScreen { background: #e8ecf3; }
-
-        .guidance-card {
-            background: var(--panel);
-            border-radius: var(--r-xl);
-            border: 1px solid var(--border);
-            border-top: 5px solid var(--bbz-anthracite);
-            padding: 32px;
-            max-width: 580px; width: 100%;
-            box-shadow: var(--sh-lg);
-        }
-
-        .guidance-card .gc-header {
-            text-align: center; margin-bottom: 20px;
-        }
-        .guidance-card .gc-header img { max-height: 38px; margin-bottom: 12px; cursor: pointer; }
-        .guidance-card .gc-header h2 {
-            font-size: 19px; font-weight: 800;
-            color: var(--bbz-anthracite); margin-bottom: 4px;
-        }
-        .guidance-card .gc-header p {
-            font-size: 13.5px; color: var(--muted); line-height: 1.5;
-        }
-
-        .steps-box {
-            background: #fffdf4;
-            border: 1.5px solid var(--bbz-yellow);
-            border-radius: var(--r-md);
-            padding: 16px;
-            margin-bottom: 18px;
-        }
-
-        .steps-box ol {
-            padding-left: 20px;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .steps-box li {
-            font-size: 14px; color: var(--bbz-anthracite);
-            line-height: 1.5;
-        }
-
         /* ── GLOBAL BUTTONS ─────────────────────────────── */
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
@@ -213,28 +127,6 @@
             white-space: nowrap; text-decoration: none;
         }
         .btn:active { transform: scale(.98); }
-
-        .btn-primary {
-            background: var(--bbz-green); color: #fff;
-            box-shadow: 0 2px 6px rgba(70,149,66,.2);
-            width: 100%; padding: 13px; font-size: 14.5px;
-            margin-bottom: 8px;
-        }
-        .btn-primary:hover { background: var(--bbz-green-dark); }
-
-        .btn-secondary {
-            background: var(--bbz-anthracite); color: #fff;
-            box-shadow: 0 2px 6px rgba(50,50,62,.15);
-            width: 100%; padding: 13px; font-size: 14.5px;
-            margin-bottom: 8px;
-        }
-        .btn-secondary:hover { background: #1e1e28; }
-
-        .btn-locked {
-            background: #e5e9f0; color: #9ca3af;
-            cursor: not-allowed; pointer-events: none;
-            width: 100%; padding: 13px; font-size: 14.5px;
-        }
 
         .btn-ghost {
             background: #f1f5f9; color: var(--bbz-anthracite);
@@ -248,12 +140,8 @@
             padding: 6px 12px; font-size: 13px;
         }
         
-        #tool-pencil.active {
-            background: #32323e !important; color: #fff !important; border-color: #32323e !important;
-        }
-        #tool-eraser.active {
-            background: #fee2e2 !important; color: #d92d20 !important; border-color: #fecaca !important;
-        }
+        #tool-pencil.active { background: #32323e !important; color: #fff !important; border-color: #32323e !important; }
+        #tool-eraser.active { background: #fee2e2 !important; color: #d92d20 !important; border-color: #fecaca !important; }
         .btn-tool:hover:not(.active) { background: #e5e9f2; }
 
         .btn-danger {
@@ -282,13 +170,11 @@
             flex-direction: column; padding: 5px; gap: 5px; background: var(--bg);
         }
 
-        /* Compact Combined Header */
         .top-bar {
             background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-md);
             padding: 6px 12px; box-shadow: var(--sh-sm); display: flex; align-items: center;
             justify-content: space-between; gap: 12px; flex-shrink: 0;
         }
-        .top-bar .logo-mini { max-height: 22px; width: auto; cursor: pointer; }
 
         .subject-badge {
             background: var(--bbz-anthracite); color: #fff; padding: 4px 10px; border-radius: var(--r-sm);
@@ -331,14 +217,7 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             position: relative; overflow: hidden; transition: var(--tr); min-width: 120px; max-width: 160px;
         }
-        .pb-right-label { color: var(--muted); font-size: 11px; text-align: center; font-weight: 500; pointer-events: none; padding: 4px; line-height: 1.2; }
-        .pb-img-wrap { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-        .pb-img-wrap img { max-width: 100%; max-height: 90%; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
-        .pb-img-change {
-            position: absolute; bottom: 2px; right: 2px; font-size: 9px; background: rgba(217, 45, 32, 0.9); color: #fff;
-            border: none; padding: 2px 5px; border-radius: 3px; cursor: pointer; font-family: var(--font); font-weight: 600;
-        }
-
+        
         /* Pivot Switcher */
         .pivot { display: flex; background: #eaeff6; padding: 2px; border-radius: var(--r-md); gap: 2px; }
         .pivot-btn {
@@ -363,9 +242,6 @@
         }
         .action-btn-full.green { background: var(--bbz-green); color: #fff; }
         .action-btn-full.green:hover { background: var(--bbz-green-dark); }
-        .action-btn-full.neutral { background: var(--bbz-anthracite); color: #fff; }
-        .action-btn-full.neutral:hover { background: #1e1e28; }
-
         .action-hint {
             background: #fff; border: 1.5px dashed var(--border-strong); color: var(--muted); padding: 8px 12px;
             border-radius: var(--r-md); font-size: 13px; font-weight: 500; text-align: center;
@@ -402,41 +278,41 @@
         .canvas-wrap { position: relative; width: 100%; height: 2400px; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
-        /* Popups & Modals */
-        .popup {
-            position: fixed; top: 120px; left: 24px; width: 440px; height: 320px; background: var(--panel);
+        /* Chat Modal (Ersetzt das alte Popup) */
+        .chat-popup {
+            position: fixed; top: 80px; right: 24px; width: 400px; height: 500px; background: var(--panel);
             border: 1px solid var(--border); box-shadow: var(--sh-lg); z-index: 3000; border-radius: var(--r-lg);
-            display: none; flex-direction: column; overflow: hidden; resize: both; min-width: 240px; min-height: 180px;
+            display: none; flex-direction: column; overflow: hidden; resize: both; min-width: 300px; min-height: 300px;
         }
         .popup-header {
-            background: var(--bbz-anthracite); color: #fff; padding: 8px 12px; cursor: move;
-            display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; user-select: none; flex-shrink: 0;
+            background: var(--bbz-anthracite); color: #fff; padding: 12px; cursor: move;
+            display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 700; user-select: none; flex-shrink: 0;
         }
-        .popup-close { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; opacity: .75; }
+        .popup-close { background: transparent; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: .75; }
         .popup-close:hover { opacity: 1; }
-        .popup-body { flex: 1; overflow: auto; padding: 10px; display: flex; align-items: flex-start; justify-content: center; background: #f8fafc; }
-        .popup-body img { max-width: 100%; height: auto; border-radius: 4px; }
-
-        .camera-modal {
-            position: fixed; inset: 0; background: rgba(50, 50, 62, 0.85);
-            z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px;
+        
+        .chat-history {
+            flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #f8fafc;
         }
-        .camera-box {
-            background: var(--panel); border-radius: var(--r-lg); width: 100%; max-width: 440px;
-            box-shadow: var(--sh-lg); padding: 16px; display: flex; flex-direction: column; gap: 10px;
+        .chat-bubble {
+            padding: 10px 14px; border-radius: 12px; font-size: 14px; max-width: 85%; white-space: pre-wrap; line-height: 1.5;
         }
-        .camera-video-wrap { width: 100%; background: #000; border-radius: var(--r-md); overflow: hidden; aspect-ratio: 4/3; }
-        #cameraVideo { width: 100%; height: 100%; object-fit: cover; }
+        .bubble-user {
+            background: #e0f2fe; color: #0369a1; align-self: flex-end; border-bottom-right-radius: 2px;
+        }
+        .bubble-ki {
+            background: #ffffff; color: var(--bbz-anthracite); align-self: flex-start; border-bottom-left-radius: 2px;
+            border: 1px solid var(--border); box-shadow: var(--sh-sm);
+        }
 
         .toast {
-            position: fixed; bottom: 20px; left: 20px; background: var(--bbz-anthracite); color: #fff;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bbz-anthracite); color: #fff;
             padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13.5px;
             display: none; box-shadow: var(--sh-lg); z-index: 6000;
         }
 
-        .footer { text-align: center; font-size: 11px; color: var(--muted-light); flex-shrink: 0; padding: 2px 0; }
+        .footer { text-align: center; font-size: 11px; color: var(--muted-light); flex-shrink: 0; padding: 4px 0; }
         
-        /* Neuer Style für den geschmeidigen Lehrer-Button */
         .btn-teacher-override {
             background: #fff5f5; color: #cc2d2d; border: 1.5px solid #fca5a5;
             margin-top: 6px; width: 100%; font-weight: 700; padding: 10px; font-size: 13.5px;
@@ -449,8 +325,7 @@
 
 <div class="screen" id="welcomeScreen">
     <div class="hero-card">
-        <img src="image_b1f285.png" alt="BBZ Schaffhausen" class="logo" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
-        <h1>Socratic Tutoring</h1>
+        <h1 ondblclick="triggerTeacherMode()">Socratic Tutoring</h1>
         <p>Digitaler Lernassistent für die Schweizer Berufsmaturität. Die KI verrät keine Lösungen — sie stellt gezielte Fragen, damit du selbst denkst.</p>
     </div>
 
@@ -469,49 +344,13 @@
             <button class="subject-btn" onclick="selectSubject('Sozialwissenschaften','👥')"><span class="icon">👥</span>Sozialwissenschaften</button>
         </div>
     </div>
-
-    <div id="kiSelectionArea">
-        <p id="kiSelectionTitle" class="section-label" style="font-size:14px;text-transform:none;letter-spacing:0;color:var(--bbz-anthracite);font-weight:700;"></p>
-        <div class="ki-grid">
-            <button class="ki-btn chatgpt" onclick="selectKI('ChatGPT')"><span class="ki-icon">🤖</span>ChatGPT</button>
-            <button class="ki-btn gemini" onclick="selectKI('Gemini')"><span class="ki-icon">✨</span>Gemini</button>
-            <button class="ki-btn copilot" onclick="selectKI('Copilot')"><span class="ki-icon">🧭</span>Copilot</button>
-        </div>
-        <button class="btn btn-ghost" style="margin-top:12px;" onclick="resetToSubjects()">↩ Zurück zur Fächerauswahl</button>
-    </div>
-    <div class="footer" style="margin-top:auto;padding-top:20px;">presented by Methoden-Freitag</div>
-</div>
-
-<div class="screen" id="guidanceScreen" style="display:none;background:#e4e9f2;">
-    <div class="guidance-card">
-        <div class="gc-header">
-            <img src="image_b1f285.png" alt="BBZ Logo" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
-            <h2>Sokratische Regeln aktivieren</h2>
-            <p>Führe Schritt 1 aus, damit die KI dir beim Denken hilft – statt einfach die Lösung zu liefern.</p>
-        </div>
-
-        <div class="steps-box">
-            <ol>
-                <li>Klicke auf <b>«1. Sokratischen Prompt kopieren»</b> unten.</li>
-                <li>Füge den Text im neu geöffneten KI-Fenster mit <b>Ctrl + V</b> ein und schicke ihn ab.</li>
-                <li>Kehre hierher zurück und klicke auf <b>«2. Weiter zum Arbeitsjournal»</b>.</li>
-            </ol>
-        </div>
-
-        <button class="btn btn-secondary" id="btn-guidance-copy" onclick="copyPromptAndOpenKIWindow()">
-            📋 1. Sokratischen Prompt kopieren &amp; KI öffnen
-        </button>
-        <button class="btn btn-locked" id="btn-guidance-next" onclick="proceedToMainWorkspace()" disabled>
-            🔒 2. Weiter zum Arbeitsjournal
-        </button>
-    </div>
     <div class="footer" style="margin-top:auto;padding-top:20px;">presented by Methoden-Freitag</div>
 </div>
 
 <div id="appContainer">
     <div class="top-bar">
         <div style="display:flex;gap:6px;align-items:center;">
-            <button class="btn btn-ghost" style="padding:4px 8px;font-size:12.5px;" onclick="goBackToSelection()">↩ Wechseln</button>
+            <button class="btn btn-ghost" style="padding:4px 8px;font-size:12.5px;" onclick="goBackToSelection()">↩ Fach wechseln</button>
             <span class="subject-badge" id="activeSubjectBadge">Fach</span>
         </div>
         
@@ -523,17 +362,15 @@
                 <input type="text" class="topic-input" id="topicInputField" oninput="updateWorkspaceVisuals()" placeholder="Thema eingeben...">
             </div>
         </div>
-
-        <img src="image_b1f285.png" alt="BBZ" class="logo-mini" onerror="this.style.display='none'" ondblclick="triggerTeacherMode()">
+        
+        <button class="btn btn-ghost" onclick="toggleChatWindow()">💬 Chat öffnen</button>
     </div>
 
     <div class="pinboard">
         <div class="pb-left">
-            <span class="pb-label">📌 Pinnwand (Text eintippen oder Bild per Ctrl+V einfügen)</span>
+            <span class="pb-label">📌 Pinnwand (Text eintippen)</span>
             <textarea class="pb-textarea" id="universalTaskText" oninput="updateWorkspaceVisuals()" placeholder="Aufgabentext hier erfassen..."></textarea>
         </div>
-        <div class="pb-right" id="universalTaskImageContainer"></div>
-        <input type="file" id="taskImageLoader" accept="image/*" onchange="handleTaskScreenshot(event)" style="display:none;">
     </div>
 
     <div id="workspaceActionBlock"></div>
@@ -543,7 +380,6 @@
         <div class="pivot">
             <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur</button>
             <button class="pivot-btn" id="btn-mode-canvas" onclick="setInputMode('canvas')">✏️ Stift-Skizze</button>
-            <button class="pivot-btn" id="btn-mode-image" onclick="setInputMode('image')">📷 Foto / Kamera</button>
         </div>
     </div>
 
@@ -551,7 +387,7 @@
         <div class="panel text-panel">
             <div class="panel-label">Schreiben</div>
             <textarea id="keyboardInput" class="textarea-input" placeholder="Ich vermute, dass man hier zuerst ausklammern muss…"></textarea>
-            <button class="btn btn-action-text" onclick="copyTextSolutionWorkflowOnly()">📋 Lösungsschritt kopieren → drüben einfügen</button>
+            <button class="btn btn-action-text" onclick="sendTextSolution()">🚀 Lösungsschritt an KI senden</button>
         </div>
 
         <div class="panel canvas-panel">
@@ -566,261 +402,145 @@
                     <canvas id="paintCanvas"></canvas>
                 </div>
             </div>
-            <button class="btn btn-action-canvas" onclick="copyCanvasSolutionWorkflowOnly()">🖼️ Zeichnung kopieren → drüben einfügen</button>
-        </div>
-
-        <div class="panel image-panel">
-            <div class="panel-label">Foto hochladen oder aufnehmen</div>
-            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1.5px dashed var(--border-strong); background:#f8fafc; border-radius:var(--r-md); min-height:0; padding:10px; position:relative;">
-                <div id="solutionImageContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
-            </div>
-            <input type="file" id="solutionImageLoader" accept="image/*" onchange="handleSolutionScreenshot(event)" style="display:none;">
-            <button class="btn btn-action-canvas" style="background:var(--bbz-green); box-shadow:0 2px 6px rgba(70,149,66,.15);" onclick="copySolutionImageWorkflowOnly()">🖼️ Foto kopieren → drüben einfügen</button>
+            <button class="btn btn-action-canvas" onclick="alert('Bilder und Skizzen werden im aktuellen Backend noch nicht unterstützt. Bitte nutze vorerst die Texteingabe.')">🖼️ Skizze senden (Demnächst)</button>
         </div>
     </div>
-
     <div class="footer">presented by Methoden-Freitag</div>
 </div>
 
-<div class="popup" id="draggableWindow">
-    <div class="popup-header" id="draggableHeader">
-        <span>📋 Aufgabenstellung</span>
-        <div style="display:flex;gap:6px;align-items:center;">
-            <button id="btn-pip-trigger" onclick="openAlwaysOnTopWindow()" style="background:#fff;color:var(--bbz-anthracite);border:none;padding:2px 8px;font-size:11px;font-weight:700;border-radius:4px;cursor:pointer;">📌 Schweben lassen</button>
-            <button class="popup-close" onclick="closeImagePopup()">✕</button>
-        </div>
+<!-- Chat Window -->
+<div class="chat-popup" id="chatWindow">
+    <div class="popup-header" id="chatHeader">
+        <span>🤖 Tutor Chat</span>
+        <button class="popup-close" onclick="toggleChatWindow()">✕</button>
     </div>
-    <div class="popup-body">
-        <img id="popupTargetImage" src="" alt="Aufgabenstellung">
-    </div>
-</div>
-
-<div class="camera-modal" id="cameraModal">
-    <div class="camera-box">
-        <span class="task-bar-label" style="color:var(--bbz-anthracite);">📷 Kamera-Auswahl &amp; Vorschau</span>
-        <select id="cameraSelect" class="topic-input" style="background:#fff; font-weight:600; padding:6px;"></select>
-        <div class="camera-video-wrap">
-            <video id="cameraVideo" autoplay playsinline></video>
-        </div>
-        <div style="display:flex; gap:8px; margin-top:4px;">
-            <button class="btn" style="background:var(--bbz-green); color:#fff; flex:1;" onclick="captureCameraSnapshot()">📸 Foto aufnehmen</button>
-            <button class="btn btn-ghost" style="flex:1;" onclick="closeCameraModal()">❌ Abbrechen</button>
-        </div>
+    <div class="chat-history" id="chatHistory">
+        <div class="chat-bubble bubble-ki">Hallo! Ich bin dein sokratischer Lernassistent. Definiere deine Aufgabe oder schick mir deinen ersten Lösungsschritt.</div>
     </div>
 </div>
 
 <div class="toast" id="statusToast"></div>
 
 <script>
+    // 🔴🔴🔴 HIER DEINE GOOGLE APPS SCRIPT URL EINFÜGEN 🔴🔴🔴
+    const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbyPX7d-765cTrtsb7R4LQB05lyJTPUM8bUo9EEtClc2Vl6NMdGv3-J4ofYKAgNsnZCjWQ/exec; 
+    
     // ── STATE ──────────────────────────────────────────────────
     const canvas    = document.getElementById('paintCanvas');
     const ctx       = canvas.getContext('2d');
     const wrapper   = document.getElementById('canvas-wrapper');
     const scrollCon = document.getElementById('scrollContainer');
 
-    let drawing = false, currentTool = 'pencil', loadedImageSrc = '', loadedSolutionImageSrc = '';
-    let pipWindowInstance = null, activeCameraStream = null, cameraTarget = 'task'; 
-    let selectedSubject = 'Mathematik', selectedKI = 'ChatGPT';
+    let drawing = false, currentTool = 'pencil';
+    let selectedSubject = 'Mathematik';
     let currentActiveMode = 'text', currentTaskOption = 'own';
     let isScrollingTwoFingers = false, startScrollTop = 0, startTouchY = 0;
-    
-    // NEU: Globaler Marker für den Lehrermodus
     let isTeacherModeActive = false; 
-const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbyPX7d-765cTrtsb7R4LQB05lyJTPUM8bUo9EEtClc2Vl6NMdGv3-J4ofYKAgNsnZCjWQ/exec; // 🔴 Web-App-URL aus Schritt 2
-
-// Diese Funktion ersetzt das "in die Zwischenablage kopieren"
-async function sendToGemini(prompt) {
-    showToast("⏳ Die KI überlegt...");
-    
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ prompt: prompt }),
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8', 
-                // Wir nutzen text/plain, um strenge CORS-Checks im Browser zu umgehen
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (data.status === 'success') {
-            zeigeKI_Antwort(data.response);
-        } else {
-            showToast("❌ Fehler bei der KI-Antwort.");
-            console.error(data.response);
-        }
-    } catch (error) {
-        showToast("❌ Netzwerkfehler (Apps Script erreichbar?).");
-        console.error(error);
-    }
-}
-
-// Eine simple Methode, um die Antwort in der App anzuzeigen
-function zeigeKI_Antwort(text) {
-    // Da du bisher noch keinen Chat-Bereich im HTML hast, nutzen wir 
-    // für den ersten Test das bestehende Popup-Fenster (draggableWindow).
-    
-    document.getElementById('popupTargetImage').style.display = 'none'; // Bild ausblenden
-    
-    // Prüfen ob schon ein Text-Container im Popup existiert
-    let textContainer = document.getElementById('kiResponseContainer');
-    if (!textContainer) {
-        textContainer = document.createElement('div');
-        textContainer.id = 'kiResponseContainer';
-        textContainer.style.padding = '15px';
-        textContainer.style.fontSize = '14.5px';
-        textContainer.style.whiteSpace = 'pre-wrap'; // Erhält Zeilenumbrüche
-        document.querySelector('.popup-body').appendChild(textContainer);
-    }
-    
-    textContainer.style.display = 'block';
-    textContainer.textContent = text;
-    
-    // Header anpassen und Popup öffnen
-    document.querySelector('.popup-header span').textContent = '🤖 KI Tutor Antwort';
-    document.getElementById('draggableWindow').style.display = 'flex';
-    showToast("✅ Antwort erhalten!");
-}
-    
-    const kiUrls = {
-        ChatGPT: 'https://chatgpt.com',
-        Gemini:  'https://gemini.google.com',
-        Copilot: 'https://copilot.microsoft.com'
-    };
+    let conversationHistory = ""; // Speichert den Verlauf für die KI
 
     const subjectPrompts = {
-        "Deutsch":              "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte besonders auf präzise Textanalyse, logische Argumentationsketten sowie stilistische und grammatikalische Genauigkeit.",
-        "Französisch":          "Du bist eine KI-Lehrperson für Französisch an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir bei Grammatik, Textverständnis und Vokabular. Stelle deine sokratischen Fragen direkt auf Französisch (BM-Niveau).",
-        "Englisch":             "Du bist eine KI-Lehrperson für Englisch an einer Schweizer Berufsmaturitätsschule (BM). Unterstütze mich bei Satzstrukturen, Tenses und Textproduktionen. Formuliere deine sokratischen Fragen auf Englisch (BM-Niveau).",
-        "Mathematik":           "Du bist eine KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule (BM). Analysiere meine Lösungswege mathematisch exakt und Schritt für Schritt.",
-        "Geschichte":           "Du bist eine KI-Lehrperson für Geschichte und Politik an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, historische Kausalitäten und Quellenauswertungen eigenständig zu durchdenken.",
-        "Wirtschaft und Recht": "Du bist eine KI-Lehrperson für Wirtschaft und Recht an einer Schweizer Berufsmaturitätsschule (BM). Unterstütze mich bei rechtlichen Fallanalysen (OR/ZGB), betriebswirtschaftlichen Kalkulationen oder Buchungssätzen.",
-        "Biologie":             "Du bist eine KI-Lehrperson für Biologie an einer Schweizer Berufsmaturitätsschule (BM). Rege mich dazu an, zelluläre Prozesse und ökologische Kreisläufe logisch herzuleiten.",
-        "Physik":               "Du bist eine KI-Lehrperson für Physik an einer Schweizer Berufsmaturitätsschule (BM). Achte streng auf die korrekte Herleitung aus physikalischen Grundgesetzen sowie SI-Einheiten.",
-        "Chemie":               "Du bist eine KI-Lehrperson für Chemie an einer Schweizer Berufsmaturitätsschule (BM). Hilf mir, Teilchenmodelle, Reaktionsgleichungen und Stöchiometrie eigenständig zu entschlüsseln.",
-        "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften (Psychologie, Soziologie) an einer Schweizer Berufsmaturitätsschule (BM). Fördere mein kritisches Denken bezüglich menschlichen Verhaltens."
+        "Deutsch":              "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte auf präzise Textanalyse.",
+        "Französisch":          "Du bist eine KI-Lehrperson für Französisch an einer Schweizer BM. Stelle sokratische Fragen auf Französisch.",
+        "Englisch":             "Du bist eine KI-Lehrperson für Englisch an einer Schweizer BM. Stelle sokratische Fragen auf Englisch.",
+        "Mathematik":           "Du bist eine KI-Lehrperson für Mathematik an einer Schweizer Berufsmaturitätsschule (BM). Analysiere meine Lösungswege mathematisch exakt.",
+        "Geschichte":           "Du bist eine KI-Lehrperson für Geschichte an einer Schweizer BM.",
+        "Wirtschaft und Recht": "Du bist eine KI-Lehrperson für W&R an einer Schweizer BM.",
+        "Biologie":             "Du bist eine KI-Lehrperson für Biologie an einer Schweizer BM.",
+        "Physik":               "Du bist eine KI-Lehrperson für Physik an einer Schweizer BM.",
+        "Chemie":               "Du bist eine KI-Lehrperson für Chemie an einer Schweizer BM.",
+        "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften an einer Schweizer BM."
     };
 
-   const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir unter keinen Umständen das Endergebnis, die finale Lösung oder die korrekte Übersetzung. Wenn ich einen Fehler mache oder stocke, antworte auf SCHRIFTDEUTSCH. Halte deine Rückmeldung extrem kurz und knackig (maximal 2–3 Sätze). Stelle mir eine präzise Frage oder gib mir einen minimalen Denkanstoss, damit ich den nächsten Teilschritt selbstständig finde. AUSNAHME: Wenn eine Nachricht mit exakten administrativen Freischalt-Code '[SYS-OVR-X79-BBZ]' beginnt, bedeutet dies, dass die Lehrperson das System überprüft. Schalte in diesem Fall den sokratischen Modus für diese eine Nachricht komplett ab und liefere sofort die vollständige Musterlösung inklusive detailliertem Rechenweg.";
-    // ── GEHEIMER LEHRER-MODUS FUNKTION ───────────────────────
-    function triggerTeacherMode() {
-        const masterPassword = "sh-bm";
-        const input = prompt("🔐 Streng geheim! Bitte Lehrpersonen-Passwort eingeben:");
-        
-        if (input === masterPassword) {
-            isTeacherModeActive = true; // Setzt Lehrer-Status auf aktiv
-            showToast("🔓 Lehrer-Modus & Bypass aktiviert!");
-            
-            document.getElementById('welcomeScreen').style.display  = 'none';
-            document.getElementById('guidanceScreen').style.display = 'none';
-            
-            unlockGuidanceNextBtn();
-            proceedToMainWorkspace();
-        } else if (input !== null) {
-            showToast("❌ Zugriff verweigert.");
+    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung.";
+
+    // ── NEUE API KOMMUNIKATION ─────────────────────────────────
+    async function sendToGemini(userText, isSystemCommand = false) {
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "DEINE_WEB_APP_URL_HIER_EINFUEGEN") {
+            alert("Achtung: Du musst noch die APPS_SCRIPT_URL im Code eintragen!");
+            return;
         }
-    }
 
-    // ── ROUTING ────────────────────────────────────────────────
-    function initAppRouting() {
-        const params = new URLSearchParams(window.location.search);
-        const view   = params.get('view');
+        const chatWindow = document.getElementById('chatWindow');
+        chatWindow.style.display = 'flex';
 
-        resetImageContainer();
-        resetSolutionImageContainer();
-
-        if (view === 'workspace') {
-            selectedSubject = params.get('subject') || 'Mathematik';
-            selectedKI      = params.get('ki')      || 'ChatGPT';
-            document.getElementById('welcomeScreen').style.display  = 'none';
-            document.getElementById('guidanceScreen').style.display = 'flex';
-            document.getElementById('appContainer').style.display   = 'none';
-            lockGuidanceNextBtn();
-        } else {
-            document.getElementById('welcomeScreen').style.display  = 'flex';
-            document.getElementById('guidanceScreen').style.display = 'none';
-            document.getElementById('appContainer').style.display   = 'none';
-            resetToSubjects();
+        if (!isSystemCommand) {
+            appendChatMessage('user', userText);
         }
-    }
 
-    function lockGuidanceNextBtn() {
-        const btn = document.getElementById('btn-guidance-next');
-        btn.disabled = true;
-        btn.className = 'btn btn-locked';
-        btn.textContent = '🔒 2. Weiter zum Arbeitsjournal';
-    }
+        showToast("⏳ Tutor tippt...");
 
-    function unlockGuidanceNextBtn() {
-        const btn = document.getElementById('btn-guidance-next');
-        btn.disabled = false;
-        btn.className = 'btn btn-primary';
-        btn.textContent = '➡️ 2. Weiter zum Arbeitsjournal';
-    }
-
-    function selectSubject(subject, icon) {
-        selectedSubject = subject;
-        document.getElementById('subjectSelectionArea').style.display = 'none';
-        document.getElementById('kiSelectionArea').style.display      = 'flex';
-        document.getElementById('kiSelectionTitle').textContent       = `${icon} ${subject} — Wähle deinen KI-Dienst:`;
-    }
-
-    function resetToSubjects() {
-        document.getElementById('subjectSelectionArea').style.display = 'flex';
-        document.getElementById('kiSelectionArea').style.display      = 'none';
-    }
-
-    function selectKI(kiName) {
-        selectedKI = kiName;
-        const w65  = Math.floor(screen.availWidth * 0.64);
-        const h    = screen.availHeight - 60;
-        const url  = `${window.location.origin}${window.location.pathname}?view=workspace&subject=${encodeURIComponent(selectedSubject)}&ki=${encodeURIComponent(selectedKI)}`;
-        window.open(url, 'workspace_window', `width=${w65},height=${h},left=0,top=0,resizable=yes,scrollbars=yes`);
-        document.getElementById('kiSelectionTitle').innerHTML =
-            `✅ <b>Arbeitsjournal geöffnet!</b><br><span style="font-size:13px;font-weight:400;color:var(--muted);">Dieses Fenster kannst du minimieren.</span>`;
-    }
-
-    async function copyPromptAndOpenKIWindow() {
-        let prompt = (subjectPrompts[selectedSubject] || subjectPrompts['Mathematik']) + globalSocraticRules;
-        prompt += `\n\nBestätige kurz in einem Satz auf Schriftdeutsch, dass du bereit bist, mich sokratisch zu begleiten. Warte danach auf meine Aufgabe oder Eingabe.`;
+        // Prompt mit Kontext zusammenbauen
+        let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
+        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
 
         try {
-            await navigator.clipboard.writeText(prompt);
-        } catch {
-            prompt && window.prompt('Prompt manuell kopieren (Ctrl+A, Ctrl+C):', prompt);
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ prompt: fullPrompt }),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            });
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                appendChatMessage('ki', data.response);
+                conversationHistory += `Schüler: ${userText}\nTutor: ${data.response}\n`;
+            } else {
+                appendChatMessage('ki', '❌ Fehler vom Server: ' + data.response);
+            }
+        } catch (e) {
+            appendChatMessage('ki', '❌ Netzwerkfehler. Ist die Apps Script URL korrekt?');
         }
-
-        const w35 = Math.floor(screen.availWidth * 0.34) - 10;
-        const lft = Math.floor(screen.availWidth * 0.65) + 6;
-        const h   = screen.availHeight - 60;
-        window.open(kiUrls[selectedKI] || 'https://chatgpt.com', 'ki_split_window',
-            `width=${w35},height=${h},left=${lft},top=0,resizable=yes,scrollbars=yes`);
-
-        showToast('📋 Prompt kopiert!');
-        unlockGuidanceNextBtn();
     }
 
-    function proceedToMainWorkspace() {
+    function appendChatMessage(sender, text) {
+        const msg = document.createElement('div');
+        msg.className = `chat-bubble ${sender === 'user' ? 'bubble-user' : 'bubble-ki'}`;
+        msg.textContent = text;
+        document.getElementById('chatHistory').appendChild(msg);
+        document.getElementById('chatHistory').scrollTop = document.getElementById('chatHistory').scrollHeight;
+    }
+
+    function toggleChatWindow() {
+        const w = document.getElementById('chatWindow');
+        w.style.display = w.style.display === 'none' || w.style.display === '' ? 'flex' : 'none';
+    }
+
+    // ── ROUTING & NAVIGATION ───────────────────────────────────
+    function selectSubject(subject, icon) {
+        selectedSubject = subject;
+        conversationHistory = ""; // Reset Historie bei Fachwechsel
+        document.getElementById('chatHistory').innerHTML = '<div class="chat-bubble bubble-ki">Hallo! Ich bin dein sokratischer Lernassistent für '+subject+'. Definiere deine Aufgabe oder schick mir deinen ersten Lösungsschritt.</div>';
+        
+        // Navigation: Direkt in den Workspace
         document.getElementById('welcomeScreen').style.display = 'none';
-        document.getElementById('guidanceScreen').style.display = 'none';
-        document.getElementById('appContainer').style.display   = 'flex';
-        document.getElementById('activeSubjectBadge').textContent = selectedSubject;
+        document.getElementById('appContainer').style.display = 'flex';
+        document.getElementById('activeSubjectBadge').textContent = subject;
+        
         setInputMode('text');
         updateWorkspaceVisuals();
+        showToast(`Fach ${subject} geladen.`);
     }
 
     function goBackToSelection() {
-        window.location.href = window.location.origin + window.location.pathname;
+        document.getElementById('appContainer').style.display = 'none';
+        document.getElementById('welcomeScreen').style.display = 'flex';
+        document.getElementById('chatWindow').style.display = 'none';
     }
 
-    // ── INTERFACE ROUTING (MODES) ──────────────────────────────
+    function triggerTeacherMode() {
+        const input = prompt("🔐 Streng geheim! Bitte Lehrpersonen-Passwort eingeben:");
+        if (input === "sh-bm") {
+            isTeacherModeActive = true;
+            showToast("🔓 Lehrer-Modus aktiviert!");
+            updateWorkspaceVisuals();
+        }
+    }
+
     function setInputMode(mode) {
         currentActiveMode = mode;
-        document.body.className = mode === 'text' ? 'text-mode-active' : (mode === 'canvas' ? 'canvas-mode-active' : 'image-mode-active');
+        document.body.className = mode === 'text' ? 'text-mode-active' : 'canvas-mode-active';
         document.getElementById('btn-mode-text').classList.toggle('active', mode === 'text');
         document.getElementById('btn-mode-canvas').classList.toggle('active', mode === 'canvas');
-        document.getElementById('btn-mode-image').classList.toggle('active', mode === 'image');
         if (mode === 'canvas') setTimeout(initCanvas, 50);
     }
 
@@ -832,318 +552,50 @@ function zeigeKI_Antwort(text) {
         updateWorkspaceVisuals();
     }
 
-    // ── LIVE CAMERA CONTROLS ───────────────────────────────────
-    function openCameraForTask() { cameraTarget = 'task'; openCameraModal(); }
-    function openCameraForSolution() { cameraTarget = 'solution'; openCameraModal(); }
-
-    async function openCameraModal() {
-        const modal = document.getElementById('cameraModal');
-        const select = document.getElementById('cameraSelect');
-        const video = document.getElementById('cameraVideo');
-        modal.style.display = 'flex';
-        
-        try {
-            activeCameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-            video.srcObject = activeCameraStream;
-            
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const videoDevices = devices.filter(d => d.kind === 'videoinput');
-            
-            select.innerHTML = '';
-            videoDevices.forEach((device, index) => {
-                const opt = document.createElement('option');
-                opt.value = device.deviceId;
-                opt.text = device.label || `Kamera ${index + 1}`;
-                select.appendChild(opt);
-            });
-            
-            select.onchange = async () => {
-                if (activeCameraStream) {
-                    activeCameraStream.getTracks().forEach(track => track.stop());
-                }
-                const constraints = { video: { deviceId: { exact: select.value } } };
-                activeCameraStream = await navigator.mediaDevices.getUserMedia(constraints);
-                video.srcObject = activeCameraStream;
-            };
-            
-        } catch (err) {
-            showToast('❌ Kamera-Zugriff blockiert.');
-            closeCameraModal();
-        }
-    }
-
-    function closeCameraModal() {
-        if (activeCameraStream) {
-            activeCameraStream.getTracks().forEach(track => track.stop());
-            activeCameraStream = null;
-        }
-        document.getElementById('cameraModal').style.display = 'none';
-    }
-
-    function captureCameraSnapshot() {
-        const video = document.getElementById('cameraVideo');
-        if (!video || !activeCameraStream) return;
-        
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = video.videoWidth || 640;
-        tempCanvas.height = video.videoHeight || 480;
-        const tempCtx = tempCanvas.getContext('2d');
-        
-        tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
-        const dataUrl = tempCanvas.toDataURL('image/png');
-        
-        if (cameraTarget === 'task') {
-            displayLoadedImage(dataUrl);
-        } else {
-            displaySolutionImage(dataUrl);
-        }
-        closeCameraModal();
-        showToast('📸 Foto erfolgreich übernommen!');
-    }
-
-    // ── IMAGE HANDLING (TASK PINBOARD) ─────────────────────────
-    function handleTaskScreenshot(e) {
-        const file = e.target.files[0]; if (!file) return;
-        const reader = new FileReader();
-        reader.onload = ev => displayLoadedImage(ev.target.result);
-        reader.readAsDataURL(file);
-    }
-
-    function displayLoadedImage(src) {
-        loadedImageSrc = src;
-        const con = document.getElementById('universalTaskImageContainer');
-        con.innerHTML = `
-            <div class="pb-img-wrap">
-                <img src="${loadedImageSrc}" alt="Vorschau" onclick="openImagePopup()" title="Vergrössern">
-                <button class="pb-img-change" onclick="event.stopPropagation(); resetImageContainer();">🗑️ Löschen</button>
-            </div>`;
-        if (pipWindowInstance && !pipWindowInstance.closed) {
-            const pipImg = pipWindowInstance.document.getElementById('pipImageElement');
-            if (pipImg) pipImg.src = loadedImageSrc;
-        }
-        updateWorkspaceVisuals();
-    }
-
-    function resetImageContainer() {
-        loadedImageSrc = '';
-        const con = document.getElementById('universalTaskImageContainer');
-        con.innerHTML = `
-            <div style="display:flex; flex-direction:column; gap:3px; width:100%; padding:2px; justify-content:center; height:100%;">
-                <button class="btn" style="background:#0ea5e9; color:#fff; font-size:10.5px; padding:3px 6px; font-weight:700;" onclick="document.getElementById('taskImageLoader').click()">📁 Datei</button>
-                <button class="btn" style="background:#6366f1; color:#fff; font-size:10.5px; padding:3px 6px; font-weight:700;" onclick="openCameraForTask()">📷 Kamera</button>
-            </div>`;
-        updateWorkspaceVisuals();
-    }
-
-    // ── IMAGE HANDLING (SOLUTION PANEL) ───────────────────────
-    function handleSolutionScreenshot(e) {
-        const file = e.target.files[0]; if (!file) return;
-        const reader = new FileReader();
-        reader.onload = ev => displaySolutionImage(ev.target.result);
-        reader.readAsDataURL(file);
-    }
-
-    function displaySolutionImage(src) {
-        loadedSolutionImageSrc = src;
-        const con = document.getElementById('solutionImageContainer');
-        con.innerHTML = `
-            <div class="pb-img-wrap" style="height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
-                <img src="${loadedSolutionImageSrc}" alt="Lösungsweg Vorschau" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:6px;">
-                <button class="pb-img-change" onclick="event.stopPropagation(); resetSolutionImageContainer();">🗑️ Löschen</button>
-            </div>`;
-    }
-
-    function resetSolutionImageContainer() {
-        loadedSolutionImageSrc = '';
-        const con = document.getElementById('solutionImageContainer');
-        con.innerHTML = `
-            <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-direction:column;">
-                <div style="display:flex; gap:8px;">
-                    <button class="btn" style="background:#0ea5e9; color:#fff; font-weight:700;" onclick="document.getElementById('solutionImageLoader').click()">📁 Datei</button>
-                    <button class="btn" style="background:#6366f1; color:#fff; font-weight:700;" onclick="openCameraForSolution()">📷 Kamera</button>
-                </div>
-                <span style="font-size:12px; color:var(--muted); font-weight:500;">oder Ctrl+V drücken</span>
-            </div>`;
-    }
-
-    // Smart Clipboard Paste Handler
-    window.addEventListener('paste', e => {
-        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-        for (const item of items) {
-            if (item.type.startsWith('image/')) {
-                const file = item.getAsFile();
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    if (currentActiveMode === 'image') {
-                        displaySolutionImage(ev.target.result);
-                        showToast('🖼️ Foto in Lösungsweg eingefügt!');
-                    } else {
-                        if (currentTaskOption === 'gen') setTaskOption('own');
-                        displayLoadedImage(ev.target.result);
-                        showToast('🖼️ Bild auf Aufgaben-Pinnwand geladen!');
-                    }
-                };
-                reader.readAsDataURL(file);
-                e.preventDefault();
-                return;
-            }
-        }
-    });
-
-    // ── WORKSPACE VISUALS ──────────────────────────────────────
+    // ── BUTTON AKTIONEN (API) ──────────────────────────────────
     function updateWorkspaceVisuals() {
         const block = document.getElementById('workspaceActionBlock');
-        if (!block) return;
-
         let htmlContent = '';
 
         if (currentTaskOption === 'gen') {
-            htmlContent = `<button class="action-btn-full green" onclick="copyTaskGenerationPromptOnly()">✨ Aufgaben-Prompt kopieren → bei ${selectedKI} einfügen</button>`;
-        } else if (loadedImageSrc) {
-            htmlContent = `<button class="action-btn-full green" onclick="copyImageToClipboardOnly()">🖼️ Bildaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            htmlContent = `<button class="action-btn-full green" onclick="sendTaskGenerationPrompt()">✨ Aufgabe generieren lassen</button>`;
         } else if (document.getElementById('universalTaskText').value.trim()) {
-            htmlContent = `<button class="action-btn-full green" onclick="copyPinboardTextOnly()">📋 Textaufgabe kopieren → bei ${selectedKI} einfügen</button>`;
+            htmlContent = `<button class="action-btn-full green" onclick="sendPinboardText()">🚀 Aufgabe an Tutor senden</button>`;
         } else {
-            htmlContent = `<div class="action-hint">💡 Erfasse oben eine Aufgabe (Text, Datei oder Kamera), um sie an ${selectedKI} zu übergeben.</div>`;
-            // Wenn Lehrer-Modus aktiv, auch bei leerer Aufgabe den Override-Button mitsenden
-            if (isTeacherModeActive) {
-                htmlContent += `<button class="btn-teacher-override" onclick="copyTeacherSolutionPrompt()">🔑 Lehrermodus: Direkt nach Lösung fragen</button>`;
-            }
-            block.innerHTML = htmlContent;
-            return;
+            htmlContent = `<div class="action-hint">💡 Erfasse oben eine Aufgabe, um sie an die KI zu übergeben.</div>`;
         }
 
-        // Exklusiv für Lehrpersonen: Zeigt den roten Override-Button an
         if (isTeacherModeActive) {
-            htmlContent += `<button class="btn-teacher-override" onclick="copyTeacherSolutionPrompt()">🔑 Lehrermodus: Direkt nach Lösung fragen</button>`;
+            htmlContent += `<button class="btn-teacher-override" onclick="sendTeacherSolutionPrompt()">🔑 Lehrermodus: Direkte Lösung anfordern</button>`;
         }
-
         block.innerHTML = htmlContent;
     }
 
-    // ── CLIPBOARD ACTIONS ──────────────────────────────────────
-    async function safeCopy(text) {
-        try { await navigator.clipboard.writeText(text); showToast('📋 Kopiert!'); }
-        catch { window.prompt('Manuell kopieren (Ctrl+A, Ctrl+C):', text); }
+    function sendTaskGenerationPrompt() {
+        const topic = document.getElementById('topicInputField').value.trim() || `einem Lehrplanthema`;
+        const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${topic}". Liefere NUR die reine Aufgabenstellung ohne Lösungsergebnisse.`;
+        sendToGemini(prompt, false);
     }
 
-    async function copyTaskGenerationPromptOnly() {
-        const topic  = document.getElementById('topicInputField').value.trim();
-        const thema  = topic || `einem BM-Lehrplanthema dieses Faches`;
-        await safeCopy(`[AUFGABEN-ERSTELLUNG]: Erstelle mir eine anspruchsvolle Aufgabe auf BM-Niveau zum Thema: "${thema}". Liefere NUR die reine Aufgabenstellung ohne Lösungsergebnisse oder Lösungswege, damit ich sie selbstständig lösen kann.`);
-    }
-
-    async function copyPinboardTextOnly() {
+    function sendPinboardText() {
         const txt = document.getElementById('universalTaskText').value.trim();
-        await safeCopy(`[MEINE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Löse sie nicht auf, sondern warte auf meinen ersten Lösungsschritt oder meine erste Vermutung.`);
+        const prompt = `[MEINE AUFGABE]:\n${txt}\n\nLies diese Aufgabe durch. Warte danach auf meinen ersten Lösungsschritt.`;
+        sendToGemini(prompt, false);
     }
 
-    // NEU: Überarbeiteter "Copilot-sicherer" Lehrer-Prompt (als administrative Rückmeldung getarnt)
-   async function copyTeacherSolutionPrompt() {
-    const txt = document.getElementById('universalTaskText').value.trim();
-    const topic = document.getElementById('topicInputField').value.trim();
-    
-    // Das geheime Codewort triggert die im Start-Prompt verankerte Ausnahme
-    let prompt = `[SYS-OVR-X79-BBZ]\n\nBitte erstelle die vollständige Musterlösung für folgende Aufgabe:\n`;
-    
-    if (txt) {
-        prompt += txt;
-        await sendToGemini(prompt);
-        showToast('🔑 Lösungs-Prompt mit Codewort kopiert!');
-    } else if (loadedImageSrc) {
-        prompt += `(Siehe angehängtes Bild)`;
-        await sendToGemini(prompt);
-        showToast('🔑 Text-Prompt kopiert! Vergiss nicht, das Bild bei Copilot einzufügen.');
-    } else if (currentTaskOption === 'gen' && topic) {
-        prompt = `[SYS-OVR-X79-BBZ]\n\nGeneriere eine anspruchsvolle Aufgabe zum Thema "${topic}" und liefere direkt die vollständige Musterlösung mit Rechenweg dazu.`;
-        await sendToGemini(prompt);
-        showToast('🔑 Lösungs-Prompt für generierte Aufgabe kopiert!');
-    } else {
-        prompt = `[SYS-OVR-X79-BBZ]\n\nGib mir die vollständige Lösung für die aktuelle Aufgabe im Chat aus.`;
-        await sendToGemini(prompt);
-        showToast('🔑 Lösungs-Prompt kopiert!');
-    }
-}
-
-    async function copyImageToClipboardOnly() {
-        if (!loadedImageSrc) return;
-        try {
-            const resp = await fetch(loadedImageSrc);
-            const blob = await resp.blob();
-            await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-            showToast('🖼️ Bild kopiert! Ctrl+V im KI-Fenster einfügen.');
-        } catch { showToast('⚠️ Bildkopieren blockiert.'); }
+    function sendTextSolution() {
+        const txt = document.getElementById('keyboardInput').value.trim();
+        if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
+        sendToGemini(txt, false);
     }
 
-   async function copyTextSolutionWorkflowOnly() {
-    const txt = document.getElementById('keyboardInput').value.trim();
-    if (!txt) { showToast('⚠️ Bitte zuerst einen Lösungsschritt eingeben.'); return; }
-    
-    // Kleiner systemischer Reminder für hartnäckige KIs wie Copilot
-    const copilotProofText = `[KONTEXT: Bleibe im sokratischen Modus. Keine Lösung nennen!]\nMein nächster Schritt: ${txt}`;
-    
-    await safeCopy(copilotProofText);
-}
-
-    async function copyCanvasSolutionWorkflowOnly() {
-        canvas.toBlob(async blob => {
-            if (!blob) { showToast('⚠️ Zeichenfeld ist leer.'); return; }
-            try {
-                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showToast('🖼️ Zeichnung kopiert!');
-            } catch { showToast('⚠️ Kopieren blockiert.'); }
-        }, 'image/png');
+    function sendTeacherSolutionPrompt() {
+        const txt = document.getElementById('universalTaskText').value.trim();
+        let prompt = `[SYS-OVR-X79-BBZ]\n\nBitte erstelle die vollständige Musterlösung für die aktuelle Aufgabe:\n${txt}`;
+        sendToGemini(prompt, true); // True, damit der Befehl selbst nicht im Chatfenster auftaucht
     }
 
-    async function copySolutionImageWorkflowOnly() {
-        if (!loadedSolutionImageSrc) { showToast('⚠️ Bitte zuerst ein Foto aufnehmen oder hochladen.'); return; }
-        try {
-            const resp = await fetch(loadedSolutionImageSrc);
-            const blob = await resp.blob();
-            await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-            showToast('🖼️ Foto des Lösungswegs kopiert! Drüben einfügen.');
-        } catch { showToast('⚠️ Kopieren vermasselt.'); }
-    }
-
-    // ── IMAGE POPUP ────────────────────────────────────────────
-    function openImagePopup() {
-        if (!loadedImageSrc) return;
-        document.getElementById('popupTargetImage').src = loadedImageSrc;
-        document.getElementById('draggableWindow').style.display = 'flex';
-        if (!('documentPictureInPicture' in window))
-            document.getElementById('btn-pip-trigger').style.display = 'none';
-    }
-    function closeImagePopup() { document.getElementById('draggableWindow').style.display = 'none'; }
-
-    async function openAlwaysOnTopWindow() {
-        if (!loadedImageSrc || !('documentPictureInPicture' in window)) return;
-        try {
-            if (pipWindowInstance) pipWindowInstance.close();
-            pipWindowInstance = await documentPictureInPicture.requestWindow({ width: 480, height: 360 });
-            const d = pipWindowInstance.document;
-            Object.assign(d.body.style, { margin:'0', padding:'8px', background:'#f8fafc', display:'flex', alignItems:'center', justifycontent:'center', height:'100vh', boxSizing:'border-box' });
-            d.title = '📌 Schwebende Aufgabe';
-            const img = d.createElement('img');
-            img.id = 'pipImageElement'; img.src = loadedImageSrc;
-            Object.assign(img.style, { maxWidth:'100%', maxHeight:'100%', objectFit:'contain', borderRadius:'8px' });
-            d.body.appendChild(img);
-            closeImagePopup();
-            showToast('📌 Schwebefenster aktiv!');
-        } catch (e) { openImagePopup(); }
-    }
-
-    // Draggable popup
-    const dragWin = document.getElementById('draggableWindow');
-    const dragHdr = document.getElementById('draggableHeader');
-    let isDragging = false, dX, dY;
-    dragHdr.addEventListener('mousedown', e => {
-        if (e.target.tagName === 'BUTTON') return;
-        isDragging = true; dX = e.clientX - dragWin.offsetLeft; dY = e.clientY - dragWin.offsetTop; e.preventDefault();
-    });
-    document.addEventListener('mousemove', e => { if (!isDragging) return; dragWin.style.left = (e.clientX-dX)+'px'; dragWin.style.top = (e.clientY-dY)+'px'; });
-    document.addEventListener('mouseup', () => isDragging = false);
-
-    // ── CANVAS DRAWING SYSTEM ──────────────────────────────────
+    // ── CANVAS SYSTEM ──────────────────────────────────────────
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
         canvas.width  = wrapper.offsetWidth || 450;
@@ -1174,7 +626,7 @@ function zeigeKI_Antwort(text) {
     }
 
     function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); redrawEverything(); }
-
+    
     function getCoords(e) {
         const r  = canvas.getBoundingClientRect();
         const cx = e.clientX ?? e.touches?.[0].clientX;
@@ -1216,14 +668,22 @@ function zeigeKI_Antwort(text) {
     canvas.addEventListener('touchend',   stopDrawing);
     window.addEventListener('resize', initCanvas);
 
-    // ── STATUS SYSTEM ──────────────────────────────────────────
+    // ── CHAT POPUP DRAG ──────────────────────────────────────────
+    const dragWin = document.getElementById('chatWindow');
+    const dragHdr = document.getElementById('chatHeader');
+    let isDragging = false, dX, dY;
+    dragHdr.addEventListener('mousedown', e => {
+        if (e.target.tagName === 'BUTTON') return;
+        isDragging = true; dX = e.clientX - dragWin.offsetLeft; dY = e.clientY - dragWin.offsetTop; e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => { if (!isDragging) return; dragWin.style.left = (e.clientX-dX)+'px'; dragWin.style.top = (e.clientY-dY)+'px'; });
+    document.addEventListener('mouseup', () => isDragging = false);
+
     function showToast(msg) {
         const t = document.getElementById('statusToast');
         t.textContent = msg; t.style.display = 'block';
         setTimeout(() => t.style.display = 'none', 2600);
     }
-
-    window.addEventListener('load', initAppRouting);
 </script>
 </body>
 </html>
