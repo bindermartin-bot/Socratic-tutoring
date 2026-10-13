@@ -446,11 +446,9 @@
 
     // ── NEUE DIREKTE API KOMMUNIKATION (OHNE APPS SCRIPT) ───────
     async function sendToGemini(userText, isSystemCommand = false) {
-        if (!GEMINI_API_KEY || GEMINI_API_KEY === "DEIN_AIza_SCHLUESSEL_HIER") {
-            alert("Achtung: Du musst noch deinen API-Schlüssel im Code eintragen!");
-            return;
-        }
-
+        // 🔴 SCHLÜSSEL HIER EINFÜGEN
+        const GEMINI_API_KEY = "AIzaSyAWpWGRWYDxGVm9KZJKomSKRGisHkx6qsg"; 
+        
         const chatWindow = document.getElementById('chatWindow');
         chatWindow.style.display = 'flex';
 
@@ -458,33 +456,49 @@
             appendChatMessage('user', userText);
         }
 
-        showToast("⏳ Tutor tippt...");
+        showToast("⏳ Tutor überlegt...");
 
         let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
-        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
+        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
 
         const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=" + GEMINI_API_KEY;
-        const payload = {
-            contents: [{ parts: [{ text: fullPrompt }] }]
-        };
+        const payload = { contents: [{ parts: [{ text: fullPrompt }] }] };
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            const data = await response.json();
-            
-            if (response.ok && data.candidates && data.candidates[0].content) {
-                const aiText = data.candidates[0].content.parts[0].text;
-                appendChatMessage('ki', aiText);
-                conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
-            } else {
-                appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
+        let success = false;
+        let attempt = 0;
+        let maxAttempts = 5;
+
+        while (attempt < maxAttempts && !success) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.candidates && data.candidates[0].content) {
+                    const aiText = data.candidates[0].content.parts[0].text;
+                    appendChatMessage('ki', aiText);
+                    conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+                    success = true;
+                } else if (data.error && data.error.code === 503) {
+                    attempt++;
+                    showToast(`⏳ Server stark ausgelastet. Automatischer Versuch ${attempt}/${maxAttempts}...`);
+                    await sleep(2500); // 2,5 Sekunden warten vor dem nächsten Versuch
+                } else {
+                    appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
+                    success = true; // Schleife bei echten Fehlern abbrechen
+                }
+            } catch (e) {
+                appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+                success = true; // Schleife bei Netzwerkabbruch abbrechen
             }
-        } catch (e) {
-            appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+        }
+
+        if (!success) {
+            appendChatMessage('ki', '❌ Die Google-Server sind aktuell komplett überlastet. Bitte versuche es in ein paar Minuten noch einmal.');
         }
     }
 
