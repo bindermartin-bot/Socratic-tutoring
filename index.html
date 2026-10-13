@@ -21,7 +21,7 @@
             --muted:           #6b7280;
             --muted-light:     #9ca3af;
             --border:          #e2e6ed;
-            --border-strong:   #c9d1dc;
+            --border-strong:   #c9d1dc;        
             --r-sm:            5px;
             --r-md:            8px;
             --r-lg:            12px;
@@ -626,7 +626,63 @@
     
     // NEU: Globaler Marker für den Lehrermodus
     let isTeacherModeActive = false; 
+const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbyPX7d-765cTrtsb7R4LQB05lyJTPUM8bUo9EEtClc2Vl6NMdGv3-J4ofYKAgNsnZCjWQ/exec; // 🔴 Web-App-URL aus Schritt 2
 
+// Diese Funktion ersetzt das "in die Zwischenablage kopieren"
+async function sendToGemini(prompt) {
+    showToast("⏳ Die KI überlegt...");
+    
+    try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ prompt: prompt }),
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8', 
+                // Wir nutzen text/plain, um strenge CORS-Checks im Browser zu umgehen
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            zeigeKI_Antwort(data.response);
+        } else {
+            showToast("❌ Fehler bei der KI-Antwort.");
+            console.error(data.response);
+        }
+    } catch (error) {
+        showToast("❌ Netzwerkfehler (Apps Script erreichbar?).");
+        console.error(error);
+    }
+}
+
+// Eine simple Methode, um die Antwort in der App anzuzeigen
+function zeigeKI_Antwort(text) {
+    // Da du bisher noch keinen Chat-Bereich im HTML hast, nutzen wir 
+    // für den ersten Test das bestehende Popup-Fenster (draggableWindow).
+    
+    document.getElementById('popupTargetImage').style.display = 'none'; // Bild ausblenden
+    
+    // Prüfen ob schon ein Text-Container im Popup existiert
+    let textContainer = document.getElementById('kiResponseContainer');
+    if (!textContainer) {
+        textContainer = document.createElement('div');
+        textContainer.id = 'kiResponseContainer';
+        textContainer.style.padding = '15px';
+        textContainer.style.fontSize = '14.5px';
+        textContainer.style.whiteSpace = 'pre-wrap'; // Erhält Zeilenumbrüche
+        document.querySelector('.popup-body').appendChild(textContainer);
+    }
+    
+    textContainer.style.display = 'block';
+    textContainer.textContent = text;
+    
+    // Header anpassen und Popup öffnen
+    document.querySelector('.popup-header span').textContent = '🤖 KI Tutor Antwort';
+    document.getElementById('draggableWindow').style.display = 'flex';
+    showToast("✅ Antwort erhalten!");
+}
+    
     const kiUrls = {
         ChatGPT: 'https://chatgpt.com',
         Gemini:  'https://gemini.google.com',
@@ -992,19 +1048,19 @@
     
     if (txt) {
         prompt += txt;
-        await safeCopy(prompt);
+        await sendToGemini(prompt);
         showToast('🔑 Lösungs-Prompt mit Codewort kopiert!');
     } else if (loadedImageSrc) {
         prompt += `(Siehe angehängtes Bild)`;
-        await safeCopy(prompt);
+        await sendToGemini(prompt);
         showToast('🔑 Text-Prompt kopiert! Vergiss nicht, das Bild bei Copilot einzufügen.');
     } else if (currentTaskOption === 'gen' && topic) {
         prompt = `[SYS-OVR-X79-BBZ]\n\nGeneriere eine anspruchsvolle Aufgabe zum Thema "${topic}" und liefere direkt die vollständige Musterlösung mit Rechenweg dazu.`;
-        await safeCopy(prompt);
+        await sendToGemini(prompt);
         showToast('🔑 Lösungs-Prompt für generierte Aufgabe kopiert!');
     } else {
         prompt = `[SYS-OVR-X79-BBZ]\n\nGib mir die vollständige Lösung für die aktuelle Aufgabe im Chat aus.`;
-        await safeCopy(prompt);
+        await sendToGemini(prompt);
         showToast('🔑 Lösungs-Prompt kopiert!');
     }
 }
