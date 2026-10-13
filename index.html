@@ -70,6 +70,7 @@
             color: var(--bbz-anthracite);
             letter-spacing: -0.8px;
             margin-bottom: 10px;
+            cursor: pointer;
         }
 
         .hero-card p {
@@ -211,12 +212,6 @@
             font-size: 13.5px; color: var(--bbz-anthracite); line-height: 1.4;
         }
         .pb-textarea:focus { outline: none; }
-
-        .pb-right {
-            flex: 1; border: 1.5px dashed var(--border-strong); background: #fff; border-radius: 6px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: relative; overflow: hidden; transition: var(--tr); min-width: 120px; max-width: 160px;
-        }
         
         /* Pivot Switcher */
         .pivot { display: flex; background: #eaeff6; padding: 2px; border-radius: var(--r-md); gap: 2px; }
@@ -229,7 +224,6 @@
         
         #btn-mode-text.active { background: #e0f2fe !important; color: #0369a1 !important; border: 1px solid #bae6fd !important; }
         #btn-mode-canvas.active { background: #e6fffa !important; color: #0d9488 !important; border: 1px solid #99f6e4 !important; }
-        #btn-mode-image.active { background: #e0e7ff !important; color: #4338ca !important; border: 1px solid #c7d2fe !important; }
         .pivot-btn:hover:not(.active) { color: var(--bbz-anthracite); background: rgba(255,255,255,.6); }
 
         /* Action block */
@@ -256,13 +250,10 @@
         .panel-label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
 
         .text-mode-active .text-panel { display: flex !important; }
-        .text-mode-active .canvas-panel, .text-mode-active .image-panel { display: none !important; }
+        .text-mode-active .canvas-panel { display: none !important; }
 
         .canvas-mode-active .canvas-panel { display: flex !important; }
-        .canvas-mode-active .text-panel, .canvas-mode-active .image-panel { display: none !important; }
-
-        .image-mode-active .image-panel { display: flex !important; }
-        .image-mode-active .text-panel, .image-mode-active .canvas-panel { display: none !important; }
+        .canvas-mode-active .text-panel { display: none !important; }
 
         .textarea-input {
             flex: 1; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--r-md);
@@ -278,7 +269,7 @@
         .canvas-wrap { position: relative; width: 100%; height: 2400px; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
 
-        /* Chat Modal (Ersetzt das alte Popup) */
+        /* Chat Modal */
         .chat-popup {
             position: fixed; top: 80px; right: 24px; width: 400px; height: 500px; background: var(--panel);
             border: 1px solid var(--border); box-shadow: var(--sh-lg); z-index: 3000; border-radius: var(--r-lg);
@@ -402,7 +393,7 @@
                     <canvas id="paintCanvas"></canvas>
                 </div>
             </div>
-            <button class="btn btn-action-canvas" onclick="alert('Bilder und Skizzen werden im aktuellen Backend noch nicht unterstützt. Bitte nutze vorerst die Texteingabe.')">🖼️ Skizze senden (Demnächst)</button>
+            <button class="btn btn-action-canvas" onclick="alert('Bilder und Skizzen werden im direkten Frontend-Modus aktuell nicht unterstützt. Bitte nutze die Texteingabe.')">🖼️ Skizze senden (Demnächst)</button>
         </div>
     </div>
     <div class="footer">presented by Methoden-Freitag</div>
@@ -422,8 +413,8 @@
 <div class="toast" id="statusToast"></div>
 
 <script>
-    // 🔴🔴🔴 HIER DEINE GOOGLE APPS SCRIPT URL EINFÜGEN 🔴🔴🔴
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrNEGdRidWOROeKx-kCBcnp9wBfgXxiskmMX3BDr3FYvmDfD3jpzlQ_ekO0OydcgLwMQ/exec"; 
+    // 🔴🔴🔴 HIER DEINEN AIza-SCHLÜSSEL EINFÜGEN 🔴🔴🔴
+    const GEMINI_API_KEY = "AQ.Ab8RN6K3mFp4k35Z5MYRcn_es2NmODtipihOomb1zMDbFAKP6A"; 
     
     // ── STATE ──────────────────────────────────────────────────
     const canvas    = document.getElementById('paintCanvas');
@@ -436,7 +427,7 @@
     let currentActiveMode = 'text', currentTaskOption = 'own';
     let isScrollingTwoFingers = false, startScrollTop = 0, startTouchY = 0;
     let isTeacherModeActive = false; 
-    let conversationHistory = ""; // Speichert den Verlauf für die KI
+    let conversationHistory = ""; 
 
     const subjectPrompts = {
         "Deutsch":              "Du bist eine KI-Lehrperson für Deutsch an einer Schweizer Berufsmaturitätsschule (BM). Achte auf präzise Textanalyse.",
@@ -451,50 +442,51 @@
         "Sozialwissenschaften": "Du bist eine KI-Lehrperson für Sozialwissenschaften an einer Schweizer BM."
     };
 
-    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung.";
+    const globalSocraticRules = " Analysiere meine Eingabe Schritt für Schritt. Verrate mir UNTER KEINEN UMSTÄNDEN die finale Lösung. Halte deine Rückmeldung extrem kurz (max 3 Sätze). Stelle mir eine präzise Frage, damit ich selbst auf die Lösung komme. AUSNAHME: Wenn die Nachricht mit '[SYS-OVR-X79-BBZ]' beginnt, liefere sofort die vollständige Musterlösung ohne weitere Fragen.";
 
-    // ── NEUE API KOMMUNIKATION ─────────────────────────────────
-   async function sendToGemini(userText, isSystemCommand = false) {
-    // 🔴 SCHLÜSSEL DIREKT HIER REIN (inklusive der Anführungszeichen)
-    const GEMINI_API_KEY = "AQ.Ab8RN6K3mFp4k35Z5MYRcn_es2NmODtipihOomb1zMDbFAKP6A"; 
-    
-    const chatWindow = document.getElementById('chatWindow');
-    chatWindow.style.display = 'flex';
-
-    if (!isSystemCommand) {
-        appendChatMessage('user', userText);
-    }
-
-    showToast("⏳ Tutor tippt...");
-
-    let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
-    fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
-
-    // Wir rufen Gemini direkt aus dem Browser auf!
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY;
-    const payload = {
-        contents: [{ parts: [{ text: fullPrompt }] }]
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        const data = await response.json();
-        
-        if (response.ok && data.candidates && data.candidates[0].content) {
-            const aiText = data.candidates[0].content.parts[0].text;
-            appendChatMessage('ki', aiText);
-            conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
-        } else {
-            appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
+    // ── NEUE DIREKTE API KOMMUNIKATION (OHNE APPS SCRIPT) ───────
+    async function sendToGemini(userText, isSystemCommand = false) {
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === "DEIN_AIza_SCHLUESSEL_HIER") {
+            alert("Achtung: Du musst noch deinen API-Schlüssel im Code eintragen!");
+            return;
         }
-    } catch (e) {
-        appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+
+        const chatWindow = document.getElementById('chatWindow');
+        chatWindow.style.display = 'flex';
+
+        if (!isSystemCommand) {
+            appendChatMessage('user', userText);
+        }
+
+        showToast("⏳ Tutor tippt...");
+
+        let fullPrompt = subjectPrompts[selectedSubject] + globalSocraticRules + "\n\n";
+        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input des Schülers: " + userText;
+
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY;
+        const payload = {
+            contents: [{ parts: [{ text: fullPrompt }] }]
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            
+            if (response.ok && data.candidates && data.candidates[0].content) {
+                const aiText = data.candidates[0].content.parts[0].text;
+                appendChatMessage('ki', aiText);
+                conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+            } else {
+                appendChatMessage('ki', '❌ API Fehler: ' + (data.error?.message || "Unbekannter Fehler"));
+            }
+        } catch (e) {
+            appendChatMessage('ki', '❌ Netzwerkfehler. ' + e.message);
+        }
     }
-}
 
     function appendChatMessage(sender, text) {
         const msg = document.createElement('div');
@@ -512,10 +504,9 @@
     // ── ROUTING & NAVIGATION ───────────────────────────────────
     function selectSubject(subject, icon) {
         selectedSubject = subject;
-        conversationHistory = ""; // Reset Historie bei Fachwechsel
+        conversationHistory = ""; 
         document.getElementById('chatHistory').innerHTML = '<div class="chat-bubble bubble-ki">Hallo! Ich bin dein sokratischer Lernassistent für '+subject+'. Definiere deine Aufgabe oder schick mir deinen ersten Lösungsschritt.</div>';
         
-        // Navigation: Direkt in den Workspace
         document.getElementById('welcomeScreen').style.display = 'none';
         document.getElementById('appContainer').style.display = 'flex';
         document.getElementById('activeSubjectBadge').textContent = subject;
@@ -556,7 +547,7 @@
         updateWorkspaceVisuals();
     }
 
-    // ── BUTTON AKTIONEN (API) ──────────────────────────────────
+    // ── BUTTON AKTIONEN ────────────────────────────────────────
     function updateWorkspaceVisuals() {
         const block = document.getElementById('workspaceActionBlock');
         let htmlContent = '';
@@ -596,7 +587,7 @@
     function sendTeacherSolutionPrompt() {
         const txt = document.getElementById('universalTaskText').value.trim();
         let prompt = `[SYS-OVR-X79-BBZ]\n\nBitte erstelle die vollständige Musterlösung für die aktuelle Aufgabe:\n${txt}`;
-        sendToGemini(prompt, true); // True, damit der Befehl selbst nicht im Chatfenster auftaucht
+        sendToGemini(prompt, true); 
     }
 
     // ── CANVAS SYSTEM ──────────────────────────────────────────
