@@ -146,7 +146,7 @@
         
         .main-workspace { display: flex; gap: 12px; flex: 1; min-height: 0; }
         .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 16px; display: flex; flex-direction: column; flex: 1; min-height: 0; box-shadow: var(--sh-sm); }
-        .panel-label { font-size: 12px; font-weight: 600; color: var(--bbz-anthracite); margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .panel-label { font-size: 12px; font-weight: 600; color: var(--bbz-anthracite); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 
         .text-mode-active .text-panel { display: flex !important; }
         .text-mode-active .canvas-panel { display: none !important; }
@@ -155,6 +155,17 @@
 
         .textarea-input { flex: 1; padding: 14px; border: 1px solid var(--border-strong); border-radius: var(--r-md); font-family: var(--font); font-size: 14.5px; resize: vertical; background: #fff; transition: var(--tr); line-height: 1.5; color: var(--bbz-anthracite); overflow-y: auto; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
         .textarea-input:focus { outline: none; border-color: var(--bbz-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
+
+        /* NEU: Mikrofon Button */
+        .btn-mic { background: #f3f4f6; border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--tr); font-size: 16px; position: absolute; right: 14px; bottom: 14px; box-shadow: var(--sh-sm); }
+        .btn-mic:hover { background: #e5e7eb; border-color: var(--border-strong); transform: scale(1.05); }
+        .btn-mic.recording { background: #fee2e2; border-color: #fca5a5; color: var(--danger); animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
 
         /* CANVAS */
         .canvas-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-shrink: 0; background: #f9fafb; padding: 4px; border-radius: var(--r-md); border: 1px solid var(--border); }
@@ -168,7 +179,11 @@
         .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); color: #000000; padding: 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
         .chat-header-title { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 800; }
         .chat-header img { height: 28px; border-radius: 6px; }
-        .chat-header-footer { font-size: 10.5px; font-weight: 500; color: var(--muted-light); letter-spacing: 0.02em; }
+        .chat-header-footer { font-size: 10.5px; font-weight: 500; color: var(--muted-light); letter-spacing: 0.02em; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        
+        /* NEU: Vorlese-Toggle */
+        .tts-toggle { background: #f3f4f6; border: 1px solid var(--border); border-radius: var(--r-sm); padding: 4px 8px; font-size: 11px; cursor: pointer; transition: var(--tr); color: var(--muted); font-weight: 600; }
+        .tts-toggle.active { background: #ecfdf5; color: var(--bbz-green-dark); border-color: #a7f3d0; }
 
         .chat-history { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
         
@@ -265,7 +280,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 4px 0; flex-shrink:0;">
                 <span class="task-bar-label" style="font-size: 13px;">💬 Lösungsweg via:</span>
                 <div class="pivot">
-                    <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur</button>
+                    <button class="pivot-btn active" id="btn-mode-text" onclick="setInputMode('text')">⌨️ Tastatur & Mikrofon</button>
                     <button class="pivot-btn" id="btn-mode-canvas" onclick="setInputMode('canvas')">✏️ Skizze</button>
                 </div>
             </div>
@@ -277,11 +292,14 @@
                         <span>Dein Lösungsschritt</span>
                         <span style="font-size:11px; color:var(--muted-light); font-weight:normal;">Mit Ctrl+V Bild einfügen</span>
                     </div>
-                    <div style="display:flex; gap:12px; flex:1;">
-                        <textarea id="keyboardInput" class="textarea-input" placeholder="Tippe deinen Lösungsansatz hier ein oder füge ein Foto deines Notizblattes ein..."></textarea>
+                    <div style="display:flex; gap:12px; flex:1; position:relative;">
+                        <textarea id="keyboardInput" class="textarea-input" placeholder="Tippe deinen Lösungsansatz hier ein, nutze das Mikrofon oder füge ein Foto ein..."></textarea>
                         
-                        <div id="pastedSolutionImageContainer" style="display:none; position:relative;">
-                            <img id="solutionImagePreview" src="" style="max-height:120px; border-radius:8px; border:1px solid var(--border); box-shadow: var(--sh-sm);">
+                        <!-- NEU: Mikrofon Button -->
+                        <button class="btn-mic" id="btnMic" onclick="startDictation()" title="Diktieren">🎤</button>
+
+                        <div id="pastedSolutionImageContainer" style="display:none; position:absolute; left:14px; bottom:14px; z-index:5;">
+                            <img id="solutionImagePreview" src="" style="max-height:120px; border-radius:8px; border:1px solid var(--border); box-shadow: var(--sh-md);">
                             <button onclick="removeSolutionImage()" style="position:absolute; top:-8px; right:-8px; background:var(--danger); color:white; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-weight:bold; line-height:1;">×</button>
                         </div>
                     </div>
@@ -316,7 +334,11 @@
                     <img src="Logo 05 - klein.png" alt="Logo">
                     <span>Tutor Chat</span>
                 </div>
-                <div class="chat-header-footer">presented by Methoden-Freitag</div>
+                <div class="chat-header-footer">
+                    <span>presented by Methoden-Freitag</span>
+                    <!-- NEU: Vorlese Toggle -->
+                    <button class="tts-toggle" id="btnTTS" onclick="toggleTTS()">🔊 Vorlesen: Aus</button>
+                </div>
             </div>
             <div class="chat-history" id="chatHistory">
                 <!-- Initial Bubble is injected via JS -->
@@ -343,9 +365,10 @@
     let pastedImageBase64 = null; 
     let pastedSolutionImageBase64 = null; 
     let savedDrawingData = null; 
-    
-    // NEU: Arrays für das Kurzzeitgedächtnis (Token-Sparmodus)
     let chatHistoryContext = [];
+    
+    // NEU: Audio Variablen
+    let isSpeechEnabled = false;
 
     const subjectPrompts = {
         "Deutsch": "Du bist KI-Lehrperson für Deutsch an einer Schweizer BM.",
@@ -361,6 +384,76 @@
     };
 
     const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ auf den Lernenden ein, aber fasse dich kurz (max. 2-3 Sätze pro Antwort). 2. BILDER & HANDSCHRIFT: Wenn ein Bild angehängt ist, lies die handschriftlichen Texte, Zahlen und Formeln extrem sorgfältig aus. Beginne deine Antwort zwingend damit, dass du in Text/LaTeX exakt wiedergibst, was du auf dem Bild erkannt hast. 3. FEEDBACK: Lobe richtige Schritte explizit. Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Gib nicht sofort den nächsten kompletten Schritt vor! Stelle eine gezielte Frage oder gib einen kleinen Tipp, damit der Schüler selbst auf die Idee kommt. Löse den Teilschritt nur auf, wenn der Schüler sichtlich feststeckt oder frustriert ist. 5. ABSCHLUSS: Gratuliere am Ende und stelle keine Fragen mehr. 6. FORMAT: Zwingend LaTeX ($$...$$ / $...$). AUSNAHME: Bei '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung.";
+
+    // --- NEU: AUDIO LOGIK (Web Speech API) ---
+    function toggleTTS() {
+        isSpeechEnabled = !isSpeechEnabled;
+        const btn = document.getElementById('btnTTS');
+        if (isSpeechEnabled) {
+            btn.classList.add('active');
+            btn.textContent = "🔊 Vorlesen: An";
+            showToast("KI liest künftige Antworten laut vor.");
+        } else {
+            btn.classList.remove('active');
+            btn.textContent = "🔊 Vorlesen: Aus";
+            window.speechSynthesis.cancel(); // Stoppt aktuelles Vorlesen
+        }
+    }
+
+    function readAloud(text) {
+        if (!isSpeechEnabled || !('speechSynthesis' in window)) return;
+        
+        // Simpler Text-Cleaner, damit LaTeX etwas flüssiger gelesen wird
+        let cleanText = text.replace(/\*/g, '')
+                            .replace(/\$/g, '')
+                            .replace(/\\frac{(.*?)}{(.*?)}/g, '$1 durch $2')
+                            .replace(/\\/g, '');
+                            
+        let utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'de-CH'; // Bevorzugt Schweizerdeutsch falls verfügbar, sonst Standard Deutsch
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function startDictation() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            showToast("Dein Browser unterstützt leider keine Spracheingabe.");
+            return;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.lang = 'de-CH';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const micBtn = document.getElementById('btnMic');
+        micBtn.classList.add('recording');
+        showToast("🎤 Bitte sprechen...");
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            const inputField = document.getElementById('keyboardInput');
+            // Füge Leerzeichen hinzu, falls schon Text da ist
+            if (inputField.value.length > 0 && !inputField.value.endsWith(' ')) {
+                inputField.value += ' ';
+            }
+            inputField.value += transcript;
+            inputField.scrollTop = inputField.scrollHeight;
+        };
+
+        recognition.onerror = function(event) {
+            showToast("⚠️ Mikrofon-Fehler: " + event.error);
+            micBtn.classList.remove('recording');
+        };
+
+        recognition.onend = function() {
+            micBtn.classList.remove('recording');
+        };
+
+        recognition.start();
+    }
 
     // --- RESIZER LOGIK ---
     const resizer = document.getElementById('dragMe');
@@ -493,7 +586,6 @@
             fullPrompt += "--- AKTUELLE AUFGABE DES SCHÜLERS ---\n" + currentTask + "\n-------------------------------------\n\n";
         }
 
-        // NEU: Begrenztes Gedächtnis (nur die letzten 6 Interaktionen)
         let historyString = chatHistoryContext.slice(-6).join("\n");
         if (historyString) {
             fullPrompt += "Bisheriger Verlauf (Auszug):\n" + historyString + "\n\n";
@@ -523,7 +615,9 @@
                 } else {
                     appendChatMessage('ki', aiText);
                     
-                    // NEU: Speichern im Kurzzeitgedächtnis
+                    // NEU: TTS Aufruf
+                    readAloud(aiText);
+
                     chatHistoryContext.push(`Schüler: ${userText}`);
                     chatHistoryContext.push(`Tutor: ${aiText}`);
                 }
@@ -559,9 +653,12 @@
 
     function selectSubject(subject, icon) {
         selectedSubject = subject;
-        chatHistoryContext = []; // NEU: Gedächtnis löschen bei Fachwechsel
+        chatHistoryContext = []; 
         document.getElementById('chatHistory').innerHTML = ''; 
-        appendChatMessage('ki', `Hallo! Ich bin dein Tutor für ${subject}. Definiere oben deine Aufgabe oder füge ein Bild ein.`);
+        
+        let initialMsg = `Hallo! Ich bin dein Tutor für ${subject}. Definiere oben deine Aufgabe oder füge ein Bild ein.`;
+        appendChatMessage('ki', initialMsg);
+        readAloud(initialMsg); // Liest auch die Begrüssung vor, falls TTS an ist
         
         document.getElementById('universalTaskText').value = "";
         document.getElementById('keyboardInput').value = "";
@@ -582,6 +679,7 @@
     }
 
     function goBackToSelection() {
+        window.speechSynthesis.cancel(); // Stoppt Audio beim Zurückgehen
         document.getElementById('appContainer').style.display = 'none';
         document.getElementById('welcomeScreen').style.display = 'flex';
     }
@@ -667,7 +765,6 @@
     function sendCanvasSolution() {
         const txt = "Hier ist meine handschriftliche Rechnung. Bitte analysiere meine Handschrift, Zahlen und Formeln exakt.";
         
-        // NEU: AUTO-CROP für Canvas (Spart drastisch Image-Tokens)
         let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
         const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imgData.data;
@@ -700,7 +797,6 @@
         const cropW = maxX - minX;
         const cropH = maxY - minY;
 
-        // Skalierungslimit (Maximal 1024px Breite/Höhe für massiv weniger Kosten)
         const MAX_DIM = 1024;
         let scale = 1;
         if (cropW > MAX_DIM || cropH > MAX_DIM) {
@@ -717,9 +813,7 @@
         tCtx.fillStyle = '#ffffff'; 
         tCtx.fillRect(0, 0, finalW, finalH);
         
-        // Zeichnet den ausgeschnittenen & runterskalierten Bereich
         tCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, finalW, finalH);
-        
         const imageData = tempCanvas.toDataURL('image/jpeg', 0.85); 
         
         sendToGemini(txt, false, imageData);
