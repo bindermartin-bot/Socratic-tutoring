@@ -339,11 +339,13 @@
     let currentActiveMode = 'text', currentTaskOption = 'own';
     let isScrollingTwoFingers = false, startScrollTop = 0, startTouchY = 0;
     let isTeacherModeActive = false; 
-    let conversationHistory = ""; 
     let isGeneratingTask = false;
     let pastedImageBase64 = null; 
     let pastedSolutionImageBase64 = null; 
-    let savedDrawingData = null; // Speichert das Canvas bei Resize
+    let savedDrawingData = null; 
+    
+    // NEU: Arrays für das Kurzzeitgedächtnis (Token-Sparmodus)
+    let chatHistoryContext = [];
 
     const subjectPrompts = {
         "Deutsch": "Du bist KI-Lehrperson für Deutsch an einer Schweizer BM.",
@@ -358,7 +360,6 @@
         "Chemie": "Du bist KI-Lehrperson für Chemie an einer Schweizer BM."
     };
 
-    // STARK VERSCHÄRFT: Bilderkennung und Hilfe-Regeln
     const globalSocraticRules = " VERHALTENSREGELN: 1. Gehe kooperativ auf den Lernenden ein, aber fasse dich kurz (max. 2-3 Sätze pro Antwort). 2. BILDER & HANDSCHRIFT: Wenn ein Bild angehängt ist, lies die handschriftlichen Texte, Zahlen und Formeln extrem sorgfältig aus. Beginne deine Antwort zwingend damit, dass du in Text/LaTeX exakt wiedergibst, was du auf dem Bild erkannt hast. 3. FEEDBACK: Lobe richtige Schritte explizit. Korrigiere Fehler freundlich. 4. HILFESTELLUNG: Gib nicht sofort den nächsten kompletten Schritt vor! Stelle eine gezielte Frage oder gib einen kleinen Tipp, damit der Schüler selbst auf die Idee kommt. Löse den Teilschritt nur auf, wenn der Schüler sichtlich feststeckt oder frustriert ist. 5. ABSCHLUSS: Gratuliere am Ende und stelle keine Fragen mehr. 6. FORMAT: Zwingend LaTeX ($$...$$ / $...$). AUSNAHME: Bei '[SYS-OVR-X79-BBZ]' zeige sofort die komplette Musterlösung.";
 
     // --- RESIZER LOGIK ---
@@ -386,7 +387,6 @@
             isResizing = false;
             resizer.classList.remove('active');
             document.body.style.cursor = 'default';
-            // Nach dem Resizing das Canvas neu anpassen
             if (currentActiveMode === 'canvas') {
                 setTimeout(initCanvas, 50);
             }
@@ -493,7 +493,13 @@
             fullPrompt += "--- AKTUELLE AUFGABE DES SCHÜLERS ---\n" + currentTask + "\n-------------------------------------\n\n";
         }
 
-        fullPrompt += "Bisheriger Verlauf:\n" + conversationHistory + "\n\nAktueller Input: " + userText;
+        // NEU: Begrenztes Gedächtnis (nur die letzten 6 Interaktionen)
+        let historyString = chatHistoryContext.slice(-6).join("\n");
+        if (historyString) {
+            fullPrompt += "Bisheriger Verlauf (Auszug):\n" + historyString + "\n\n";
+        }
+
+        fullPrompt += "Aktueller Input: " + userText;
         if (imageData) fullPrompt += " (Beachte das angehängte Bild für diesen Schritt.)";
 
         try {
@@ -516,7 +522,10 @@
                     toggleTaskMode('preview'); 
                 } else {
                     appendChatMessage('ki', aiText);
-                    conversationHistory += `Schüler: ${userText}\nTutor: ${aiText}\n`;
+                    
+                    // NEU: Speichern im Kurzzeitgedächtnis
+                    chatHistoryContext.push(`Schüler: ${userText}`);
+                    chatHistoryContext.push(`Tutor: ${aiText}`);
                 }
             } else {
                 appendChatMessage('ki', '❌ API Fehler: ' + (data.error || "Unbekannter Fehler"));
@@ -550,7 +559,7 @@
 
     function selectSubject(subject, icon) {
         selectedSubject = subject;
-        conversationHistory = ""; 
+        chatHistoryContext = []; // NEU: Gedächtnis löschen bei Fachwechsel
         document.getElementById('chatHistory').innerHTML = ''; 
         appendChatMessage('ki', `Hallo! Ich bin dein Tutor für ${subject}. Definiere oben deine Aufgabe oder füge ein Bild ein.`);
         
@@ -559,7 +568,7 @@
         removePastedImage();
         removeSolutionImage();
         clearCanvas();
-        savedDrawingData = null; // Canvas Reset
+        savedDrawingData = null; 
         toggleTaskMode('edit'); 
         isTeacherModeActive = false; 
         
@@ -627,7 +636,6 @@
         const topic = document.getElementById('topicInputField').value.trim() || `einem Standard-Lehrplanthema aus dem Fach ${selectedSubject}`;
         const difficulty = document.getElementById('taskDifficulty').value;
         
-        // STARK VERSCHÄRFT: Zwingende BM-Lehrplantreue
         const prompt = `[AUFGABEN-ERSTELLUNG]: Erstelle eine Aufgabe, die sich STRIKT an den offiziellen Rahmenlehrplan der Schweizer Berufsmaturität (BM) hält. Thema: "${topic}". 
         Schwierigkeitsgrad: ${difficulty}. 
         WICHTIGE REGELN: Die Aufgabe muss exakt lehrplankonform sein (vermeide uni-spezifische oder fachfremde Konzepte). Sie darf MAXIMAL 3 Teilfragen (a, b, c) umfassen. Vermeide simple Wissensabfragen, fordere Transferdenken. Liefere NUR die Text-Aufgabenstellung. Keine Lösungen, keine Tipps. Formeln in LaTeX formatieren.`;
@@ -659,7 +667,7 @@
     function sendCanvasSolution() {
         const txt = "Hier ist meine handschriftliche Rechnung. Bitte analysiere meine Handschrift, Zahlen und Formeln exakt.";
         
-        // AUTO-CROP FUNKTION: Sucht den gezeichneten Bereich, damit das Bild beim Senden groß und scharf bleibt
+        // NEU: AUTO-CROP für Canvas (Spart drastisch Image-Tokens)
         let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
         const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imgData.data;
@@ -668,7 +676,7 @@
         for (let y = 0; y < canvas.height; y++) {
             for (let x = 0; x < canvas.width; x++) {
                 const r = data[(y * canvas.width + x) * 4]; 
-                if (r < 200) { // Erkennt dunkle Stift-Pixel
+                if (r < 200) { 
                     if (x < minX) minX = x;
                     if (x > maxX) maxX = x;
                     if (y < minY) minY = y;
@@ -683,7 +691,6 @@
             return;
         }
 
-        // Schneide das Bild zu (mit kleinem Rand)
         const pad = 30;
         minX = Math.max(0, minX - pad);
         minY = Math.max(0, minY - pad);
@@ -693,14 +700,27 @@
         const cropW = maxX - minX;
         const cropH = maxY - minY;
 
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = cropW; tempCanvas.height = cropH;
-        const tCtx = tempCanvas.getContext('2d');
-        tCtx.fillStyle = '#ffffff'; tCtx.fillRect(0, 0, cropW, cropH);
-        tCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+        // Skalierungslimit (Maximal 1024px Breite/Höhe für massiv weniger Kosten)
+        const MAX_DIM = 1024;
+        let scale = 1;
+        if (cropW > MAX_DIM || cropH > MAX_DIM) {
+            scale = Math.min(MAX_DIM / cropW, MAX_DIM / cropH);
+        }
         
-        // Senden in extremer Qualität für die Texterkennung
-        const imageData = tempCanvas.toDataURL('image/jpeg', 0.95); 
+        const finalW = cropW * scale;
+        const finalH = cropH * scale;
+
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = finalW; 
+        tempCanvas.height = finalH;
+        const tCtx = tempCanvas.getContext('2d');
+        tCtx.fillStyle = '#ffffff'; 
+        tCtx.fillRect(0, 0, finalW, finalH);
+        
+        // Zeichnet den ausgeschnittenen & runterskalierten Bereich
+        tCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, finalW, finalH);
+        
+        const imageData = tempCanvas.toDataURL('image/jpeg', 0.85); 
         
         sendToGemini(txt, false, imageData);
         showToast("✅ Skizze gesendet!");
@@ -714,16 +734,14 @@
     function initCanvas() {
         if (!wrapper || currentActiveMode !== 'canvas') return;
         
-        // Retten der bisherigen Zeichnung vor dem Resize
         if (canvas.width > 0 && canvas.height > 0) {
             savedDrawingData = canvas.toDataURL();
         }
 
         canvas.width  = wrapper.offsetWidth || 450;
-        canvas.height = 6000; // Massiv verlängertes Endlos-Papier
+        canvas.height = 6000; 
         redrawEverything();
 
-        // Zeichnung wiederherstellen
         if (savedDrawingData && savedDrawingData !== 'data:,') {
             const img = new Image();
             img.onload = () => { ctx.drawImage(img, 0, 0); };
